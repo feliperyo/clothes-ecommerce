@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiMail, FiPhone } from 'react-icons/fi';
-import { FaWhatsapp, FaPix, FaCreditCard, FaBarcode } from 'react-icons/fa';
+import { FaWhatsapp, FaMoneyBillWave, FaCreditCard, FaBarcode } from 'react-icons/fa';
 import { SiMercadopago } from 'react-icons/si';
 
 const Footer = () => {
@@ -122,7 +122,7 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Formas de Pagamento</h4>
             <div className="flex flex-wrap gap-3 mb-4">
               <div className="bg-white/10 p-2 rounded" title="Pix">
-                <FaPix size={24} />
+                <FaMoneyBillWave size={24} />
               </div>
               <div className="bg-white/10 p-2 rounded" title="Cartão de Crédito">
                 <FaCreditCard size={24} />

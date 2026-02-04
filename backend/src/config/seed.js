@@ -10,7 +10,7 @@ const products = [
     price: 129.90,
     discountPrice: 99.90,
     category: "Blusas",
-    sizes: ["G1", "G2", "G3", "G4"],
+    sizes: "G1,G2,G3,G4",
     stock: 50,
     imageUrl: "https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600",
     isFeatured: true,
@@ -22,7 +22,7 @@ const products = [
     price: 199.90,
     discountPrice: null,
     category: "Vestidos",
-    sizes: ["48", "50", "52", "54", "56"],
+    sizes: "48,50,52,54,56",
     stock: 35,
     imageUrl: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600",
     isFeatured: true,
@@ -34,7 +34,7 @@ const products = [
     price: 179.90,
     discountPrice: 149.90,
     category: "Calças",
-    sizes: ["46", "48", "50", "52", "54", "56", "58"],
+    sizes: "46,48,50,52,54,56,58",
     stock: 60,
     imageUrl: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600",
     isFeatured: true,
@@ -46,7 +46,7 @@ const products = [
     price: 249.90,
     discountPrice: 199.90,
     category: "Conjuntos",
-    sizes: ["G0", "G1", "G2", "G3"],
+    sizes: "G0,G1,G2,G3",
     stock: 40,
     imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
     isFeatured: true,
@@ -58,7 +58,7 @@ const products = [
     price: 159.90,
     discountPrice: null,
     category: "Blusas",
-    sizes: ["G1", "G2", "G3", "G4", "G5"],
+    sizes: "G1,G2,G3,G4,G5",
     stock: 30,
     imageUrl: "https://images.unsplash.com/photo-1564859228273-274232fdb516?w=600",
     isFeatured: false,
@@ -70,7 +70,7 @@ const products = [
     price: 189.90,
     discountPrice: 159.90,
     category: "Vestidos",
-    sizes: ["48", "50", "52", "54", "56", "58"],
+    sizes: "48,50,52,54,56,58",
     stock: 25,
     imageUrl: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600",
     isFeatured: false,
@@ -82,7 +82,7 @@ const products = [
     price: 169.90,
     discountPrice: null,
     category: "Calças",
-    sizes: ["46", "48", "50", "52", "54", "56"],
+    sizes: "46,48,50,52,54,56",
     stock: 45,
     imageUrl: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600",
     isFeatured: false,
@@ -90,11 +90,11 @@ const products = [
   },
   {
     name: "Blusa Regata Básica (Pack 3)",
-    description: "Kit com 3 blusas regata em algodão. Cores neutras: preto, branco e bege.",
+    description: "Kit com 3 blusas regata em algodão. Cores neutras: preto,branco e bege.",
     price: 89.90,
     discountPrice: 69.90,
     category: "Blusas",
-    sizes: ["G0", "G1", "G2", "G3", "G4"],
+    sizes: "G0,G1,G2,G3,G4",
     stock: 100,
     imageUrl: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600",
     isFeatured: true,
@@ -106,7 +106,7 @@ const products = [
     price: 219.90,
     discountPrice: null,
     category: "Vestidos",
-    sizes: ["48", "50", "52", "54", "56"],
+    sizes: "48,50,52,54,56",
     stock: 20,
     imageUrl: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600",
     isFeatured: false,
@@ -118,7 +118,7 @@ const products = [
     price: 159.90,
     discountPrice: 129.90,
     category: "Conjuntos",
-    sizes: ["G1", "G2", "G3", "G4"],
+    sizes: "G1,G2,G3,G4",
     stock: 35,
     imageUrl: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
     isFeatured: false,
@@ -130,7 +130,7 @@ const products = [
     price: 139.90,
     discountPrice: 109.90,
     category: "Calças",
-    sizes: ["G0", "G1", "G2", "G3", "G4", "G5"],
+    sizes: "G0,G1,G2,G3,G4,G5",
     stock: 80,
     imageUrl: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=600",
     isFeatured: true,
@@ -142,7 +142,7 @@ const products = [
     price: 119.90,
     discountPrice: null,
     category: "Blusas",
-    sizes: ["G1", "G2", "G3", "G4", "G5"],
+    sizes: "G1,G2,G3,G4,G5",
     stock: 40,
     imageUrl: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600",
     isFeatured: false,
@@ -154,7 +154,7 @@ const products = [
     price: 179.90,
     discountPrice: 149.90,
     category: "Vestidos",
-    sizes: ["48", "50", "52", "54", "56", "58"],
+    sizes: "48,50,52,54,56,58",
     stock: 30,
     imageUrl: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600",
     isFeatured: true,
@@ -166,7 +166,7 @@ const products = [
     price: 399.90,
     discountPrice: 329.90,
     category: "Conjuntos",
-    sizes: ["G0", "G1", "G2", "G3", "G4"],
+    sizes: "G0,G1,G2,G3,G4",
     stock: 15,
     imageUrl: "https://images.unsplash.com/photo-1581338834647-b0fb40704e21?w=600",
     isFeatured: true,
@@ -178,7 +178,7 @@ const products = [
     price: 129.90,
     discountPrice: null,
     category: "Calças",
-    sizes: ["G0", "G1", "G2", "G3", "G4", "G5"],
+    sizes: "G0,G1,G2,G3,G4,G5",
     stock: 55,
     imageUrl: "https://images.unsplash.com/photo-1624623278313-a930126a11c3?w=600",
     isFeatured: false,
@@ -190,7 +190,7 @@ const products = [
     price: 109.90,
     discountPrice: 89.90,
     category: "Blusas",
-    sizes: ["G1", "G2", "G3", "G4"],
+    sizes: "G1,G2,G3,G4",
     stock: 45,
     imageUrl: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=600",
     isFeatured: false,
@@ -202,7 +202,7 @@ const products = [
     price: 189.90,
     discountPrice: null,
     category: "Vestidos",
-    sizes: ["48", "50", "52", "54", "56"],
+    sizes: "48,50,52,54,56",
     stock: 28,
     imageUrl: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600",
     isFeatured: false,
@@ -214,7 +214,7 @@ const products = [
     price: 189.90,
     discountPrice: 159.90,
     category: "Conjuntos",
-    sizes: ["G0", "G1", "G2", "G3", "G4"],
+    sizes: "G0,G1,G2,G3,G4",
     stock: 50,
     imageUrl: "https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=600",
     isFeatured: false,
@@ -226,7 +226,7 @@ const products = [
     price: 159.90,
     discountPrice: null,
     category: "Calças",
-    sizes: ["46", "48", "50", "52", "54", "56", "58"],
+    sizes: "46,48,50,52,54,56,58",
     stock: 38,
     imageUrl: "https://images.unsplash.com/photo-1566206091558-7f218b696731?w=600",
     isFeatured: false,
@@ -238,7 +238,7 @@ const products = [
     price: 189.90,
     discountPrice: 149.90,
     category: "Blusas",
-    sizes: ["G1", "G2", "G3", "G4", "G5"],
+    sizes: "G1,G2,G3,G4,G5",
     stock: 25,
     imageUrl: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=600",
     isFeatured: false,
@@ -258,7 +258,7 @@ async function main() {
   console.log('✅ Cleared existing data');
 
   // Criar admin
-  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'admin123', 10);
+  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'admin123',10);
 
   const admin = await prisma.admin.create({
     data: {
@@ -267,7 +267,7 @@ async function main() {
     }
   });
 
-  console.log('✅ Admin created:', admin.username);
+  console.log('✅ Admin created:',admin.username);
 
   // Criar produtos
   for (const product of products) {
@@ -303,7 +303,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error('❌ Error seeding database:', e);
+    console.error('❌ Error seeding database:',e);
     process.exit(1);
   })
   .finally(async () => {

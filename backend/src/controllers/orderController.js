@@ -1,9 +1,9 @@
 const prisma = global.prisma;
-const mercadopago = require('mercadopago');
+const { MercadoPagoConfig, Preference, Payment } = require('mercadopago');
 
-// Configurar Mercado Pago
-mercadopago.configure({
-  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN
+// Configurar Mercado Pago (SDK v2)
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN || 'TEST-TOKEN'
 });
 
 // Gerar número de pedido único
@@ -139,19 +139,20 @@ const createOrder = async (req, res) => {
         }
       };
 
-      const response = await mercadopago.preferences.create(preference);
+      const preferenceClient = new Preference(client);
+      const response = await preferenceClient.create({ body: preference });
 
       // Atualizar pedido com ID do Mercado Pago
       await prisma.order.update({
         where: { id: order.id },
-        data: { mercadopagoId: response.body.id }
+        data: { mercadopagoId: response.id }
       });
 
       res.status(201).json({
         orderId: order.id,
         orderNumber: order.orderNumber,
-        checkoutUrl: response.body.init_point,
-        sandboxUrl: response.body.sandbox_init_point
+        checkoutUrl: response.init_point,
+        sandboxUrl: response.sandbox_init_point
       });
     } catch (mpError) {
       console.error('Mercado Pago error:', mpError);

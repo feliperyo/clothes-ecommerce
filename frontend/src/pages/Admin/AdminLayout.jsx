@@ -5,7 +5,7 @@ import {
   FiMenu,
   FiX,
   FiLogOut,
-  FiBarChart3,
+  FiBarChart2,
   FiBox,
   FiTruck,
   FiHome
@@ -50,7 +50,7 @@ const AdminLayout = () => {
   const navLinks = [
     {
       label: 'Dashboard',
-      icon: FiBarChart3,
+      icon: FiBarChart2,
       path: '/admin',
       exact: true
     },

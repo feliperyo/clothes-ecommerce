@@ -1,5 +1,10 @@
 const prisma = global.prisma;
-const mercadopago = require('mercadopago');
+const { MercadoPagoConfig, Payment } = require('mercadopago');
+
+// Configurar Mercado Pago (SDK v2)
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN || 'TEST-TOKEN'
+});
 
 // POST /api/webhooks/mercadopago - Webhook do Mercado Pago
 const handleMercadoPagoWebhook = async (req, res) => {
@@ -14,8 +19,8 @@ const handleMercadoPagoWebhook = async (req, res) => {
       const paymentId = data.id;
 
       // Buscar informações do pagamento
-      const payment = await mercadopago.payment.get(paymentId);
-      const paymentData = payment.body;
+      const paymentClient = new Payment(client);
+      const paymentData = await paymentClient.get({ id: paymentId });
 
       console.log('Payment data:', paymentData);
 

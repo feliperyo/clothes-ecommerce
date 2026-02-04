@@ -1,3 +1,10 @@
+// Converter sizes de string para array
+export const parseSizes = (sizes) => {
+  if (Array.isArray(sizes)) return sizes; // Já é array
+  if (!sizes) return [];
+  return sizes.split(',').map(s => s.trim());
+};
+
 // Formatar preço em Real Brasileiro
 export const formatPrice = (price) => {
   return new Intl.NumberFormat('pt-BR', {

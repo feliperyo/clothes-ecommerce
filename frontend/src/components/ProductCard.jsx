@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, parseSizes } from '../utils/helpers';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -17,19 +17,24 @@ const ProductCard = ({ product }) => {
 
   const price = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
+  const sizes = parseSizes(product.sizes);
 
   return (
     <Link
       to={`/produto/${product.id}`}
-      className="product-card block"
+      className="product-card block group"
     >
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {product.isPromotion && (
-          <span className="badge-promo">OFERTA</span>
+          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-red-500">
+            OFERTA
+          </span>
         )}
         {product.isFeatured && (
-          <span className="badge-featured">DESTAQUE</span>
+          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary">
+            DESTAQUE
+          </span>
         )}
       </div>
 
@@ -99,7 +104,7 @@ const ProductCard = ({ product }) => {
             disabled={product.stock === 0}
           >
             <option value="">Selecione</option>
-            {product.sizes.map((size) => (
+            {sizes.map((size) => (
               <option key={size} value={size}>
                 {size}
               </option>

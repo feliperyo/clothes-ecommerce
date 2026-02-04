@@ -6,18 +6,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Product {
   id            Int         @id @default(autoincrement())
   name          String
-  description   String      @db.Text
+  description   String
   price         Float
   discountPrice Float?
   category      String
-  sizes         String[]    // Array: ["48", "50", "52", "G0"]
+  sizes         String      // Comma-separated: "48,50,52,G0"
   stock         Int         @default(0)
   imageUrl      String
   isFeatured    Boolean     @default(false)

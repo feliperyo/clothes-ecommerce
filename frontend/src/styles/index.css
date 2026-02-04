@@ -42,30 +42,13 @@
 
   /* Product Card */
   .product-card {
-    @apply card relative group;
+    @apply card relative;
   }
 
   .product-card img {
     @apply w-full aspect-[3/4] object-cover
            transition-transform duration-500
            group-hover:scale-105;
-  }
-
-  .product-card .badge {
-    @apply absolute top-3 left-3 px-3 py-1 rounded-full
-           text-xs font-semibold text-white z-10;
-  }
-
-  .product-card .badge-promo {
-    @apply badge bg-red-500;
-  }
-
-  .product-card .badge-featured {
-    @apply badge bg-primary;
-  }
-
-  .product-card .badge-new {
-    @apply badge bg-green-500;
   }
 
   /* Form Inputs */
