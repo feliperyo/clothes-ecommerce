@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            Int         @id @default(autoincrement())
+  name          String
+  description   String      @db.Text
+  price         Float
+  discountPrice Float?
+  category      String
+  sizes         String[]    // Array: ["48", "50", "52", "G0"]
+  stock         Int         @default(0)
+  imageUrl      String
+  isFeatured    Boolean     @default(false)
+  isPromotion   Boolean     @default(false)
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  orderItems    OrderItem[]
+}
+
+model Order {
+  id             Int        @id @default(autoincrement())
+  orderNumber    String     @unique // Ex: "AC-20260204-0001"
+
+  // Dados do cliente
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  customerCPF    String
+
+  // Endereço
+  zipCode        String
+  street         String
+  number         String
+  complement     String?
+  neighborhood   String
+  city           String
+  state          String
+
+  // Pedido
+  subtotal       Float
+  shippingCost   Float
+  discount       Float      @default(0)
+  total          Float
+
+  // Pagamento
+  paymentMethod  String     // "credit_card", "pix", "boleto"
+  paymentStatus  String     @default("PENDING") // PENDING, PAID, CANCELLED, REFUNDED
+  mercadopagoId  String?    // ID da transação no Mercado Pago
+
+  // Entrega
+  shippingStatus String     @default("PROCESSING") // PROCESSING, SHIPPED, DELIVERED
+  trackingCode   String?
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  items          OrderItem[]
+}
+
+model OrderItem {
+  id           Int     @id @default(autoincrement())
+  orderId      Int
+  productId    Int
+  productName  String  // Salva o nome no momento da compra
+  productPrice Float   // Salva o preço no momento da compra
+  size         String
+  quantity     Int
+  subtotal     Float
+
+  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product      Product @relation(fields: [productId], references: [id])
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String // bcrypt hash
+}

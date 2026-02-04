@@ -1,0 +1,28 @@
+{
+  "name": "ac-ana-curve-shop",
+  "version": "1.0.0",
+  "description": "E-commerce completo de Moda Plus Size",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd backend && npm install && npx prisma generate && node src/server.js",
+    "prisma:migrate": "cd backend && npx prisma migrate deploy",
+    "prisma:seed": "cd backend && npm run prisma:seed"
+  },
+  "keywords": [
+    "ecommerce",
+    "plus-size",
+    "fashion",
+    "mercadopago",
+    "react",
+    "nodejs"
+  ],
+  "author": "AC Ana Curve Shop",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
