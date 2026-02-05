@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateAdmin } = require('../middleware/auth');
+const upload = require('../config/upload');
 const {
   login,
   getDashboard,
@@ -27,8 +28,8 @@ router.get('/dashboard', getDashboard);
 
 // Produtos
 router.get('/products', getAllProductsAdmin);
-router.post('/products', createProduct);
-router.put('/products/:id', updateProduct);
+router.post('/products', upload.single('image'), createProduct);
+router.put('/products/:id', upload.single('image'), updateProduct);
 router.delete('/products/:id', deleteProduct);
 router.patch('/products/:id/featured', toggleFeatured);
 router.patch('/products/:id/promotion', togglePromotion);

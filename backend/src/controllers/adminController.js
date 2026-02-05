@@ -1,11 +1,14 @@
-const prisma = global.prisma;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+// Função helper para obter prisma em runtime
+const getPrisma = () => global.prisma;
 
 // POST /api/admin/login - Login do admin
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    const prisma = getPrisma();
 
     const admin = await prisma.admin.findUnique({
       where: { username }
@@ -43,6 +46,7 @@ const login = async (req, res) => {
 // GET /api/admin/dashboard - Estatísticas
 const getDashboard = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const totalProducts = await prisma.product.count();
     const totalOrders = await prisma.order.count();
     const pendingOrders = await prisma.order.count({
@@ -84,6 +88,7 @@ const getDashboard = async (req, res) => {
 // GET /api/admin/products - Lista todos produtos (incluindo inativos)
 const getAllProductsAdmin = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const products = await prisma.product.findMany({
       orderBy: { createdAt: 'desc' }
     });
@@ -97,6 +102,7 @@ const getAllProductsAdmin = async (req, res) => {
 // POST /api/admin/products - Criar produto
 const createProduct = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const {
       name,
       description,
@@ -105,10 +111,15 @@ const createProduct = async (req, res) => {
       category,
       sizes,
       stock,
-      imageUrl,
       isFeatured,
       isPromotion
     } = req.body;
+
+    // Imagem vem do upload (req.file) ou URL externa (req.body.imageUrl)
+    let imageUrl = req.body.imageUrl || '';
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
 
     const product = await prisma.product.create({
       data: {
@@ -120,8 +131,8 @@ const createProduct = async (req, res) => {
         sizes,
         stock: parseInt(stock),
         imageUrl,
-        isFeatured: isFeatured || false,
-        isPromotion: isPromotion || false
+        isFeatured: isFeatured === 'true' || isFeatured === true,
+        isPromotion: isPromotion === 'true' || isPromotion === true
       }
     });
 
@@ -135,6 +146,7 @@ const createProduct = async (req, res) => {
 // PUT /api/admin/products/:id - Editar produto
 const updateProduct = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
     const {
       name,
@@ -144,27 +156,35 @@ const updateProduct = async (req, res) => {
       category,
       sizes,
       stock,
-      imageUrl,
       isFeatured,
       isPromotion,
       isActive
     } = req.body;
 
+    // Preparar dados para atualização
+    const data = {
+      name,
+      description,
+      price: parseFloat(price),
+      discountPrice: discountPrice ? parseFloat(discountPrice) : null,
+      category,
+      sizes,
+      stock: parseInt(stock),
+      isFeatured: isFeatured === 'true' || isFeatured === true,
+      isPromotion: isPromotion === 'true' || isPromotion === true,
+      isActive: isActive === 'true' || isActive === true || isActive === undefined
+    };
+
+    // Se nova imagem foi enviada, atualizar
+    if (req.file) {
+      data.imageUrl = `/uploads/${req.file.filename}`;
+    } else if (req.body.imageUrl) {
+      data.imageUrl = req.body.imageUrl;
+    }
+
     const product = await prisma.product.update({
       where: { id: parseInt(id) },
-      data: {
-        name,
-        description,
-        price: parseFloat(price),
-        discountPrice: discountPrice ? parseFloat(discountPrice) : null,
-        category,
-        sizes,
-        stock: parseInt(stock),
-        imageUrl,
-        isFeatured,
-        isPromotion,
-        isActive
-      }
+      data
     });
 
     res.json(product);
@@ -177,6 +197,7 @@ const updateProduct = async (req, res) => {
 // DELETE /api/admin/products/:id - Deletar produto
 const deleteProduct = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
 
     await prisma.product.delete({
@@ -193,6 +214,7 @@ const deleteProduct = async (req, res) => {
 // PATCH /api/admin/products/:id/featured - Toggle destaque
 const toggleFeatured = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
 
     const product = await prisma.product.findUnique({
@@ -214,6 +236,7 @@ const toggleFeatured = async (req, res) => {
 // PATCH /api/admin/products/:id/promotion - Toggle promoção
 const togglePromotion = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
 
     const product = await prisma.product.findUnique({
@@ -237,6 +260,7 @@ const togglePromotion = async (req, res) => {
 // GET /api/admin/orders - Lista todos pedidos
 const getAllOrders = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const orders = await prisma.order.findMany({
       orderBy: { createdAt: 'desc' },
       include: {
@@ -257,6 +281,7 @@ const getAllOrders = async (req, res) => {
 // GET /api/admin/orders/:id - Detalhes do pedido
 const getOrderById = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
 
     const order = await prisma.order.findUnique({
@@ -284,6 +309,7 @@ const getOrderById = async (req, res) => {
 // PATCH /api/admin/orders/:id/status - Atualizar status
 const updateOrderStatus = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
     const { paymentStatus, shippingStatus } = req.body;
 
@@ -306,6 +332,7 @@ const updateOrderStatus = async (req, res) => {
 // PATCH /api/admin/orders/:id/tracking - Adicionar código de rastreio
 const updateTracking = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
     const { trackingCode } = req.body;
 

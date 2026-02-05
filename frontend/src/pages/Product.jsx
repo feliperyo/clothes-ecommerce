@@ -13,6 +13,14 @@ import { useCart } from '../context/CartContext';
 import { getProductById } from '../utils/api';
 import { formatPrice } from '../utils/helpers';
 
+const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
+
+const getImageUrl = (imageUrl) => {
+  if (!imageUrl) return 'https://via.placeholder.com/400x533?text=AC+Ana+Curve';
+  if (imageUrl.startsWith('/uploads')) return `${API_URL}${imageUrl}`;
+  return imageUrl;
+};
+
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -151,7 +159,7 @@ const Product = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
               )}
               <img
-                src={product.imageUrl}
+                src={getImageUrl(product.imageUrl)}
                 alt={product.name}
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'

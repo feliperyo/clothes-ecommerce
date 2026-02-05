@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Category from './pages/Category';
+import Collections from './pages/Collections';
 
 // Admin Pages
 import AdminLogin from './pages/Admin/AdminLogin';
@@ -63,6 +64,7 @@ function App() {
                   <main className="flex-grow">
                     <Routes>
                       <Route path="/" element={<Home />} />
+                      <Route path="/colecoes" element={<Collections />} />
                       <Route path="/produto/:id" element={<Product />} />
                       <Route path="/carrinho" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />

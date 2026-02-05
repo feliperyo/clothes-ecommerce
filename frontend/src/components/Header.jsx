@@ -10,13 +10,6 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const categories = [
-    { name: 'Blusas', path: '/categoria/Blusas' },
-    { name: 'Calças', path: '/categoria/Calças' },
-    { name: 'Vestidos', path: '/categoria/Vestidos' },
-    { name: 'Conjuntos', path: '/categoria/Conjuntos' }
-  ];
-
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -54,27 +47,12 @@ const Header = () => {
             <Link to="/" className="text-text hover:text-primary transition-colors font-medium">
               Início
             </Link>
-            <Link to="/?featured=true" className="text-text hover:text-primary transition-colors font-medium">
+            <Link to="/?newest=true" className="text-text hover:text-primary transition-colors font-medium">
               Novidades
             </Link>
-            <div className="relative group">
-              <button className="text-text hover:text-primary transition-colors font-medium">
-                Categorias
-              </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                <div className="py-2">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.name}
-                      to={cat.path}
-                      className="block px-4 py-2 hover:bg-tertiary/30 transition-colors"
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <Link to="/colecoes" className="text-text hover:text-primary transition-colors font-medium">
+              Coleções
+            </Link>
             <Link to="/?promotion=true" className="text-text hover:text-primary transition-colors font-medium">
               Promoções
             </Link>
@@ -173,27 +151,19 @@ const Header = () => {
               Início
             </Link>
             <Link
-              to="/?featured=true"
+              to="/?newest=true"
               onClick={() => setIsMenuOpen(false)}
               className="block py-2 text-text hover:text-primary transition-colors font-medium"
             >
               Novidades
             </Link>
-            <div>
-              <p className="py-2 font-medium text-gray-600">Categorias</p>
-              <div className="pl-4 space-y-2">
-                {categories.map((cat) => (
-                  <Link
-                    key={cat.name}
-                    to={cat.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block py-2 text-text hover:text-primary transition-colors"
-                  >
-                    {cat.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <Link
+              to="/colecoes"
+              onClick={() => setIsMenuOpen(false)}
+              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+            >
+              Coleções
+            </Link>
             <Link
               to="/?promotion=true"
               onClick={() => setIsMenuOpen(false)}

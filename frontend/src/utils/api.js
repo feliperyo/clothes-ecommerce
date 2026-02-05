@@ -97,13 +97,17 @@ export const getAllProductsAdmin = async () => {
   return response.data;
 };
 
-export const createProduct = async (productData) => {
-  const response = await api.post('/admin/products', productData);
+export const createProduct = async (formData) => {
+  const response = await api.post('/admin/products', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
   return response.data;
 };
 
-export const updateProduct = async (id, productData) => {
-  const response = await api.put(`/admin/products/${id}`, productData);
+export const updateProduct = async (id, formData) => {
+  const response = await api.put(`/admin/products/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
   return response.data;
 };
 

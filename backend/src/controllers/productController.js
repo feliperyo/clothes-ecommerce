@@ -1,8 +1,10 @@
-const prisma = global.prisma;
+// Função helper para obter prisma em runtime
+const getPrisma = () => global.prisma;
 
 // GET /api/products - Lista produtos ativos
 const getAllProducts = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { category, featured, search } = req.query;
 
     const where = {
@@ -32,6 +34,7 @@ const getAllProducts = async (req, res) => {
 // GET /api/products/:id - Detalhes do produto
 const getProductById = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { id } = req.params;
 
     const product = await prisma.product.findUnique({
@@ -52,6 +55,7 @@ const getProductById = async (req, res) => {
 // GET /api/products/featured - Produtos em destaque
 const getFeaturedProducts = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const products = await prisma.product.findMany({
       where: {
         isActive: true,
@@ -71,6 +75,7 @@ const getFeaturedProducts = async (req, res) => {
 // GET /api/products/category/:category - Por categoria
 const getProductsByCategory = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const { category } = req.params;
 
     const products = await prisma.product.findMany({
@@ -91,6 +96,7 @@ const getProductsByCategory = async (req, res) => {
 // GET /api/products/promotions - Produtos em promoção
 const getPromotionProducts = async (req, res) => {
   try {
+    const prisma = getPrisma();
     const products = await prisma.product.findMany({
       where: {
         isActive: true,

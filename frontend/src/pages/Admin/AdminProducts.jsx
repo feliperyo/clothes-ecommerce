@@ -18,8 +18,12 @@ import {
   FiLoader,
   FiStar,
   FiTrendingUp,
-  FiAlertCircle
+  FiAlertCircle,
+  FiUpload,
+  FiImage
 } from 'react-icons/fi';
+
+const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -27,6 +31,8 @@ const AdminProducts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
     defaultValues: {
@@ -68,14 +74,22 @@ const AdminProducts = () => {
       setValue('category', product.category);
       setValue('price', product.price);
       setValue('stock', product.stock);
-      setValue('sizes', product.sizes.join(','));
-      setValue('imageUrl', product.imageUrl);
+      setValue('sizes', typeof product.sizes === 'string' ? product.sizes : product.sizes.join(','));
       setValue('discountPrice', product.discountPrice || '');
-      setValue('featured', product.featured || false);
-      setValue('promotion', product.promotion || false);
+      setValue('featured', product.isFeatured || false);
+      setValue('promotion', product.isPromotion || false);
+      // Se tem imagem existente, mostrar preview
+      if (product.imageUrl) {
+        const imgUrl = product.imageUrl.startsWith('/uploads')
+          ? `${API_URL}${product.imageUrl}`
+          : product.imageUrl;
+        setImagePreview(imgUrl);
+      }
     } else {
       setEditingProduct(null);
       reset();
+      setSelectedFile(null);
+      setImagePreview(null);
     }
     setIsModalOpen(true);
   };
@@ -83,41 +97,68 @@ const AdminProducts = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingProduct(null);
+    setSelectedFile(null);
+    setImagePreview(null);
     reset();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      // Criar preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
 
-      const productData = {
-        name: data.name,
-        description: data.description,
-        category: data.category,
-        price: parseFloat(data.price),
-        stock: parseInt(data.stock),
-        sizes: data.sizes.split(',').map(s => s.trim()),
-        imageUrl: data.imageUrl,
-        discountPrice: data.discountPrice ? parseFloat(data.discountPrice) : null,
-        featured: data.featured,
-        promotion: data.promotion
-      };
+      // Usar FormData para suportar upload de arquivo
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('description', data.description);
+      formData.append('category', data.category);
+      formData.append('price', data.price);
+      formData.append('stock', data.stock);
+      formData.append('sizes', data.sizes);
+      formData.append('isFeatured', data.featured);
+      formData.append('isPromotion', data.promotion);
+
+      if (data.discountPrice) {
+        formData.append('discountPrice', data.discountPrice);
+      }
+
+      // Se tem arquivo selecionado, enviar
+      if (selectedFile) {
+        formData.append('image', selectedFile);
+      }
 
       if (editingProduct) {
         // Atualizar
-        const updated = await updateProduct(editingProduct.id, productData);
+        const updated = await updateProduct(editingProduct.id, formData);
         setProducts(products.map(p => p.id === editingProduct.id ? updated : p));
         toast.success('Produto atualizado com sucesso!');
       } else {
-        // Criar
-        const created = await createProduct(productData);
+        // Criar - imagem é obrigatória para novos produtos
+        if (!selectedFile) {
+          toast.error('Selecione uma imagem para o produto');
+          setSubmitting(false);
+          return;
+        }
+        const created = await createProduct(formData);
         setProducts([created, ...products]);
         toast.success('Produto criado com sucesso!');
       }
 
       closeModal();
     } catch (error) {
-      const message = error.response?.data?.message || 'Erro ao salvar produto';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Erro ao salvar produto';
       toast.error(message);
     } finally {
       setSubmitting(false);
@@ -218,7 +259,7 @@ const AdminProducts = () => {
                       <div className="flex items-center gap-3">
                         {product.imageUrl && (
                           <img
-                            src={product.imageUrl}
+                            src={product.imageUrl.startsWith('/uploads') ? `${API_URL}${product.imageUrl}` : product.imageUrl}
                             alt={product.name}
                             className="w-12 h-12 rounded-lg object-cover"
                           />
@@ -264,7 +305,7 @@ const AdminProducts = () => {
                         <button
                           onClick={() => handleToggleFeatured(product.id)}
                           className={`p-2 rounded-lg transition-colors ${
-                            product.featured
+                            product.isFeatured
                               ? 'bg-yellow-100 text-yellow-600'
                               : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                           }`}
@@ -275,7 +316,7 @@ const AdminProducts = () => {
                         <button
                           onClick={() => handleTogglePromotion(product.id)}
                           className={`p-2 rounded-lg transition-colors ${
-                            product.promotion
+                            product.isPromotion
                               ? 'bg-red-100 text-red-600'
                               : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                           }`}
@@ -399,24 +440,47 @@ const AdminProducts = () => {
                   </select>
                 </div>
 
-                {/* Image URL */}
+                {/* Image Upload */}
                 <div>
                   <label className="block text-sm font-medium text-text mb-2">
-                    URL da Imagem
+                    Imagem do Produto
                   </label>
-                  <input
-                    type="url"
-                    placeholder="https://..."
-                    {...register('imageUrl', { required: 'URL da imagem é obrigatória' })}
-                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                      errors.imageUrl
-                        ? 'border-red-500 focus:ring-red-200'
-                        : 'border-gray-300 focus:ring-primary/20'
-                    }`}
-                  />
-                  {errors.imageUrl && (
-                    <p className="text-red-500 text-sm mt-1">{errors.imageUrl.message}</p>
-                  )}
+                  <div className="space-y-3">
+                    {/* Preview */}
+                    {imagePreview && (
+                      <div className="relative w-24 h-24">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="w-24 h-24 rounded-lg object-cover border border-gray-200"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedFile(null);
+                            setImagePreview(null);
+                          }}
+                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                        >
+                          <FiX size={14} />
+                        </button>
+                      </div>
+                    )}
+                    {/* Input */}
+                    <label className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
+                      <FiUpload className="text-gray-400" size={20} />
+                      <span className="text-sm text-gray-500">
+                        {selectedFile ? selectedFile.name : 'Clique para selecionar'}
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </label>
+                    <p className="text-xs text-gray-400">JPG, PNG, WebP ou GIF (máx. 5MB)</p>
+                  </div>
                 </div>
 
                 {/* Price */}

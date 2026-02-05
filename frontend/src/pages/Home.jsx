@@ -14,6 +14,7 @@ const Home = () => {
   const searchQuery = searchParams.get('search');
   const showFeatured = searchParams.get('featured') === 'true';
   const showPromotion = searchParams.get('promotion') === 'true';
+  const showNewest = searchParams.get('newest') === 'true';
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,6 +27,9 @@ const Home = () => {
         } else if (showPromotion) {
           const promos = await getPromotionProducts();
           setPromotionProducts(promos);
+        } else if (showNewest) {
+          const allProducts = await getProducts();
+          setNewProducts(allProducts);
         } else {
           const [featured, allProducts] = await Promise.all([
             getFeaturedProducts(),
@@ -47,7 +51,7 @@ const Home = () => {
     };
 
     fetchProducts();
-  }, [searchQuery, showFeatured, showPromotion]);
+  }, [searchQuery, showFeatured, showPromotion, showNewest]);
 
   const categories = [
     {
@@ -123,6 +127,27 @@ const Home = () => {
     );
   }
 
+  if (showNewest) {
+    return (
+      <div className="section">
+        <div className="container">
+          <h1 className="section-title">🆕 Novidades - Produtos Recentes</h1>
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <div className="spinner" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {newProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {/* Hero Section */}
@@ -137,7 +162,7 @@ const Home = () => {
               Encontre as melhores peças para se sentir confiante e linda!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/?featured=true" className="btn-primary">
+              <Link to="/colecoes" className="btn-primary">
                 Ver Coleção
               </Link>
               <Link to="/?promotion=true" className="btn-outline">

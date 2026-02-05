@@ -1,14 +1,9 @@
 require('dotenv').config();
+// Server v2
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { PrismaClient } = require('@prisma/client');
-
-// Routes
-const productRoutes = require('./routes/products');
-const orderRoutes = require('./routes/orders');
-const adminRoutes = require('./routes/admin');
-const webhookRoutes = require('./routes/webhooks');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,8 +18,14 @@ const prisma = new PrismaClient({
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error']
 });
 
-// Make prisma available globally
+// Make prisma available globally BEFORE loading routes
 global.prisma = prisma;
+
+// Routes (loaded AFTER prisma is set)
+const productRoutes = require('./routes/products');
+const orderRoutes = require('./routes/orders');
+const adminRoutes = require('./routes/admin');
+const webhookRoutes = require('./routes/webhooks');
 
 // Middlewares
 app.use(cors({
@@ -50,6 +51,9 @@ app.use((req, res, next) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 }
+
+// Servir imagens de produtos (uploads)
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
