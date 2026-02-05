@@ -13,7 +13,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-display font-bold mb-4">AC Ana Curve</h3>
+            <img
+              src="/assets/logo-ac.webp"
+              alt="AC Ana Curve"
+              className="h-14 w-auto mb-4"
+            />
             <p className="text-sm text-white/80 mb-4">
               Moda Plus Size Moderna e de Qualidade. Valorizamos suas curvas com estilo e elegância.
             </p>
@@ -58,7 +62,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/?featured=true" className="hover:text-primary transition-colors">
+                <Link to="/?newest=true" className="hover:text-primary transition-colors">
                   Novidades
                 </Link>
               </li>
