@@ -25,12 +25,12 @@ const AdminLogin = () => {
 
       // Salvar token no localStorage
       localStorage.setItem('anacurve_admin_token', response.token);
-      localStorage.setItem('anacurve_admin_user', JSON.stringify(response.user));
+      localStorage.setItem('anacurve_admin_user', JSON.stringify(response.admin));
 
       toast.success('Login realizado com sucesso!');
       navigate('/admin');
     } catch (error) {
-      const message = error.response?.data?.message || 'Erro ao fazer login';
+      const message = error.response?.data?.error || error.response?.data?.message || 'Erro ao fazer login';
       toast.error(message);
     } finally {
       setLoading(false);
@@ -42,9 +42,11 @@ const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Logo / Header */}
         <div className="text-center mb-8">
-          <h1 className="font-display text-4xl font-bold text-primary mb-2">
-            AC Ana Curve
-          </h1>
+          <img
+            src="/assets/logo-ac.webp"
+            alt="AC Ana Curve"
+            className="h-20 w-auto mx-auto mb-4"
+          />
           <p className="text-text/60">Painel Administrativo</p>
         </div>
 

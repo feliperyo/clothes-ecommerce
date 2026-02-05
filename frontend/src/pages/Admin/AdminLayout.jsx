@@ -7,8 +7,7 @@ import {
   FiLogOut,
   FiBarChart2,
   FiBox,
-  FiTruck,
-  FiHome
+  FiTruck
 } from 'react-icons/fi';
 
 const AdminLayout = () => {
@@ -93,15 +92,12 @@ const AdminLayout = () => {
         {/* Logo */}
         <div className="p-6 border-b border-gray-100">
           <Link to="/admin" className="flex items-center gap-3 no-underline">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-              <FiHome className="text-white" size={24} />
-            </div>
-            <div>
-              <h1 className="font-display font-bold text-lg text-text">
-                AC Ana
-              </h1>
-              <p className="text-xs text-gray-500">Admin Panel</p>
-            </div>
+            <img
+              src="/assets/logo-ac.webp"
+              alt="AC Ana Curve"
+              className="h-12 w-auto"
+            />
+            <p className="text-xs text-gray-500">Admin Panel</p>
           </Link>
         </div>
 

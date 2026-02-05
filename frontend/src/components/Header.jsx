@@ -41,13 +41,12 @@ const Header = () => {
       <div className="container">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex flex-col items-center">
-            <h1 className="text-2xl md:text-3xl font-display font-bold text-primary">
-              AC Ana Curve
-            </h1>
-            <span className="text-xs md:text-sm text-secondary font-semibold tracking-wider">
-              PLUS SIZE FASHION
-            </span>
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/assets/logo-ac.webp"
+              alt="AC Ana Curve"
+              className="h-12 md:h-14 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
