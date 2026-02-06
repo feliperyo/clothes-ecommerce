@@ -40,6 +40,9 @@ const seedRoutes = require('./routes/seed');
 const allowedOrigins = [
   process.env.CLIENT_URL,
   process.env.FRONTEND_URL,
+  'https://anacurveshop.vercel.app',
+  'https://anacurveshop-git-main-felipe-ryos-projects.vercel.app',
+  'https://anacurveshop-9u9jug756-felipe-ryos-projects.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
 ].filter(Boolean);
