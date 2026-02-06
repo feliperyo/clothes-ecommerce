@@ -98,7 +98,7 @@ const OrderConfirmation = () => {
     );
   }
 
-  const subtotal = order.items.reduce(
+  const subtotal = (order.items || []).reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
