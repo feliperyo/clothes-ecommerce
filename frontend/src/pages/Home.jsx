@@ -45,6 +45,10 @@ const Home = () => {
         }
       } catch (error) {
         console.error('Error fetching products:', error);
+        // Garantir que os estados permaneçam como arrays mesmo em caso de erro
+        setFeaturedProducts([]);
+        setNewProducts([]);
+        setPromotionProducts([]);
       } finally {
         setLoading(false);
       }
