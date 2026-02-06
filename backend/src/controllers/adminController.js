@@ -95,7 +95,15 @@ const getDashboard = async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching dashboard:', error);
-    res.status(500).json({ error: 'Erro ao buscar dashboard' });
+    res.status(500).json({
+      totalProducts: 0,
+      totalOrders: 0,
+      pendingOrders: 0,
+      totalRevenue: 0,
+      recentOrders: [],
+      lowStockProducts: [],
+      topProducts: []
+    });
   }
 };
 
@@ -108,10 +116,10 @@ const getAllProductsAdmin = async (req, res) => {
     const products = await prisma.product.findMany({
       orderBy: { createdAt: 'desc' }
     });
-    res.json(products);
+    res.json(products || []);
   } catch (error) {
     console.error('Error fetching products:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos' });
+    res.status(500).json([]);
   }
 };
 
@@ -287,10 +295,10 @@ const getAllOrders = async (req, res) => {
         }
       }
     });
-    res.json(orders);
+    res.json(orders || []);
   } catch (error) {
     console.error('Error fetching orders:', error);
-    res.status(500).json({ error: 'Erro ao buscar pedidos' });
+    res.status(500).json([]);
   }
 };
 

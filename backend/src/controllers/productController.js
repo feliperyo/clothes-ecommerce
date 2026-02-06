@@ -24,10 +24,10 @@ const getAllProducts = async (req, res) => {
       orderBy: { createdAt: 'desc' }
     });
 
-    res.json(products);
+    res.json(products || []);
   } catch (error) {
     console.error('Error fetching products:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos' });
+    res.status(500).json([]);
   }
 };
 
@@ -65,10 +65,10 @@ const getFeaturedProducts = async (req, res) => {
       take: 8
     });
 
-    res.json(products);
+    res.json(products || []);
   } catch (error) {
     console.error('Error fetching featured products:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos em destaque' });
+    res.status(500).json([]);
   }
 };
 
@@ -86,10 +86,10 @@ const getProductsByCategory = async (req, res) => {
       orderBy: { createdAt: 'desc' }
     });
 
-    res.json(products);
+    res.json(products || []);
   } catch (error) {
     console.error('Error fetching products by category:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos por categoria' });
+    res.status(500).json([]);
   }
 };
 
@@ -105,10 +105,10 @@ const getPromotionProducts = async (req, res) => {
       orderBy: { createdAt: 'desc' }
     });
 
-    res.json(products);
+    res.json(products || []);
   } catch (error) {
     console.error('Error fetching promotion products:', error);
-    res.status(500).json({ error: 'Erro ao buscar produtos em promoção' });
+    res.status(500).json([]);
   }
 };
 
