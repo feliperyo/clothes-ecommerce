@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
+    minify: 'esbuild', // Mais rápido e incluído no Vite
     rollupOptions: {
       output: {
         manualChunks: {
