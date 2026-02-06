@@ -9,7 +9,29 @@
       "Bash(wc:*)",
       "Bash(git init:*)",
       "Bash(git remote add:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(npm run prisma:seed:*)",
+      "Bash(npm run dev:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(powershell \"Stop-Process -Id 20348 -Force\")",
+      "Bash(powershell:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 3 tail:*)",
+      "Bash(exit:*)",
+      "Bash(timeout 2 cmd /c \"\")",
+      "Bash(tasklist:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(node:*)",
+      "Bash(timeout:*)",
+      "WebFetch(domain:anacurveshop-production.up.railway.app)"
     ]
   }
 }
