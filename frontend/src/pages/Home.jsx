@@ -23,24 +23,24 @@ const Home = () => {
 
         if (searchQuery) {
           const results = await getProducts({ search: searchQuery });
-          setFeaturedProducts(results);
+          setFeaturedProducts(Array.isArray(results) ? results : []);
         } else if (showPromotion) {
           const promos = await getPromotionProducts();
-          setPromotionProducts(promos);
+          setPromotionProducts(Array.isArray(promos) ? promos : []);
         } else if (showNewest) {
           const allProducts = await getProducts();
-          setNewProducts(allProducts);
+          setNewProducts(Array.isArray(allProducts) ? allProducts : []);
         } else {
           const [featured, allProducts] = await Promise.all([
             getFeaturedProducts(),
             getProducts()
           ]);
-          setFeaturedProducts(featured);
-          setNewProducts(allProducts.slice(0, 8));
+          setFeaturedProducts(Array.isArray(featured) ? featured : []);
+          setNewProducts(Array.isArray(allProducts) ? allProducts.slice(0, 8) : []);
 
           if (!showFeatured) {
             const promos = await getPromotionProducts();
-            setPromotionProducts(promos.slice(0, 4));
+            setPromotionProducts(Array.isArray(promos) ? promos.slice(0, 4) : []);
           }
         }
       } catch (error) {

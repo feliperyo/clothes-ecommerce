@@ -27,6 +27,12 @@ const ProductCard = ({ product }) => {
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
   const sizes = parseSizes(product.sizes);
 
+  // Garantir que sizes é sempre array
+  if (!Array.isArray(sizes)) {
+    console.error('ProductCard: sizes não é array:', sizes, 'product:', product);
+    return null;
+  }
+
   return (
     <Link
       to={`/produto/${product.id}`}
