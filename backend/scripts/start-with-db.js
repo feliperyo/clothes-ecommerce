@@ -40,6 +40,18 @@ async function waitForDatabase(maxRetries = 15, delay = 3000) {
 
 async function runMigrations() {
   try {
+    // Try to resolve any failed migrations first
+    try {
+      console.log('🔍 Checking for failed migrations...');
+      execSync('npx prisma migrate resolve --rolled-back 20260204221218_init', {
+        stdio: 'inherit',
+        env: { ...process.env, DATABASE_URL: databaseUrl }
+      });
+      console.log('✅ Resolved failed migration');
+    } catch (resolveError) {
+      console.log('ℹ️  No failed migrations to resolve');
+    }
+
     console.log('🔄 Running database migrations...');
     execSync('npx prisma migrate deploy', {
       stdio: 'inherit',
