@@ -189,7 +189,11 @@ const getOrderByNumber = async (req, res) => {
       return res.status(404).json({ error: 'Pedido não encontrado' });
     }
 
-    res.json(order);
+    // Garantir que items sempre seja array
+    res.json({
+      ...order,
+      items: order.items || []
+    });
   } catch (error) {
     console.error('Error fetching order:', error);
     res.status(500).json({ error: 'Erro ao buscar pedido' });

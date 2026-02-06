@@ -70,12 +70,28 @@ const getDashboard = async (req, res) => {
       }
     });
 
+    // Produtos com baixo estoque
+    const lowStockProducts = await prisma.product.findMany({
+      where: {
+        stock: {
+          lte: 5
+        }
+      },
+      orderBy: { stock: 'asc' },
+      take: 5
+    });
+
+    // Produtos mais vendidos (placeholder - requer analytics)
+    const topProducts = [];
+
     res.json({
       totalProducts,
       totalOrders,
       pendingOrders,
       totalRevenue,
-      recentOrders
+      recentOrders: recentOrders || [],
+      lowStockProducts: lowStockProducts || [],
+      topProducts: topProducts || []
     });
   } catch (error) {
     console.error('Error fetching dashboard:', error);
