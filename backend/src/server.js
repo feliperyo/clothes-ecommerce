@@ -9,10 +9,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Prisma com pool mínimo para otimização Railway
+// Adiciona parâmetros SSL se não estiverem na URL
+let databaseUrl = process.env.DATABASE_URL;
+if (databaseUrl && !databaseUrl.includes('?')) {
+  databaseUrl += '?schema=public&sslmode=require';
+} else if (databaseUrl && !databaseUrl.includes('sslmode')) {
+  databaseUrl += '&sslmode=require';
+}
+
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL
+      url: databaseUrl
     }
   },
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error']
@@ -102,6 +110,27 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Database connection with retry
+async function connectWithRetry(maxRetries = 10, delay = 3000) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      console.log(`🔌 Attempting to connect to database (attempt ${i + 1}/${maxRetries})...`);
+      await prisma.$connect();
+      await prisma.$queryRaw`SELECT 1`; // Test query
+      console.log('✅ Database connected successfully!');
+      return true;
+    } catch (error) {
+      console.error(`❌ Database connection failed (attempt ${i + 1}/${maxRetries}):`, error.message);
+      if (i < maxRetries - 1) {
+        console.log(`⏳ Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 1.5; // Exponential backoff
+      }
+    }
+  }
+  throw new Error('Failed to connect to database after maximum retries');
+}
+
 // Graceful shutdown
 const gracefulShutdown = async () => {
   console.log('Shutting down gracefully...');
@@ -112,11 +141,24 @@ const gracefulShutdown = async () => {
 process.on('SIGTERM', gracefulShutdown);
 process.on('SIGINT', gracefulShutdown);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📦 Environment: ${process.env.NODE_ENV}`);
-  console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL}`);
-});
+// Start server with database connection check
+async function startServer() {
+  try {
+    // Connect to database first
+    await connectWithRetry();
+
+    // Then start the server
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📦 Environment: ${process.env.NODE_ENV}`);
+      console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL}`);
+    });
+  } catch (error) {
+    console.error('💥 Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+startServer();
 
  
