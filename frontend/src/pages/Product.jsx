@@ -11,7 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { getProductById } from '../utils/api';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, parseSizes } from '../utils/helpers';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
 
@@ -274,7 +274,7 @@ const Product = () => {
             <div>
               <label className="block font-semibold mb-3">Tamanho *</label>
               <div className="grid grid-cols-4 gap-3">
-                {product.sizes.map((size) => (
+                {parseSizes(product.sizes).map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
