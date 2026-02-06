@@ -26,6 +26,7 @@ const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const adminRoutes = require('./routes/admin');
 const webhookRoutes = require('./routes/webhooks');
+const seedRoutes = require('./routes/seed');
 
 // Middlewares - CORS Configuration
 const allowedOrigins = [
@@ -83,6 +84,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/seed', seedRoutes);
 
 // Catch-all route para SPA (produção)
 if (process.env.NODE_ENV === 'production') {
