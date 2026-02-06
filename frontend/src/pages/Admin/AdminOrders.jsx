@@ -34,10 +34,11 @@ const AdminOrders = () => {
     try {
       setLoading(true);
       const data = await getAllOrders();
-      setOrders(data);
+      setOrders(Array.isArray(data) ? data : []);
     } catch (error) {
       toast.error('Erro ao carregar pedidos');
       console.error(error);
+      setOrders([]);
     } finally {
       setLoading(false);
     }

@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import { getProductsByCategory } from '../utils/api';
+import { parseSizes, formatPrice } from '../utils/helpers';
 
 const Category = () => {
   const { category } = useParams();
@@ -66,7 +67,7 @@ const Category = () => {
     // Filter by sizes
     if (selectedSizes.length > 0) {
       filtered = filtered.filter((product) =>
-        product.sizes.some((size) => selectedSizes.includes(size))
+        parseSizes(product.sizes).some((size) => selectedSizes.includes(size))
       );
     }
 
@@ -358,11 +359,11 @@ const Category = () => {
                         <div className="flex items-center gap-2 mb-2">
                           {hasDiscount && (
                             <span className="text-gray-400 line-through text-sm">
-                              R$ {product.price.toFixed(2)}
+                              {formatPrice(product.price)}
                             </span>
                           )}
                           <span className="text-primary font-bold text-lg">
-                            R$ {price.toFixed(2)}
+                            {formatPrice(price)}
                           </span>
                         </div>
                         <p className="text-xs text-gray-600">

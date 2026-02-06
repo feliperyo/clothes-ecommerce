@@ -241,7 +241,7 @@ const OrderConfirmation = () => {
             <div className="card p-6">
               <h2 className="text-xl font-bold mb-4">Itens do Pedido</h2>
               <div className="space-y-4">
-                {order.items.map((item, index) => (
+                {(order.items || []).map((item, index) => (
                   <div key={index} className="flex gap-4 pb-4 border-b last:border-b-0">
                     <div className="w-20 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                       <img

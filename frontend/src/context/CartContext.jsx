@@ -14,8 +14,15 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     // Carregar carrinho do localStorage
-    const savedCart = localStorage.getItem('anacurve_cart');
-    return savedCart ? JSON.parse(savedCart) : [];
+    try {
+      const savedCart = localStorage.getItem('anacurve_cart');
+      if (!savedCart) return [];
+      const parsed = JSON.parse(savedCart);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      console.error('Error loading cart from localStorage:', error);
+      return [];
+    }
   });
 
   const [isCartOpen, setIsCartOpen] = useState(false);

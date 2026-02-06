@@ -57,10 +57,11 @@ const AdminProducts = () => {
     try {
       setLoading(true);
       const data = await getAllProductsAdmin();
-      setProducts(data);
+      setProducts(Array.isArray(data) ? data : []);
     } catch (error) {
       toast.error('Erro ao carregar produtos');
       console.error(error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
