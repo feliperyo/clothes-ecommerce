@@ -23,11 +23,18 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-30">
-      {/* Top Banner */}
-      <div className="bg-gradient-primary text-white text-center py-2 px-4 text-sm">
-        <p className="font-medium">
-          ✨ Frete Grátis acima de R$ 599 | Parcele em até 12x sem juros
-        </p>
+      {/* Top Banner - Scrolling Marquee */}
+      <div className="bg-gradient-primary text-white py-2 overflow-hidden">
+        <div className="animate-marquee flex whitespace-nowrap">
+          <span className="mx-8 font-medium text-sm">✨ Frete Grátis acima de R$ 599</span>
+          <span className="mx-8 font-medium text-sm">💳 Parcele em até 12x sem juros</span>
+          <span className="mx-8 font-medium text-sm">🔥 Novidades toda semana</span>
+          <span className="mx-8 font-medium text-sm">🚚 Entrega rápida para todo Brasil</span>
+          <span className="mx-8 font-medium text-sm">✨ Frete Grátis acima de R$ 599</span>
+          <span className="mx-8 font-medium text-sm">💳 Parcele em até 12x sem juros</span>
+          <span className="mx-8 font-medium text-sm">🔥 Novidades toda semana</span>
+          <span className="mx-8 font-medium text-sm">🚚 Entrega rápida para todo Brasil</span>
+        </div>
       </div>
 
       {/* Main Header */}

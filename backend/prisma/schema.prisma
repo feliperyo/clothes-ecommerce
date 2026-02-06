@@ -6,9 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Para desenvolvimento local com SQLite, mude o provider acima para "sqlite"
+// e use DATABASE_URL="file:./dev.db"
 
 model Product {
   id            Int         @id @default(autoincrement())

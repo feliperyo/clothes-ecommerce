@@ -30,17 +30,18 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={`/produto/${product.id}`}
-      className="product-card block group"
+      className="product-card block group hover:scale-[1.02] transition-transform duration-300"
     >
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
         {product.isPromotion && (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-red-500">
+          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-red-500 animate-pulse-glow relative overflow-hidden">
             OFERTA
+            <span className="absolute inset-0 animate-shimmer"></span>
           </span>
         )}
         {product.isFeatured && (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary">
+          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary animate-bounce-soft">
             DESTAQUE
           </span>
         )}

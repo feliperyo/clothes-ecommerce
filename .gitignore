@@ -47,6 +47,14 @@ Thumbs.db
 
 # Prisma
 backend/prisma/migrations/*_migration.sql
+backend/prisma/*.db
+backend/prisma/*.db-journal
+*.db
+*.db-journal
+
+# Uploads (imagens de produtos em desenvolvimento)
+backend/uploads/
+!backend/uploads/.gitkeep
 
 # Temporary files
 *.tmp
@@ -55,3 +63,6 @@ backend/prisma/migrations/*_migration.sql
 
 # Railway
 .railway/
+
+# Vercel
+.vercel
