@@ -3,7 +3,7 @@ const { MercadoPagoConfig, Payment } = require('mercadopago');
 
 // Configurar Mercado Pago (SDK v2)
 const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN || 'TEST-TOKEN'
+  accessToken: process.env.MP_ACCESS_TOKEN || 'TEST-TOKEN'
 });
 
 // POST /api/webhooks/mercadopago - Webhook do Mercado Pago
