@@ -127,6 +127,17 @@ const Footer = () => {
           <p className="text-center text-xs text-gray-400">
             © AC Ana Curve Shop - {currentYear}. Todos os direitos reservados.
           </p>
+          <p className="text-center text-xs text-gray-400 mt-1">
+            Desenvolvido por{' '}
+            <a
+              href="https://ryart.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors underline"
+            >
+              RyArt Design
+            </a>
+          </p>
         </div>
       </div>
     </footer>
