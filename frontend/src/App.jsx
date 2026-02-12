@@ -3,14 +3,6 @@ import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { CartProvider } from './context/CartContext';
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
-
 // Pages
 import Home from './pages/Home';
 import Product from './pages/Product';
@@ -34,6 +26,14 @@ import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppButton from './components/WhatsAppButton';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <Router>
@@ -51,7 +51,7 @@ function App() {
               },
               success: {
                 iconTheme: {
-                  primary: '#C07837',
+                  primary: '#C4A393',
                   secondary: '#fff'
                 }
               }
