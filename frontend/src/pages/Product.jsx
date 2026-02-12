@@ -41,6 +41,34 @@ const Product = () => {
         const data = await getProductById(id);
         setProduct(data);
         setError(null);
+
+        // Salvar nos produtos visualizados
+        if (data && data.id) {
+          try {
+            const saved = localStorage.getItem('anacurve_viewed_products');
+            const parsed = saved ? JSON.parse(saved) : [];
+            const viewed = Array.isArray(parsed) ? parsed : [];
+            const filtered = viewed.filter((p) => p.id !== data.id);
+            filtered.unshift({
+              id: data.id,
+              name: data.name,
+              imageUrl: data.imageUrl,
+              price: data.price,
+              discountPrice: data.discountPrice,
+              category: data.category,
+              sizes: data.sizes,
+              stock: data.stock,
+              isPromotion: data.isPromotion,
+              isFeatured: data.isFeatured,
+            });
+            localStorage.setItem(
+              'anacurve_viewed_products',
+              JSON.stringify(filtered.slice(0, 8))
+            );
+          } catch (e) {
+            // Ignorar erros de localStorage
+          }
+        }
       } catch (err) {
         console.error('Erro ao buscar produto:', err);
         setError('Não foi possível carregar o produto. Tente novamente.');

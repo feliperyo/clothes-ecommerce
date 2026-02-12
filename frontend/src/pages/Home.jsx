@@ -9,6 +9,7 @@ const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   const [promotionProducts, setPromotionProducts] = useState([]);
+  const [viewedProducts, setViewedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const searchQuery = searchParams.get('search');
@@ -55,6 +56,16 @@ const Home = () => {
 
     fetchProducts();
   }, [searchQuery, showFeatured, showPromotion, showNewest]);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('anacurve_viewed_products');
+      const parsed = saved ? JSON.parse(saved) : [];
+      setViewedProducts(Array.isArray(parsed) ? parsed : []);
+    } catch {
+      setViewedProducts([]);
+    }
+  }, []);
 
   const categories = [
     {
@@ -271,6 +282,20 @@ const Home = () => {
               <Link to="/?promotion=true" className="btn-primary inline-block">
                 Ver Todas as Promoções
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Produtos Visualizados */}
+      {viewedProducts.length > 0 && (
+        <section className="py-12 bg-white">
+          <div className="container">
+            <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Produtos Visualizados</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {viewedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
             </div>
           </div>
         </section>
