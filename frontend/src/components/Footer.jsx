@@ -56,19 +56,19 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <Link to="/faq#como-comprar" className="hover:text-primary transition-colors">
                   Como Comprar
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <Link to="/faq#politica-de-privacidade" className="hover:text-primary transition-colors">
                   Política de Privacidade
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-primary transition-colors">
+                <Link to="/faq#trocas-e-devolucoes" className="hover:text-primary transition-colors">
                   Trocas e Devoluções
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

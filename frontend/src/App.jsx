@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Category from './pages/Category';
 import Collections from './pages/Collections';
+import Faq from './pages/Faq';
 
 // Admin Pages
 import AdminLogin from './pages/Admin/AdminLogin';
@@ -71,6 +72,7 @@ function App() {
                       <Route path="/checkout" element={<Checkout />} />
                       <Route path="/pedido-confirmado/:orderNumber" element={<OrderConfirmation />} />
                       <Route path="/categoria/:category" element={<Category />} />
+                      <Route path="/faq" element={<Faq />} />
                     </Routes>
                   </main>
                   <Footer />
