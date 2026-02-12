@@ -279,14 +279,14 @@ const Home = () => {
       )}
 
       {/* Quem Somos */}
-      <section className="bg-neutral-900 text-white py-16 md:py-24">
+      <section className="bg-primary text-white py-16 md:py-24">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-sm tracking-widest uppercase mb-4 text-white/60">Quem Somos</p>
+            <p className="text-sm tracking-widest uppercase mb-4 text-white/80">Quem Somos</p>
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
               Moda plus size moderna e de qualidade.
             </h2>
-            <p className="text-white/70 leading-relaxed">
+            <p className="text-white/90 leading-relaxed text-lg">
               A AC Ana Curve nasceu do desejo de oferecer moda plus size moderna,
               bem-acabada e de qualidade para mulheres que querem se sentir confiantes
               e lindas. Valorizamos suas curvas com estilo e elegância, trazendo peças
