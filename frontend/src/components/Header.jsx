@@ -65,6 +65,9 @@ const Header = () => {
             <Link to="/?promotion=true" className="text-text hover:text-primary transition-colors font-medium">
               Promoções
             </Link>
+            <Link to="/faq" className="text-text hover:text-primary transition-colors font-medium">
+              FAQ
+            </Link>
           </nav>
 
           {/* Search Bar (Desktop) */}
@@ -179,6 +182,13 @@ const Header = () => {
               className="block py-2 text-text hover:text-primary transition-colors font-medium"
             >
               Promoções
+            </Link>
+            <Link
+              to="/faq"
+              onClick={() => setIsMenuOpen(false)}
+              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+            >
+              FAQ
             </Link>
           </nav>
         </div>
