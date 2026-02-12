@@ -22,6 +22,7 @@ import AdminLayout from './pages/Admin/AdminLayout';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
                   </main>
                   <Footer />
                   <CartDrawer />
+                  <WhatsAppButton />
                 </>
               }
             />

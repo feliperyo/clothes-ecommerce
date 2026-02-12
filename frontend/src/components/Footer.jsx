@@ -41,7 +41,7 @@ const Footer = () => {
                 <FiFacebook size={20} />
               </a>
               <a
-                href="https://wa.me/5511999999999"
+                href="https://wa.me/5511913762420"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
@@ -90,12 +90,12 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2">
                 <FiPhone size={16} />
-                <span>(11) 99999-9999</span>
+                <span>(11) 91376-2420</span>
               </li>
               <li className="flex items-center gap-2">
                 <FaWhatsapp size={16} />
                 <a
-                  href="https://wa.me/5511999999999"
+                  href="https://wa.me/5511913762420"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
@@ -115,6 +115,10 @@ const Footer = () => {
             </ul>
             <div className="mt-4">
               <p className="text-xs text-white/70">
+                Rua Nove de Julho, 677<br />
+                Jd. Santa Helena - Suzano/SP
+              </p>
+              <p className="text-xs text-white/70 mt-2">
                 Segunda à Sexta: 9h às 18h<br />
                 Sábado: 9h às 13h
               </p>
