@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#C07837', // Rosa escuro/terracota
-        secondary: '#DE9A8D', // Rosa médio
-        tertiary: '#EBC9C3', // Rosa claro
-        neutral: '#AA8476', // Marrom rosado
-        background: '#FAF5F3', // Bege clarinho
-        text: '#4A4A4A', // Cinza escuro
+        primary: '#8B6F5E', // Marrom rosé
+        secondary: '#C4A99B', // Rosé médio/bege
+        tertiary: '#E8DDD6', // Rosé claro/bege
+        neutral: '#7A6459', // Marrom quente
+        background: '#F7F3F0', // Bege suave
+        text: '#3D3533', // Marrom escuro
       },
       fontFamily: {
         display: ['Playfair Display', 'serif'],
