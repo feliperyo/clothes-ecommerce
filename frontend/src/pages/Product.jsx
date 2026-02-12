@@ -10,8 +10,10 @@ import {
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
+import SEO from '../components/SEO';
 import { getProductById, getImageUrl } from '../utils/api';
 import { formatPrice, parseSizes, FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
+import { getProductSchema, getBreadcrumbSchema } from '../utils/seo';
 
 const Product = () => {
   const { id } = useParams();
@@ -161,6 +163,21 @@ const Product = () => {
 
   return (
     <div className="section bg-background">
+      <SEO
+        title={product.name}
+        description={`${product.name} - ${product.description?.substring(0, 150)}. Tamanhos: ${parseSizes(product.sizes).join(', ')}. Compre na Ana Curve Shop.`}
+        path={`/produto/${product.id}`}
+        image={getImageUrl(product.imageUrl)}
+        type="product"
+        jsonLd={[
+          getProductSchema(product),
+          getBreadcrumbSchema([
+            { name: 'Início', url: '/' },
+            { name: product.category, url: `/categoria/${product.category}` },
+            { name: product.name },
+          ]),
+        ]}
+      />
       <div className="container">
         {/* Breadcrumb */}
         <button
@@ -186,7 +203,7 @@ const Product = () => {
                 }`}
                 onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x533?text=AC+Ana+Curve';
+                  e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
                   setImageLoaded(true);
                 }}
               />

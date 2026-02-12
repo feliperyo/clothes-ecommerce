@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { FiTruck, FiCreditCard, FiRefreshCw, FiShield } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
+import SEO from '../components/SEO';
 import { getProducts, getFeaturedProducts, getPromotionProducts } from '../utils/api';
 import { FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
+import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema } from '../utils/seo';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
@@ -160,6 +162,10 @@ const Home = () => {
 
   return (
     <div>
+      <SEO
+        path="/"
+        jsonLd={[getOrganizationSchema(), getLocalBusinessSchema(), getWebSiteSchema()]}
+      />
       {/* Banner Hero */}
       <section className="w-full">
         <Link to="/colecoes">

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /carrinho
+Disallow: /checkout
+Disallow: /pedido-confirmado
+
+# Sitemap
+Sitemap: https://anacurveshop.com.br/sitemap.xml

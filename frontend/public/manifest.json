@@ -1,0 +1,23 @@
+{
+  "short_name": "Ana Curve",
+  "name": "Ana Curve Shop - Moda Plus Size",
+  "description": "Moda plus size moderna e de qualidade. Blusas, calças, vestidos e conjuntos.",
+  "icons": [
+    {
+      "src": "/assets/logo-ac.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "/assets/logo-ac.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#C4A393",
+  "background_color": "#FDF9F5",
+  "lang": "pt-BR",
+  "scope": "/"
+}

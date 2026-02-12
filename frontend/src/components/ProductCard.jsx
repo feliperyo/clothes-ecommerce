@@ -53,7 +53,7 @@ const ProductCard = ({ product }) => {
           }`}
           onLoad={() => setImageLoaded(true)}
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x533?text=AC+Ana+Curve';
+            e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
             setImageLoaded(true);
           }}
         />

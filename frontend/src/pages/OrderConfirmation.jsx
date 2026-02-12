@@ -9,6 +9,7 @@ import {
   FiMail,
 } from 'react-icons/fi';
 import { getOrderByNumber } from '../utils/api';
+import SEO from '../components/SEO';
 import { formatPrice, formatDate, getPaymentStatusLabel } from '../utils/helpers';
 
 const OrderConfirmation = () => {
@@ -107,6 +108,7 @@ const OrderConfirmation = () => {
 
   return (
     <div className="section bg-background">
+      <SEO title="Pedido Confirmado" noIndex={true} />
       <div className="container">
         <button
           onClick={() => navigate('/')}

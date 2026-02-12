@@ -8,8 +8,10 @@ import {
   FiList,
 } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
+import SEO from '../components/SEO';
 import { getProductsByCategory } from '../utils/api';
 import { parseSizes, formatPrice } from '../utils/helpers';
+import { getBreadcrumbSchema } from '../utils/seo';
 
 const Category = () => {
   const { category } = useParams();
@@ -138,8 +140,24 @@ const Category = () => {
     );
   }
 
+  const categoryDescriptions = {
+    'Blusas': 'Blusas plus size modernas e confortáveis para todas as ocasiões. Tamanhos G0 ao G4.',
+    'Calças': 'Calças plus size que valorizam suas curvas com estilo e elegância. Tamanhos G0 ao G4.',
+    'Vestidos': 'Vestidos plus size para arrasar em qualquer evento. Tamanhos G0 ao G4.',
+    'Conjuntos': 'Conjuntos plus size práticos e estilosos prontos para usar. Tamanhos G0 ao G4.',
+  };
+
   return (
     <div className="section bg-background">
+      <SEO
+        title={`${categoryDisplay} Plus Size`}
+        description={categoryDescriptions[categoryDisplay] || `${categoryDisplay} plus size na Ana Curve Shop. Frete grátis acima de R$599.`}
+        path={`/categoria/${category}`}
+        jsonLd={getBreadcrumbSchema([
+          { name: 'Início', url: '/' },
+          { name: categoryDisplay },
+        ])}
+      />
       <div className="container">
         {/* Breadcrumb */}
         <button

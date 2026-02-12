@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiTrash2, FiMinus, FiPlus, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
+import SEO from '../components/SEO';
 import { formatPrice, calculateShipping, FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 
 const Cart = () => {
@@ -97,6 +98,7 @@ const Cart = () => {
 
   return (
     <div className="section bg-background">
+      <SEO title="Carrinho" noIndex={true} />
       <div className="container">
         <button
           onClick={() => navigate('/')}

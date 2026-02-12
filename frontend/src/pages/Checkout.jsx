@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
+import SEO from '../components/SEO';
 import { createOrder, fetchAddressByCep } from '../utils/api';
 import { formatPrice, formatCEP, validateCPF, calculateShipping } from '../utils/helpers';
 
@@ -124,6 +125,7 @@ const Checkout = () => {
 
   return (
     <div className="section bg-background">
+      <SEO title="Checkout" noIndex={true} />
       <div className="container">
         <h1 className="text-3xl font-bold text-center mb-8">Finalizar Compra</h1>
 

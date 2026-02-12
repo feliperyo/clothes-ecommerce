@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
+import { getBreadcrumbSchema } from '../utils/seo';
 
 const Collections = () => {
   const collections = [
@@ -30,6 +32,15 @@ const Collections = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Coleções"
+        description="Explore nossas coleções de moda plus size: blusas, calças, vestidos e conjuntos. Peças modernas nos tamanhos G0 ao G4."
+        path="/colecoes"
+        jsonLd={getBreadcrumbSchema([
+          { name: 'Início', url: '/' },
+          { name: 'Coleções' },
+        ])}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-tertiary via-secondary/20 to-tertiary py-12 md:py-16">
         <div className="container">
