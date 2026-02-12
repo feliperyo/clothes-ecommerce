@@ -1,6 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { CartProvider } from './context/CartContext';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // Pages
 import Home from './pages/Home';
@@ -29,6 +38,7 @@ function App() {
   return (
     <Router>
       <CartProvider>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
           <Toaster
             position="top-right"

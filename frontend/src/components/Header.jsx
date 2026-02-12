@@ -43,7 +43,7 @@ const Header = () => {
       <div className="container">
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3">
             <img
               src="/assets/logo-ac.webp"
               alt="AC Ana Curve"
@@ -53,7 +53,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <Link to="/" className="text-text hover:text-primary transition-colors font-medium">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-text hover:text-primary transition-colors font-medium">
               Início
             </Link>
             <Link to="/?newest=true" className="text-text hover:text-primary transition-colors font-medium">
@@ -154,7 +154,7 @@ const Header = () => {
           <nav className="container py-4 space-y-3">
             <Link
               to="/"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => { setIsMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="block py-2 text-text hover:text-primary transition-colors font-medium"
             >
               Início
