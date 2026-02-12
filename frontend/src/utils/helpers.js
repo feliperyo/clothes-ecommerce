@@ -1,11 +1,11 @@
+// Limite para frete grátis (centralizado)
+export const FREE_SHIPPING_THRESHOLD = 599;
+
 // Converter sizes de string para array
 export const parseSizes = (sizes) => {
-  if (Array.isArray(sizes)) return sizes; // Já é array
+  if (Array.isArray(sizes)) return sizes;
   if (!sizes) return [];
-  if (typeof sizes !== 'string') {
-    console.error('parseSizes: sizes não é string nem array:', sizes);
-    return [];
-  }
+  if (typeof sizes !== 'string') return [];
   return sizes.split(',').map(s => s.trim());
 };
 
@@ -89,8 +89,7 @@ export const validateEmail = (email) => {
 
 // Calcular frete (pode ser substituído por API real)
 export const calculateShipping = (cep, totalValue) => {
-  // Frete grátis acima de R$ 599
-  if (totalValue >= 599) {
+  if (totalValue >= FREE_SHIPPING_THRESHOLD) {
     return 0;
   }
 

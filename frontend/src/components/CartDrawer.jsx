@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiX, FiPlus, FiMinus, FiTrash2, FiShoppingBag } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 
 const CartDrawer = () => {
   const {
@@ -117,7 +117,7 @@ const CartDrawer = () => {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
-                        className="w-7 h-7 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                        className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100 transition-colors"
                         aria-label="Diminuir quantidade"
                       >
                         <FiMinus size={14} />
@@ -127,7 +127,7 @@ const CartDrawer = () => {
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
-                        className="w-7 h-7 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                        className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100 transition-colors"
                         disabled={item.quantity >= item.stock}
                         aria-label="Aumentar quantidade"
                       >
@@ -153,9 +153,9 @@ const CartDrawer = () => {
             </div>
 
             {/* Shipping Note */}
-            {total < 599 && (
+            {total < FREE_SHIPPING_THRESHOLD && (
               <p className="text-sm text-gray-500 mb-4 text-center">
-                Faltam {formatPrice(599 - total)} para frete grátis!
+                Faltam {formatPrice(FREE_SHIPPING_THRESHOLD - total)} para frete grátis!
               </p>
             )}
 

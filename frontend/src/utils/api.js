@@ -2,10 +2,6 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-// Log para debug
-console.log('🔧 API URL configurada:', API_URL);
-console.log('🔧 VITE_API_URL:', import.meta.env.VITE_API_URL);
-
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -166,6 +162,16 @@ export const fetchAddressByCep = async (cep) => {
   } catch (error) {
     throw new Error('Erro ao buscar CEP');
   }
+};
+
+// === IMAGENS ===
+
+// Monta a URL completa de uma imagem de produto
+export const getImageUrl = (imageUrl) => {
+  if (!imageUrl) return '';
+  if (imageUrl.startsWith('http')) return imageUrl;
+  const baseUrl = API_URL.replace('/api', '');
+  return `${baseUrl}${imageUrl}`;
 };
 
 export default api;

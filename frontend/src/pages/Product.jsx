@@ -10,16 +10,8 @@ import {
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
-import { getProductById } from '../utils/api';
-import { formatPrice, parseSizes } from '../utils/helpers';
-
-const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
-
-const getImageUrl = (imageUrl) => {
-  if (!imageUrl) return 'https://via.placeholder.com/400x533?text=AC+Ana+Curve';
-  if (imageUrl.startsWith('/uploads')) return `${API_URL}${imageUrl}`;
-  return imageUrl;
-};
+import { getProductById, getImageUrl } from '../utils/api';
+import { formatPrice, parseSizes, FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 
 const Product = () => {
   const { id } = useParams();
@@ -258,17 +250,9 @@ const Product = () => {
 
             {/* Title */}
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-text leading-tight mb-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-text leading-tight">
                 {product.name}
               </h1>
-              <div className="flex items-center gap-2">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i}>★</span>
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600">(2,345 avaliações)</span>
-              </div>
             </div>
 
             {/* Prices */}
@@ -279,7 +263,7 @@ const Product = () => {
                     {formatPrice(product.price)}
                   </span>
                 )}
-                <span className="text-4xl font-bold text-primary">
+                <span className="text-3xl sm:text-4xl font-bold text-primary">
                   {formatPrice(price)}
                 </span>
               </div>
@@ -301,7 +285,7 @@ const Product = () => {
             {/* Size Selection */}
             <div>
               <label className="block font-semibold mb-3">Tamanho *</label>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                 {parseSizes(product.sizes).map((size) => (
                   <button
                     key={size}
@@ -359,7 +343,7 @@ const Product = () => {
                 <FiTruck className="text-primary flex-shrink-0 mt-1" size={20} />
                 <div>
                   <p className="font-semibold text-sm">Frete Grátis</p>
-                  <p className="text-xs text-gray-600">Em compras acima de R$ 599</p>
+                  <p className="text-xs text-gray-600">{`Em compras acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</p>
                 </div>
               </div>
               <div className="flex gap-3 items-start">
@@ -395,13 +379,6 @@ const Product = () => {
           </div>
         </div>
 
-        {/* Related Products Section */}
-        <div className="pt-8 border-t">
-          <h2 className="section-title mb-6">Você Pode Gostar Também</h2>
-          <div className="text-center text-gray-600 py-12">
-            <p>Produtos relacionados virão aqui em breve</p>
-          </div>
-        </div>
       </div>
     </div>
   );

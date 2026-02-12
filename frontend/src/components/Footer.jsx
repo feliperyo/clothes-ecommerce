@@ -105,7 +105,7 @@ const Footer = () => {
           <div className="flex lg:justify-end items-start">
             <div className="flex gap-4">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/anacurve.shop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-primary transition-colors"

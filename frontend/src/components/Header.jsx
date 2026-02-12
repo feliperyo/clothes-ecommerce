@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiShoppingCart, FiSearch, FiMenu, FiX } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 
 const Header = () => {
   const { getItemCount, getTotal, toggleCart } = useCart();
@@ -26,16 +26,16 @@ const Header = () => {
       {/* Top Banner - Scrolling Marquee */}
       <div className="bg-gradient-primary text-white py-2 overflow-hidden">
         <div className="animate-marquee flex whitespace-nowrap">
-          <span className="mx-8 font-medium text-sm">✨ Frete Grátis acima de R$ 599</span>
-          <span className="mx-8 font-medium text-sm">💳 Parcele em até 12x sem juros</span>
-          <span className="mx-8 font-medium text-sm">🔥 Novidades toda semana</span>
-          <span className="mx-8 font-medium text-sm">🚚 Entrega rápida para todo Brasil</span>
-          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-8 font-medium text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
-          <span className="mx-8 font-medium text-sm">✨ Frete Grátis acima de R$ 599</span>
-          <span className="mx-8 font-medium text-sm">💳 Parcele em até 12x sem juros</span>
-          <span className="mx-8 font-medium text-sm">🔥 Novidades toda semana</span>
-          <span className="mx-8 font-medium text-sm">🚚 Entrega rápida para todo Brasil</span>
-          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-8 font-medium text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">{`✨ Frete Grátis acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">💳 Parcele em até 12x sem juros</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🔥 Novidades toda semana</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🚚 Entrega rápida para todo Brasil</span>
+          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">{`✨ Frete Grátis acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">💳 Parcele em até 12x sem juros</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🔥 Novidades toda semana</span>
+          <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🚚 Entrega rápida para todo Brasil</span>
+          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
         </div>
       </div>
 
@@ -47,7 +47,7 @@ const Header = () => {
             <img
               src="/assets/logo-ac.webp"
               alt="AC Ana Curve"
-              className="h-12 md:h-14 w-auto"
+              className="h-10 sm:h-12 md:h-14 w-auto"
             />
           </Link>
 

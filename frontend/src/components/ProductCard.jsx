@@ -3,14 +3,7 @@ import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { formatPrice, parseSizes } from '../utils/helpers';
-
-const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
-
-const getImageUrl = (imageUrl) => {
-  if (!imageUrl) return 'https://via.placeholder.com/400x533?text=AC+Ana+Curve';
-  if (imageUrl.startsWith('/uploads')) return `${API_URL}${imageUrl}`;
-  return imageUrl;
-};
+import { getImageUrl } from '../utils/api';
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
@@ -26,12 +19,6 @@ const ProductCard = ({ product }) => {
   const price = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
   const sizes = parseSizes(product.sizes);
-
-  // Garantir que sizes é sempre array
-  if (!Array.isArray(sizes)) {
-    console.error('ProductCard: sizes não é array:', sizes, 'product:', product);
-    return null;
-  }
 
   return (
     <Link
@@ -78,9 +65,9 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         {/* Product Name */}
-        <h3 className="font-semibold text-lg text-text mb-2 line-clamp-2 min-h-[3.5rem]">
+        <h3 className="font-semibold text-base sm:text-lg text-text mb-2 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">
           {product.name}
         </h3>
 

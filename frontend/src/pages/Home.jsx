@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { FiTruck, FiCreditCard, FiRefreshCw, FiShield } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import { getProducts, getFeaturedProducts, getPromotionProducts } from '../utils/api';
+import { FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
@@ -182,7 +183,7 @@ const Home = () => {
               <FiTruck size={24} className="text-primary" />
               <div>
                 <p className="font-semibold text-sm">Frete Grátis</p>
-                <p className="text-xs text-gray-500">Acima de R$ 599</p>
+                <p className="text-xs text-gray-500">{`Acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -211,9 +212,9 @@ const Home = () => {
       </section>
 
       {/* Categories */}
-      <section className="py-12 bg-beige-light/40">
+      <section className="py-8 md:py-12 bg-beige-light/40">
         <div className="container">
-          <div className="grid grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
             {categories.map((category) => (
               <Link
                 key={category.name}
@@ -237,7 +238,7 @@ const Home = () => {
       </section>
 
       {/* Lançamentos */}
-      <section className="py-12 bg-background">
+      <section className="py-8 md:py-12 bg-background">
         <div className="container">
           <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Lançamentos</h2>
           {loading ? (
@@ -256,7 +257,7 @@ const Home = () => {
 
       {/* Destaques */}
       {featuredProducts.length > 0 && (
-        <section className="py-12 bg-white">
+        <section className="py-8 md:py-12 bg-white">
           <div className="container">
             <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Destaques</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -270,7 +271,7 @@ const Home = () => {
 
       {/* Ofertas */}
       {!showFeatured && promotionProducts.length > 0 && (
-        <section className="py-12 bg-tertiary">
+        <section className="py-8 md:py-12 bg-tertiary">
           <div className="container">
             <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Ofertas Especiais</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -289,7 +290,7 @@ const Home = () => {
 
       {/* Produtos Visualizados */}
       {viewedProducts.length > 0 && (
-        <section className="py-12 bg-white">
+        <section className="py-8 md:py-12 bg-white">
           <div className="container">
             <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Produtos Visualizados</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
