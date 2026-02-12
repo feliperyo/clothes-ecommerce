@@ -105,7 +105,7 @@ const Footer = () => {
           <div className="flex lg:justify-end items-start">
             <div className="flex gap-4">
               <a
-                href="https://www.instagram.com/anacurve.shop"
+                href="https://www.instagram.com/anacurveshop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-primary transition-colors"
@@ -122,7 +122,7 @@ const Footer = () => {
       <div className="border-t">
         <div className="container py-4">
           <p className="text-center text-xs text-gray-400">
-            © AC Ana Curve Shop - {currentYear}. Todos os direitos reservados.
+            © AC Ana Curve Shop - CNPJ: 24.025.650/0001-50 - {currentYear}. Todos os direitos reservados.
           </p>
           <p className="text-center text-xs text-gray-400 mt-1">
             Desenvolvido por{' '}
