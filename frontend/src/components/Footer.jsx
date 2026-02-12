@@ -84,11 +84,8 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
                 >
-                  5511913762420
+                  (11) 91376-2420
                 </a>
-              </li>
-              <li>
-                <span>(11) 91376-2420</span>
               </li>
               <li>
                 <a

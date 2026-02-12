@@ -151,7 +151,7 @@ const Home = () => {
       {/* Banner Hero */}
       <section className="w-full">
         <Link to="/colecoes">
-          <div className="w-full bg-gray-100 flex items-center justify-center" style={{ minHeight: '400px' }}>
+          <div className="w-full bg-tertiary flex items-center justify-center" style={{ minHeight: '400px' }}>
             <img
               src="/assets/banner-home.webp"
               alt="AC Ana Curve - Moda Plus Size"
@@ -202,7 +202,7 @@ const Home = () => {
       </section>
 
       {/* Categories */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-beige-light/40">
         <div className="container">
           <div className="grid grid-cols-3 gap-4 md:gap-6">
             {categories.map((category) => (
@@ -261,7 +261,7 @@ const Home = () => {
 
       {/* Ofertas */}
       {!showFeatured && promotionProducts.length > 0 && (
-        <section className="py-12 bg-background">
+        <section className="py-12 bg-tertiary">
           <div className="container">
             <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Ofertas Especiais</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

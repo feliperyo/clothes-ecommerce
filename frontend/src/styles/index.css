@@ -143,12 +143,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #AA8476;
+  background: #C4A393;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C07837;
+  background: #AD9185;
 }
 
 /* Smooth scroll */
@@ -160,9 +160,9 @@ html {
 .img-placeholder {
   background: linear-gradient(
     90deg,
-    #EBC9C3 0%,
-    #DE9A8D 50%,
-    #EBC9C3 100%
+    #EDE5DE 0%,
+    #D5C0B2 50%,
+    #EDE5DE 100%
   );
   background-size: 200% 100%;
   animation: loading 1.5s ease-in-out infinite;
@@ -214,10 +214,10 @@ html {
 /* Pulse Glow Animation */
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(192, 120, 55, 0.4);
+    box-shadow: 0 0 5px rgba(196, 163, 147, 0.4);
   }
   50% {
-    box-shadow: 0 0 20px rgba(192, 120, 55, 0.8);
+    box-shadow: 0 0 20px rgba(196, 163, 147, 0.8);
   }
 }
 
