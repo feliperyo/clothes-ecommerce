@@ -1,74 +1,21 @@
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiFacebook, FiMail, FiPhone } from 'react-icons/fi';
-import { FaWhatsapp, FaMoneyBillWave, FaCreditCard, FaBarcode } from 'react-icons/fa';
-import { SiMercadopago } from 'react-icons/si';
+import { FiInstagram } from 'react-icons/fi';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-neutral text-white mt-auto">
+    <footer className="bg-white border-t mt-auto">
       {/* Main Footer */}
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* About */}
+          {/* Navegue no site */}
           <div>
-            <img
-              src="/assets/logo-ac.webp"
-              alt="AC Ana Curve"
-              className="h-14 w-auto mb-4"
-            />
-            <p className="text-sm text-white/80 mb-4">
-              Moda Plus Size Moderna e de Qualidade. Valorizamos suas curvas com estilo e elegância.
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="Instagram"
-              >
-                <FiInstagram size={20} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="Facebook"
-              >
-                <FiFacebook size={20} />
-              </a>
-              <a
-                href="https://wa.me/5511913762420"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp size={20} />
-              </a>
-            </div>
-          </div>
-
-          {/* Links */}
-          <div>
-            <h4 className="font-bold mb-4">Links Rápidos</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-bold text-text mb-4">Navegue no site</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <Link to="/" className="hover:text-primary transition-colors">
-                  Início
-                </Link>
-              </li>
-              <li>
-                <Link to="/?newest=true" className="hover:text-primary transition-colors">
-                  Novidades
-                </Link>
-              </li>
-              <li>
-                <Link to="/?promotion=true" className="hover:text-primary transition-colors">
-                  Promoções
+                  Todos os Produtos
                 </Link>
               </li>
               <li>
@@ -77,34 +24,73 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/categoria/Calças" className="hover:text-primary transition-colors">
+                  Calças
+                </Link>
+              </li>
+              <li>
                 <Link to="/categoria/Vestidos" className="hover:text-primary transition-colors">
                   Vestidos
+                </Link>
+              </li>
+              <li>
+                <Link to="/categoria/Conjuntos" className="hover:text-primary transition-colors">
+                  Conjuntos
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Customer Service */}
+          {/* Ajuda & Atendimento */}
           <div>
-            <h4 className="font-bold mb-4">Atendimento</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-center gap-2">
-                <FiPhone size={16} />
-                <span>(11) 91376-2420</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <FaWhatsapp size={16} />
+            <h4 className="font-bold text-text mb-4">Ajuda & Atendimento</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>
                 <a
                   href="https://wa.me/5511913762420"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
                 >
-                  WhatsApp
+                  Fale Conosco
                 </a>
               </li>
-              <li className="flex items-center gap-2">
-                <FiMail size={16} />
+              <li>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Como Comprar
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Política de Privacidade
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Trocas e Devoluções
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Fale Conosco */}
+          <div>
+            <h4 className="font-bold text-text mb-4">Fale Conosco</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li>
+                <a
+                  href="https://wa.me/5511913762420"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  5511913762420
+                </a>
+              </li>
+              <li>
+                <span>(11) 91376-2420</span>
+              </li>
+              <li>
                 <a
                   href="mailto:contato@anacurve.com.br"
                   className="hover:text-primary transition-colors"
@@ -112,68 +98,35 @@ const Footer = () => {
                   contato@anacurve.com.br
                 </a>
               </li>
+              <li>
+                <span>Rua Nove de Julho, 677, Jd. Santa Helena - Suzano/SP</span>
+              </li>
             </ul>
-            <div className="mt-4">
-              <p className="text-xs text-white/70">
-                Rua Nove de Julho, 677<br />
-                Jd. Santa Helena - Suzano/SP
-              </p>
-              <p className="text-xs text-white/70 mt-2">
-                Segunda à Sexta: 9h às 18h<br />
-                Sábado: 9h às 13h
-              </p>
-            </div>
           </div>
 
-          {/* Payment & Security */}
-          <div>
-            <h4 className="font-bold mb-4">Formas de Pagamento</h4>
-            <div className="flex flex-wrap gap-3 mb-4">
-              <div className="bg-white/10 p-2 rounded" title="Pix">
-                <FaMoneyBillWave size={24} />
-              </div>
-              <div className="bg-white/10 p-2 rounded" title="Cartão de Crédito">
-                <FaCreditCard size={24} />
-              </div>
-              <div className="bg-white/10 p-2 rounded" title="Boleto">
-                <FaBarcode size={24} />
-              </div>
-              <div className="bg-white/10 p-2 rounded" title="Mercado Pago">
-                <SiMercadopago size={24} />
-              </div>
-            </div>
-            <p className="text-xs text-white/70">
-              Parcele em até 12x sem juros no cartão de crédito
-            </p>
-            <div className="mt-4">
-              <p className="text-xs text-white/70">
-                🔒 Ambiente Seguro<br />
-                Seus dados protegidos
-              </p>
+          {/* Redes Sociais */}
+          <div className="flex lg:justify-end items-start">
+            <div className="flex gap-4">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary transition-colors"
+                aria-label="Instagram"
+              >
+                <FiInstagram size={24} />
+              </a>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/20">
-        <div className="container py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
-            <p>
-              © {currentYear} AC Ana Curve Shop. Todos os direitos reservados.
-            </p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-primary transition-colors">
-                Política de Privacidade
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                Termos de Uso
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                Trocas e Devoluções
-              </a>
-            </div>
-          </div>
+      <div className="border-t">
+        <div className="container py-4">
+          <p className="text-center text-xs text-gray-400">
+            Copyright AC Ana Curve Shop - {currentYear}. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>

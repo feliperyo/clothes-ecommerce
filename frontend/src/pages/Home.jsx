@@ -45,7 +45,6 @@ const Home = () => {
         }
       } catch (error) {
         console.error('Error fetching products:', error);
-        // Garantir que os estados permaneçam como arrays mesmo em caso de erro
         setFeaturedProducts([]);
         setNewProducts([]);
         setPromotionProducts([]);
@@ -72,11 +71,6 @@ const Home = () => {
       name: 'Vestidos',
       image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400',
       path: '/categoria/Vestidos'
-    },
-    {
-      name: 'Conjuntos',
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
-      path: '/categoria/Conjuntos'
     }
   ];
 
@@ -114,7 +108,7 @@ const Home = () => {
     return (
       <div className="section">
         <div className="container">
-          <h1 className="section-title">🔥 Promoções Especiais</h1>
+          <h1 className="section-title">Promoções Especiais</h1>
           {loading ? (
             <div className="flex justify-center py-12">
               <div className="spinner" />
@@ -135,7 +129,7 @@ const Home = () => {
     return (
       <div className="section">
         <div className="container">
-          <h1 className="section-title">🆕 Novidades - Produtos Recentes</h1>
+          <h1 className="section-title">Novidades - Produtos Recentes</h1>
           {loading ? (
             <div className="flex justify-center py-12">
               <div className="spinner" />
@@ -154,102 +148,76 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-tertiary via-secondary/20 to-tertiary py-16 md:py-24 overflow-hidden">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 animate-fade-in-up">
-              Moda Plus Size Moderna e de Qualidade
-            </h1>
-            <p className="text-lg md:text-xl text-text/80 mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              Valorize suas curvas com estilo e elegância.
-              Encontre as melhores peças para se sentir confiante e linda!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <Link to="/colecoes" className="btn-primary hover:scale-105 transition-transform">
-                Ver Coleção
-              </Link>
-              <Link to="/?promotion=true" className="btn-outline hover:scale-105 transition-transform">
-                Ver Promoções
-              </Link>
-            </div>
+      {/* Banner Hero */}
+      <section className="w-full">
+        <Link to="/colecoes">
+          <div className="w-full bg-gray-100 flex items-center justify-center" style={{ minHeight: '400px' }}>
+            <img
+              src="/assets/banner-home.webp"
+              alt="AC Ana Curve - Moda Plus Size"
+              className="w-full h-auto object-cover"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.parentElement.innerHTML = '<div class="text-center py-20"><p class="text-gray-400 text-lg">Banner em breve</p></div>';
+              }}
+            />
           </div>
-        </div>
+        </Link>
       </section>
 
-      {/* Benefits */}
-      <section className="py-12 bg-white border-y">
+      {/* Benefits Bar */}
+      <section className="py-6 bg-white border-y">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-children">
-            <div className="flex flex-col items-center text-center animate-fade-in-up opacity-0">
-              <div className="w-16 h-16 bg-tertiary rounded-full flex items-center justify-center mb-4 hover:scale-110 transition-transform animate-float">
-                <FiTruck size={32} className="text-primary" />
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            <div className="flex items-center gap-3">
+              <FiTruck size={24} className="text-primary" />
+              <div>
+                <p className="font-semibold text-sm">Frete Grátis</p>
+                <p className="text-xs text-gray-500">Acima de R$ 599</p>
               </div>
-              <h3 className="font-bold mb-2">Frete Grátis</h3>
-              <p className="text-sm text-gray-600">Acima de R$ 599</p>
             </div>
-            <div className="flex flex-col items-center text-center animate-fade-in-up opacity-0">
-              <div className="w-16 h-16 bg-tertiary rounded-full flex items-center justify-center mb-4 hover:scale-110 transition-transform animate-float" style={{ animationDelay: '0.5s' }}>
-                <FiCreditCard size={32} className="text-primary" />
+            <div className="flex items-center gap-3">
+              <FiCreditCard size={24} className="text-primary" />
+              <div>
+                <p className="font-semibold text-sm">Até 12x s/ juros</p>
+                <p className="text-xs text-gray-500">No cartão</p>
               </div>
-              <h3 className="font-bold mb-2">Parcele em 12x</h3>
-              <p className="text-sm text-gray-600">Sem juros no cartão</p>
             </div>
-            <div className="flex flex-col items-center text-center animate-fade-in-up opacity-0">
-              <div className="w-16 h-16 bg-tertiary rounded-full flex items-center justify-center mb-4 hover:scale-110 transition-transform animate-float" style={{ animationDelay: '1s' }}>
-                <FiRefreshCw size={32} className="text-primary" />
+            <div className="flex items-center gap-3">
+              <FiRefreshCw size={24} className="text-primary" />
+              <div>
+                <p className="font-semibold text-sm">Troca Facilitada</p>
+                <p className="text-xs text-gray-500">30 dias</p>
               </div>
-              <h3 className="font-bold mb-2">Troca Facilitada</h3>
-              <p className="text-sm text-gray-600">30 dias para trocar</p>
             </div>
-            <div className="flex flex-col items-center text-center animate-fade-in-up opacity-0">
-              <div className="w-16 h-16 bg-tertiary rounded-full flex items-center justify-center mb-4 hover:scale-110 transition-transform animate-float" style={{ animationDelay: '1.5s' }}>
-                <FiShield size={32} className="text-primary" />
+            <div className="flex items-center gap-3">
+              <FiShield size={24} className="text-primary" />
+              <div>
+                <p className="font-semibold text-sm">Compra Segura</p>
+                <p className="text-xs text-gray-500">Ambiente protegido</p>
               </div>
-              <h3 className="font-bold mb-2">Compra Segura</h3>
-              <p className="text-sm text-gray-600">Ambiente protegido</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="section bg-background">
-        <div className="container">
-          <h2 className="section-title animate-fade-in-up">✨ Produtos em Destaque</h2>
-          {loading ? (
-            <div className="flex justify-center py-12">
-              <div className="spinner" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
       {/* Categories */}
-      <section className="section bg-white">
+      <section className="py-12 bg-white">
         <div className="container">
-          <h2 className="section-title animate-fade-in-up">Compre por Categoria</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
-            {categories.map((category, index) => (
+          <div className="grid grid-cols-3 gap-4 md:gap-6">
+            {categories.map((category) => (
               <Link
                 key={category.name}
                 to={category.path}
-                className="group relative overflow-hidden rounded-lg aspect-square animate-scale-in opacity-0 hover:shadow-2xl transition-shadow duration-300"
-                style={{ animationDelay: `${index * 0.15}s` }}
+                className="group relative overflow-hidden rounded-lg aspect-[4/3]"
               >
                 <img
                   src={category.image}
                   alt={category.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center p-6">
-                  <h3 className="text-white font-bold text-xl md:text-2xl group-hover:scale-110 transition-transform">
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                  <h3 className="text-white font-bold text-lg md:text-2xl lowercase italic">
                     {category.name}
                   </h3>
                 </div>
@@ -259,18 +227,50 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Promotions */}
-      {!showFeatured && promotionProducts.length > 0 && (
-        <section className="section bg-gradient-to-r from-primary/10 to-secondary/10">
+      {/* Lançamentos */}
+      <section className="py-12 bg-background">
+        <div className="container">
+          <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Lançamentos</h2>
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <div className="spinner" />
+            </div>
+          ) : newProducts.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {newProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      {/* Destaques */}
+      {featuredProducts.length > 0 && (
+        <section className="py-12 bg-white">
           <div className="container">
-            <h2 className="section-title animate-fade-in-up">🔥 Ofertas Especiais</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Destaques</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Ofertas */}
+      {!showFeatured && promotionProducts.length > 0 && (
+        <section className="py-12 bg-background">
+          <div className="container">
+            <h2 className="text-center text-2xl font-display font-bold text-text mb-8">Ofertas Especiais</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {promotionProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
             <div className="text-center mt-8">
-              <Link to="/?promotion=true" className="btn-primary hover:scale-105 transition-transform animate-pulse-glow inline-block">
+              <Link to="/?promotion=true" className="btn-primary inline-block">
                 Ver Todas as Promoções
               </Link>
             </div>
@@ -278,40 +278,20 @@ const Home = () => {
         </section>
       )}
 
-      {/* New Arrivals */}
-      {!showFeatured && newProducts.length > 0 && (
-        <section className="section bg-background">
-          <div className="container">
-            <h2 className="section-title animate-fade-in-up">🆕 Novidades</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {newProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Newsletter */}
-      <section className="section bg-primary text-white overflow-hidden">
+      {/* Quem Somos */}
+      <section className="bg-neutral-900 text-white py-16 md:py-24">
         <div className="container">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-display font-bold mb-4 animate-fade-in-up">
-              Fique por Dentro das Novidades!
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm tracking-widest uppercase mb-4 text-white/60">Quem Somos</p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
+              Moda plus size moderna e de qualidade.
             </h2>
-            <p className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              Cadastre-se e receba em primeira mão nossas promoções exclusivas e lançamentos.
+            <p className="text-white/70 leading-relaxed">
+              A AC Ana Curve nasceu do desejo de oferecer moda plus size moderna,
+              bem-acabada e de qualidade para mulheres que querem se sentir confiantes
+              e lindas. Valorizamos suas curvas com estilo e elegância, trazendo peças
+              que combinam conforto e tendência.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              <input
-                type="email"
-                placeholder="Seu melhor e-mail"
-                className="flex-1 px-6 py-3 rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-white transition-transform hover:scale-[1.02]"
-              />
-              <button type="submit" className="btn-secondary whitespace-nowrap hover:scale-105 transition-transform animate-pulse-glow">
-                Cadastrar
-              </button>
-            </form>
           </div>
         </div>
       </section>
