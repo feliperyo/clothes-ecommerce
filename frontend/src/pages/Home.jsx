@@ -151,17 +151,15 @@ const Home = () => {
       {/* Banner Hero */}
       <section className="w-full">
         <Link to="/colecoes">
-          <div className="w-full bg-tertiary flex items-center justify-center" style={{ minHeight: '400px' }}>
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/assets/banner-home-mobile.webp" />
+            <source media="(min-width: 768px)" srcSet="/assets/banner-home.webp" />
             <img
               src="/assets/banner-home.webp"
-              alt="AC Ana Curve - Moda Plus Size"
+              alt="AC Ana Curve - A Moda que suas Curvas"
               className="w-full h-auto object-cover"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.parentElement.innerHTML = '<div class="text-center py-20"><p class="text-gray-400 text-lg">Banner em breve</p></div>';
-              }}
             />
-          </div>
+          </picture>
         </Link>
       </section>
 
