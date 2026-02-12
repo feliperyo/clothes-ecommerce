@@ -94,7 +94,7 @@ const AdminLayout = () => {
           <Link to="/admin" className="flex items-center gap-3 no-underline">
             <img
               src="/assets/logo-ac.webp"
-              alt="AC Ana Curve"
+              alt="Ana Curve"
               className="h-12 w-auto"
             />
             <p className="text-xs text-gray-500">Admin Panel</p>

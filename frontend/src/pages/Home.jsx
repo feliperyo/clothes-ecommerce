@@ -168,7 +168,7 @@ const Home = () => {
             <source media="(min-width: 768px)" srcSet="/assets/banner-home.webp" />
             <img
               src="/assets/banner-home.webp"
-              alt="AC Ana Curve - A Moda que suas Curvas"
+              alt="Ana Curve - A Moda que suas Curvas"
               className="w-full h-auto object-cover"
             />
           </picture>
@@ -311,7 +311,7 @@ const Home = () => {
               Moda plus size moderna e de qualidade.
             </h2>
             <p className="text-white/90 leading-relaxed text-lg">
-              A AC Ana Curve nasceu do desejo de oferecer moda plus size moderna,
+              A Ana Curve nasceu do desejo de oferecer moda plus size moderna,
               bem-acabada e de qualidade para mulheres que querem se sentir confiantes
               e lindas. Valorizamos suas curvas com estilo e elegância, trazendo peças
               que combinam conforto e tendência.

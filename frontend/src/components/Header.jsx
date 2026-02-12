@@ -46,7 +46,7 @@ const Header = () => {
           <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3">
             <img
               src="/assets/logo-ac.webp"
-              alt="AC Ana Curve"
+              alt="Ana Curve"
               className="h-10 sm:h-12 md:h-14 w-auto"
             />
           </Link>

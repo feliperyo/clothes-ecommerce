@@ -122,7 +122,7 @@ const Footer = () => {
       <div className="border-t">
         <div className="container py-4">
           <p className="text-center text-xs text-gray-400">
-            © AC Ana Curve Shop - CNPJ: 24.025.650/0001-50 - {currentYear}. Todos os direitos reservados.
+            © Ana Curve Shop - CNPJ: 24.025.650/0001-50 - {currentYear}. Todos os direitos reservados.
           </p>
           <p className="text-center text-xs text-gray-400 mt-1">
             Desenvolvido por{' '}

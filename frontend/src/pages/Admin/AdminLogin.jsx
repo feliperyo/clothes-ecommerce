@@ -44,7 +44,7 @@ const AdminLogin = () => {
         <div className="text-center mb-8">
           <img
             src="/assets/logo-ac.webp"
-            alt="AC Ana Curve"
+            alt="Ana Curve"
             className="h-20 w-auto mx-auto mb-4"
           />
           <p className="text-text/60">Painel Administrativo</p>
