@@ -139,10 +139,10 @@ const createProduct = async (req, res) => {
       isPromotion
     } = req.body;
 
-    // Imagem vem do upload (req.file) ou URL externa (req.body.imageUrl)
+    // Imagem vem do upload Cloudinary (req.file.path) ou URL externa (req.body.imageUrl)
     let imageUrl = req.body.imageUrl || '';
     if (req.file) {
-      imageUrl = `/uploads/${req.file.filename}`;
+      imageUrl = req.file.path;
     }
 
     const product = await prisma.product.create({
@@ -199,9 +199,9 @@ const updateProduct = async (req, res) => {
       isActive: isActive === 'true' || isActive === true || isActive === undefined
     };
 
-    // Se nova imagem foi enviada, atualizar
+    // Se nova imagem foi enviada via Cloudinary, atualizar
     if (req.file) {
-      data.imageUrl = `/uploads/${req.file.filename}`;
+      data.imageUrl = req.file.path;
     } else if (req.body.imageUrl) {
       data.imageUrl = req.body.imageUrl;
     }

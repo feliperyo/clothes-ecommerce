@@ -1,16 +1,21 @@
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const path = require('path');
 
-// Configuração de armazenamento
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads'));
-  },
-  filename: (req, file, cb) => {
-    // Gerar nome único: timestamp + random + extensão original
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, `product-${uniqueSuffix}${ext}`);
+// Configuração do Cloudinary via variáveis de ambiente
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Storage: salva direto no Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'anacurve/products',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+    transformation: [{ quality: 'auto', fetch_format: 'auto' }]
   }
 });
 

@@ -3,14 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs');
 const { PrismaClient } = require('@prisma/client');
 
-// Garante que a pasta de uploads existe (necessário no Railway e outros PaaS)
-const uploadsDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -89,8 +83,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 }
 
-// Servir imagens de produtos (uploads)
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
