@@ -48,7 +48,7 @@ const allowedOrigins = [
   'http://localhost:3000'
 ].filter(Boolean);
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, Postman, etc)
     if (!origin) return callback(null, true);
@@ -60,9 +60,13 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
-}));
+};
+
+app.use(cors(corsOptions));
+// Responde preflight OPTIONS imediatamente para todas as rotas
+app.options('*', cors(corsOptions));
 
 // Limite de payload para otimização
 app.use(express.json({ limit: '100kb' }));
@@ -78,12 +82,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Servir frontend estático (para produção)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
-}
-
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -95,13 +93,6 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/seed', seedRoutes);
-
-// Catch-all route para SPA (produção)
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
-  });
-}
 
 // Error handler
 app.use((err, req, res, next) => {
