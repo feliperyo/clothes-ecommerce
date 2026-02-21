@@ -82,9 +82,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check endpoint
+// Health check + root
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/', (req, res) => {
+  res.json({ status: 'Ana Curve API running' });
 });
 
 // API Routes
@@ -93,6 +97,11 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/seed', seedRoutes);
+
+// 404 para rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({ error: 'Rota não encontrada' });
+});
 
 // Error handler
 app.use((err, req, res, next) => {
