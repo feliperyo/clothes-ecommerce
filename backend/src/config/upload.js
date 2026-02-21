@@ -14,8 +14,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'anacurve/products',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
-    transformation: [{ quality: 'auto', fetch_format: 'auto' }]
+    allowed_formats: ['jpg', 'png', 'webp', 'gif']
   }
 });
 
