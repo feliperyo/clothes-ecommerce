@@ -18,6 +18,9 @@ const ProductCard = ({ product }) => {
 
   const price = product.discountPrice || product.price;
   const hasDiscount = product.discountPrice && product.discountPrice < product.price;
+  const discountPercent = hasDiscount
+    ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
+    : 0;
   const sizes = parseSizes(product.sizes);
 
   return (
@@ -36,6 +39,11 @@ const ProductCard = ({ product }) => {
         {product.isFeatured && (
           <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary animate-bounce-soft">
             DESTAQUE
+          </span>
+        )}
+        {hasDiscount && (
+          <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-red-600">
+            -{discountPercent}%
           </span>
         )}
       </div>

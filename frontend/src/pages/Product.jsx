@@ -279,7 +279,7 @@ const Product = () => {
 
             {/* Prices */}
             <div className="py-4 border-y border-gray-200">
-              <div className="flex items-baseline gap-3 mb-2">
+              <div className="flex items-center gap-3 flex-wrap mb-2">
                 {hasDiscount && (
                   <span className="text-xl text-gray-400 line-through">
                     {formatPrice(product.price)}
@@ -288,6 +288,11 @@ const Product = () => {
                 <span className="text-3xl sm:text-4xl font-bold text-primary">
                   {formatPrice(price)}
                 </span>
+                {hasDiscount && (
+                  <span className="bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full">
+                    -{discountPercent}% OFF
+                  </span>
+                )}
               </div>
               {product.stock > 0 && product.stock <= 5 && (
                 <p className="text-sm text-orange-600 font-semibold">
