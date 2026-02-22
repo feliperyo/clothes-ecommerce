@@ -136,6 +136,7 @@ const createProduct = async (req, res) => {
       sizes,
       stock,
       sizeStock,
+      colors,
       isFeatured,
       isPromotion
     } = req.body;
@@ -176,6 +177,7 @@ const createProduct = async (req, res) => {
         sizes,
         stock: totalStock,
         sizeStock: sizeStock || null,
+        colors: colors || null,
         imageUrl,
         images,
         videoUrl,
@@ -205,6 +207,7 @@ const updateProduct = async (req, res) => {
       sizes,
       stock,
       sizeStock,
+      colors,
       isFeatured,
       isPromotion,
       isActive
@@ -229,6 +232,7 @@ const updateProduct = async (req, res) => {
       sizes,
       stock: totalStock,
       sizeStock: sizeStock || null,
+      colors: colors || null,
       isFeatured: isFeatured === 'true' || isFeatured === true,
       isPromotion: isPromotion === 'true' || isPromotion === true,
       isActive: isActive === 'true' || isActive === true || isActive === undefined

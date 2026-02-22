@@ -22,6 +22,10 @@ const ProductCard = ({ product }) => {
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : 0;
   const sizes = parseSizes(product.sizes);
+  const colorsParsed = (() => {
+    if (!product.colors) return null;
+    try { return JSON.parse(product.colors); } catch { return null; }
+  })();
 
   return (
     <Link
@@ -93,6 +97,23 @@ const ProductCard = ({ product }) => {
             {formatPrice(price)}
           </span>
         </div>
+
+        {/* Color dots */}
+        {colorsParsed?.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {colorsParsed.slice(0, 6).map((c, idx) => (
+              <span
+                key={idx}
+                title={c.name}
+                className="w-4 h-4 rounded-full border border-gray-200 flex-shrink-0"
+                style={{ backgroundColor: c.hex }}
+              />
+            ))}
+            {colorsParsed.length > 6 && (
+              <span className="text-xs text-gray-400">+{colorsParsed.length - 6}</span>
+            )}
+          </div>
+        )}
 
         {/* Size Selector */}
         <div className="mb-3">

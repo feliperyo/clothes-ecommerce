@@ -39,6 +39,9 @@ const AdminProducts = () => {
   const [existingVideoUrl, setExistingVideoUrl] = useState(null); // cloud URL
   const [removeVideo, setRemoveVideo] = useState(false);
   const [sizeStockMap, setSizeStockMap] = useState({});
+  const [colorList, setColorList] = useState([]); // [{name, hex}]
+  const [colorName, setColorName] = useState('');
+  const [colorHex, setColorHex] = useState('#000000');
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
     defaultValues: {
@@ -122,6 +125,15 @@ const AdminProducts = () => {
       setSelectedVideo(null);
       setVideoPreview(null);
       setRemoveVideo(false);
+      // Cores existentes
+      if (product.colors) {
+        try { setColorList(JSON.parse(product.colors)); }
+        catch { setColorList([]); }
+      } else {
+        setColorList([]);
+      }
+      setColorName('');
+      setColorHex('#000000');
     } else {
       setEditingProduct(null);
       reset();
@@ -133,6 +145,9 @@ const AdminProducts = () => {
       setVideoPreview(null);
       setRemoveVideo(false);
       setSizeStockMap({});
+      setColorList([]);
+      setColorName('');
+      setColorHex('#000000');
     }
     setIsModalOpen(true);
   };
@@ -148,6 +163,9 @@ const AdminProducts = () => {
     setVideoPreview(null);
     setRemoveVideo(false);
     setSizeStockMap({});
+    setColorList([]);
+    setColorName('');
+    setColorHex('#000000');
     reset();
   };
 
@@ -209,6 +227,7 @@ const AdminProducts = () => {
       formData.append('category', data.category);
       formData.append('price', data.price);
       formData.append('sizeStock', JSON.stringify(sizeStockMap));
+      formData.append('colors', JSON.stringify(colorList));
       formData.append('sizes', data.sizes);
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
@@ -721,6 +740,72 @@ const AdminProducts = () => {
                     ))}
                   </div>
                 )}
+              </div>
+
+              {/* Cores */}
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Cores Disponíveis (Opcional)
+                </label>
+                {/* Lista de cores adicionadas */}
+                {colorList.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {colorList.map((c, idx) => (
+                      <div key={idx} className="flex items-center gap-1.5 bg-gray-100 rounded-full px-3 py-1">
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300 flex-shrink-0"
+                          style={{ backgroundColor: c.hex }}
+                        />
+                        <span className="text-sm">{c.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => setColorList(prev => prev.filter((_, i) => i !== idx))}
+                          className="text-gray-400 hover:text-red-500 ml-1"
+                        >
+                          <FiX size={12} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {/* Adicionar cor */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={colorHex}
+                    onChange={e => setColorHex(e.target.value)}
+                    className="w-10 h-9 rounded border border-gray-300 cursor-pointer p-0.5"
+                    title="Escolher cor"
+                  />
+                  <input
+                    type="text"
+                    value={colorName}
+                    onChange={e => setColorName(e.target.value)}
+                    placeholder="Nome da cor (ex: Preto)"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (colorName.trim()) {
+                          setColorList(prev => [...prev, { name: colorName.trim(), hex: colorHex }]);
+                          setColorName('');
+                        }
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (colorName.trim()) {
+                        setColorList(prev => [...prev, { name: colorName.trim(), hex: colorHex }]);
+                        setColorName('');
+                      }
+                    }}
+                    className="px-3 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90 transition-colors"
+                  >
+                    + Adicionar
+                  </button>
+                </div>
               </div>
 
               {/* Checkboxes */}

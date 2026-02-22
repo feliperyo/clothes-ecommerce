@@ -29,6 +29,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
@@ -89,11 +90,15 @@ const Product = () => {
       toast.error('Por favor, selecione um tamanho');
       return;
     }
+    if (colorsParsed?.length > 0 && !selectedColor) {
+      toast.error('Por favor, selecione uma cor');
+      return;
+    }
     if (quantity < 1) {
       toast.error('Quantidade inválida');
       return;
     }
-    addToCart(product, selectedSize, quantity);
+    addToCart(product, selectedSize, quantity, selectedColor);
     setQuantity(1);
   };
 
@@ -180,6 +185,11 @@ const Product = () => {
     } catch { return [product.imageUrl]; }
   })();
   const activeImageUrl = imagesList[activeImageIndex] || product.imageUrl;
+
+  const colorsParsed = (() => {
+    if (!product.colors) return null;
+    try { return JSON.parse(product.colors); } catch { return null; }
+  })();
 
   return (
     <div className="section bg-background">
@@ -363,6 +373,31 @@ const Product = () => {
                 {product.description}
               </p>
             </div>
+
+            {/* Color Selection */}
+            {colorsParsed?.length > 0 && (
+              <div>
+                <label className="block font-semibold mb-3">
+                  Cor *{selectedColor && <span className="text-primary font-normal ml-2">{selectedColor.name}</span>}
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  {colorsParsed.map((color, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedColor(color)}
+                      title={color.name}
+                      className={`w-9 h-9 rounded-full border-2 transition-all ${
+                        selectedColor?.name === color.name
+                          ? 'border-primary scale-110 shadow-md'
+                          : 'border-transparent hover:border-gray-300'
+                      }`}
+                      style={{ backgroundColor: color.hex, outline: '2px solid #e5e7eb', outlineOffset: '1px' }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Size Selection */}
             <div>
