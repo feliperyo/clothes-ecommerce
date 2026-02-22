@@ -135,9 +135,19 @@ const createProduct = async (req, res) => {
       category,
       sizes,
       stock,
+      sizeStock,
       isFeatured,
       isPromotion
     } = req.body;
+
+    // Calcular stock total a partir de sizeStock se disponível
+    let totalStock = parseInt(stock) || 0;
+    if (sizeStock) {
+      try {
+        const sizeStockObj = JSON.parse(sizeStock);
+        totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+      } catch (e) { /* mantém totalStock do body */ }
+    }
 
     // Imagem vem do upload Cloudinary (req.file.path) ou URL externa (req.body.imageUrl)
     let imageUrl = req.body.imageUrl || '';
@@ -153,7 +163,8 @@ const createProduct = async (req, res) => {
         discountPrice: discountPrice ? parseFloat(discountPrice) : null,
         category,
         sizes,
-        stock: parseInt(stock),
+        stock: totalStock,
+        sizeStock: sizeStock || null,
         imageUrl,
         isFeatured: isFeatured === 'true' || isFeatured === true,
         isPromotion: isPromotion === 'true' || isPromotion === true
@@ -180,10 +191,20 @@ const updateProduct = async (req, res) => {
       category,
       sizes,
       stock,
+      sizeStock,
       isFeatured,
       isPromotion,
       isActive
     } = req.body;
+
+    // Calcular stock total a partir de sizeStock se disponível
+    let totalStock = parseInt(stock) || 0;
+    if (sizeStock) {
+      try {
+        const sizeStockObj = JSON.parse(sizeStock);
+        totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+      } catch (e) { /* mantém totalStock do body */ }
+    }
 
     // Preparar dados para atualização
     const data = {
@@ -193,7 +214,8 @@ const updateProduct = async (req, res) => {
       discountPrice: discountPrice ? parseFloat(discountPrice) : null,
       category,
       sizes,
-      stock: parseInt(stock),
+      stock: totalStock,
+      sizeStock: sizeStock || null,
       isFeatured: isFeatured === 'true' || isFeatured === true,
       isPromotion: isPromotion === 'true' || isPromotion === true,
       isActive: isActive === 'true' || isActive === true || isActive === undefined

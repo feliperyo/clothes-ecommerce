@@ -33,8 +33,9 @@ const AdminProducts = () => {
   const [submitting, setSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [sizeStockMap, setSizeStockMap] = useState({});
 
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
     defaultValues: {
       name: '',
       description: '',
@@ -52,6 +53,20 @@ const AdminProducts = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  // Sincronizar sizeStockMap quando o campo de tamanhos muda
+  const watchedSizes = watch('sizes');
+  useEffect(() => {
+    if (!watchedSizes) return;
+    const sizeList = watchedSizes.split(',').map(s => s.trim()).filter(Boolean);
+    setSizeStockMap(prev => {
+      const next = {};
+      sizeList.forEach(size => {
+        next[size] = prev[size] ?? 0;
+      });
+      return next;
+    });
+  }, [watchedSizes]);
 
   const fetchProducts = async () => {
     try {
@@ -79,6 +94,13 @@ const AdminProducts = () => {
       setValue('discountPrice', product.discountPrice || '');
       setValue('featured', product.isFeatured || false);
       setValue('promotion', product.isPromotion || false);
+      // Preencher estoque por tamanho
+      if (product.sizeStock) {
+        try { setSizeStockMap(JSON.parse(product.sizeStock)); }
+        catch { setSizeStockMap({}); }
+      } else {
+        setSizeStockMap({});
+      }
       // Se tem imagem existente, mostrar preview
       if (product.imageUrl) {
         const imgUrl = product.imageUrl.startsWith('/uploads')
@@ -91,6 +113,7 @@ const AdminProducts = () => {
       reset();
       setSelectedFile(null);
       setImagePreview(null);
+      setSizeStockMap({});
     }
     setIsModalOpen(true);
   };
@@ -100,6 +123,7 @@ const AdminProducts = () => {
     setEditingProduct(null);
     setSelectedFile(null);
     setImagePreview(null);
+    setSizeStockMap({});
     reset();
   };
 
@@ -126,7 +150,7 @@ const AdminProducts = () => {
       formData.append('description', data.description);
       formData.append('category', data.category);
       formData.append('price', data.price);
-      formData.append('stock', data.stock);
+      formData.append('sizeStock', JSON.stringify(sizeStockMap));
       formData.append('sizes', data.sizes);
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
@@ -521,26 +545,6 @@ const AdminProducts = () => {
                   />
                 </div>
 
-                {/* Stock */}
-                <div>
-                  <label className="block text-sm font-medium text-text mb-2">
-                    Estoque
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="0"
-                    {...register('stock', { required: 'Estoque é obrigatório' })}
-                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                      errors.stock
-                        ? 'border-red-500 focus:ring-red-200'
-                        : 'border-gray-300 focus:ring-primary/20'
-                    }`}
-                  />
-                  {errors.stock && (
-                    <p className="text-red-500 text-sm mt-1">{errors.stock.message}</p>
-                  )}
-                </div>
-
                 {/* Sizes */}
                 <div>
                   <label className="block text-sm font-medium text-text mb-2">
@@ -560,6 +564,37 @@ const AdminProducts = () => {
                     <p className="text-red-500 text-sm mt-1">{errors.sizes.message}</p>
                   )}
                 </div>
+              </div>
+
+              {/* Estoque por tamanho */}
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Estoque por Tamanho
+                  <span className="ml-2 text-gray-400 font-normal">
+                    (Total: {Object.values(sizeStockMap).reduce((a, b) => a + b, 0)} un.)
+                  </span>
+                </label>
+                {Object.keys(sizeStockMap).length === 0 ? (
+                  <p className="text-sm text-gray-400">Preencha os tamanhos acima para definir o estoque por tamanho</p>
+                ) : (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                    {Object.entries(sizeStockMap).map(([size, qty]) => (
+                      <div key={size} className="flex flex-col items-center gap-1">
+                        <span className="text-xs font-semibold text-gray-600 uppercase">{size}</span>
+                        <input
+                          type="number"
+                          min="0"
+                          value={qty}
+                          onChange={e => setSizeStockMap(prev => ({
+                            ...prev,
+                            [size]: parseInt(e.target.value) || 0
+                          }))}
+                          className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Checkboxes */}

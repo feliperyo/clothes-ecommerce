@@ -165,6 +165,10 @@ const Product = () => {
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : 0;
   const inStock = product.stock > 0;
+  const sizeStockParsed = (() => {
+    if (!product.sizeStock) return null;
+    try { return JSON.parse(product.sizeStock); } catch { return null; }
+  })();
 
   return (
     <div className="section bg-background">
@@ -318,20 +322,29 @@ const Product = () => {
             <div>
               <label className="block font-semibold mb-3">Tamanho *</label>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                {parseSizes(product.sizes).map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    disabled={!inStock}
-                    className={`py-3 rounded-lg font-semibold transition-all border-2 ${
-                      selectedSize === size
-                        ? 'border-primary bg-primary/10'
-                        : 'border-gray-300 hover:border-primary'
-                    } ${!inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  >
-                    {size}
-                  </button>
-                ))}
+                {parseSizes(product.sizes).map((size) => {
+                  const sizeQty = sizeStockParsed ? (sizeStockParsed[size] ?? 0) : null;
+                  const sizeDisabled = !inStock || (sizeStockParsed !== null && sizeQty === 0);
+                  return (
+                    <button
+                      key={size}
+                      onClick={() => !sizeDisabled && setSelectedSize(size)}
+                      disabled={sizeDisabled}
+                      className={`py-3 rounded-lg font-semibold transition-all border-2 relative ${
+                        sizeDisabled
+                          ? 'border-gray-200 text-gray-300 cursor-not-allowed line-through'
+                          : selectedSize === size
+                          ? 'border-primary bg-primary/10'
+                          : 'border-gray-300 hover:border-primary'
+                      }`}
+                    >
+                      {size}
+                      {sizeStockParsed && sizeQty === 1 && !sizeDisabled && (
+                        <span className="block text-xs text-red-500 font-normal leading-none mt-0.5">últ.</span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
