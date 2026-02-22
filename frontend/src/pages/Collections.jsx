@@ -27,6 +27,18 @@ const Collections = () => {
       description: 'Conjuntos práticos e estilosos prontos para usar',
       image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800',
       path: '/categoria/Conjuntos'
+    },
+    {
+      name: 'Saia',
+      description: 'Saias modernas para valorizar suas curvas',
+      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800',
+      path: '/categoria/Saia'
+    },
+    {
+      name: 'Saia Short',
+      description: 'Saia shorts estilosas e confortáveis',
+      image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800',
+      path: '/categoria/Saia Short'
     }
   ];
 

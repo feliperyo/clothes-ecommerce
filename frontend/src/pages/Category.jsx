@@ -145,6 +145,8 @@ const Category = () => {
     'Calças': 'Calças plus size que valorizam suas curvas com estilo e elegância. Tamanhos G0 ao G4.',
     'Vestidos': 'Vestidos plus size para arrasar em qualquer evento. Tamanhos G0 ao G4.',
     'Conjuntos': 'Conjuntos plus size práticos e estilosos prontos para usar. Tamanhos G0 ao G4.',
+    'Saia': 'Saias plus size modernas para valorizar suas curvas. Tamanhos G0 ao G4.',
+    'Saia Short': 'Saia shorts plus size estilosas e confortáveis. Tamanhos G0 ao G4.',
   };
 
   return (

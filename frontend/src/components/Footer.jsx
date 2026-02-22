@@ -38,6 +38,16 @@ const Footer = () => {
                   Conjuntos
                 </Link>
               </li>
+              <li>
+                <Link to="/categoria/Saia" className="hover:text-primary transition-colors">
+                  Saia
+                </Link>
+              </li>
+              <li>
+                <Link to="/categoria/Saia Short" className="hover:text-primary transition-colors">
+                  Saia Short
+                </Link>
+              </li>
             </ul>
           </div>
 
