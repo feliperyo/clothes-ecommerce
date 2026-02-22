@@ -20,6 +20,11 @@ const Product = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
+  const handleBack = () => {
+    if (window.history.length > 1) navigate(-1);
+    else navigate('/');
+  };
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -113,7 +118,7 @@ const Product = () => {
       <div className="section bg-background">
         <div className="container">
           <button
-            onClick={() => navigate(-1)}
+            onClick={handleBack}
             className="flex items-center gap-2 text-primary font-semibold mb-8"
           >
             <FiArrowLeft size={20} />
@@ -181,7 +186,7 @@ const Product = () => {
       <div className="container">
         {/* Breadcrumb */}
         <button
-          onClick={() => navigate(-1)}
+          onClick={handleBack}
           className="flex items-center gap-2 text-primary font-semibold mb-8 hover:gap-3 transition-all"
         >
           <FiArrowLeft size={20} />
