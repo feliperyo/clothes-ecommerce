@@ -324,14 +324,14 @@ const AdminProducts = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-text mb-2">Produtos</h1>
-          <p className="text-gray-600">{products.length} produtos cadastrados</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-text mb-1">Produtos</h1>
+          <p className="text-sm text-gray-600">{products.length} produtos cadastrados</p>
         </div>
         <button
           onClick={() => openModal()}
-          className="btn-primary flex items-center gap-2"
+          className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <FiPlus size={20} />
           Novo Produto
@@ -342,25 +342,25 @@ const AdminProducts = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         {products.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-xs sm:text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Produto
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Categoria
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Preço
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Estoque
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="hidden md:table-cell px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Status
                   </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-gray-700">
                     Ações
                   </th>
                 </tr>
@@ -368,42 +368,42 @@ const AdminProducts = () => {
               <tbody className="divide-y divide-gray-100">
                 {products.map((product) => (
                   <tr key={product.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
+                      <div className="flex items-center gap-2 sm:gap-3">
                         {product.imageUrl && (
                           <img
                             src={product.imageUrl.startsWith('/uploads') ? `${API_URL}${product.imageUrl}` : product.imageUrl}
                             alt={product.name}
-                            className="w-12 h-12 rounded-lg object-cover"
+                            className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover flex-shrink-0"
                           />
                         )}
-                        <div>
-                          <p className="font-medium text-text truncate max-w-xs">
+                        <div className="min-w-0">
+                          <p className="font-medium text-text truncate max-w-[120px] sm:max-w-[200px] md:max-w-xs">
                             {product.name}
                           </p>
-                          <p className="text-xs text-gray-500">
-                            {product.id}
+                          <p className="text-xs text-gray-400 hidden sm:block">
+                            #{product.id}
                           </p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-700">
+                    <td className="hidden sm:table-cell px-3 sm:px-6 py-3 sm:py-4 text-gray-700">
                       {product.category}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                         <span className="font-semibold text-primary">
                           {formatPrice(product.price)}
                         </span>
                         {product.discountPrice && (
-                          <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded">
+                          <span className="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded">
                             {formatPrice(product.discountPrice)}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
+                      <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium ${
                         product.stock > 10
                           ? 'bg-green-100 text-green-700'
                           : product.stock > 0
@@ -413,47 +413,47 @@ const AdminProducts = () => {
                         {product.stock} un.
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
+                    <td className="hidden md:table-cell px-3 sm:px-6 py-3 sm:py-4">
+                      <div className="flex gap-1.5 sm:gap-2">
                         <button
                           onClick={() => handleToggleFeatured(product.id)}
-                          className={`p-2 rounded-lg transition-colors ${
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors ${
                             product.isFeatured
                               ? 'bg-yellow-100 text-yellow-600'
                               : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                           }`}
                           title="Toggle Destaque"
                         >
-                          <FiStar size={16} />
+                          <FiStar size={14} />
                         </button>
                         <button
                           onClick={() => handleTogglePromotion(product.id)}
-                          className={`p-2 rounded-lg transition-colors ${
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors ${
                             product.isPromotion
                               ? 'bg-red-100 text-red-600'
                               : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                           }`}
                           title="Toggle Promoção"
                         >
-                          <FiTrendingUp size={16} />
+                          <FiTrendingUp size={14} />
                         </button>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex gap-2">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4">
+                      <div className="flex gap-1.5 sm:gap-2">
                         <button
                           onClick={() => openModal(product)}
                           className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Editar"
                         >
-                          <FiEdit2 size={18} />
+                          <FiEdit2 size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(product.id)}
                           className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           title="Deletar"
                         >
-                          <FiTrash2 size={18} />
+                          <FiTrash2 size={16} />
                         </button>
                       </div>
                     </td>
@@ -478,11 +478,11 @@ const AdminProducts = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="bg-white rounded-t-2xl sm:rounded-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto shadow-xl">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
-              <h2 className="text-2xl font-bold text-text">
+            <div className="sticky top-0 bg-white border-b border-gray-100 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between z-10">
+              <h2 className="text-lg sm:text-2xl font-bold text-text">
                 {editingProduct ? 'Editar Produto' : 'Novo Produto'}
               </h2>
               <button
@@ -494,7 +494,7 @@ const AdminProducts = () => {
             </div>
 
             {/* Modal Body */}
-            <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-5">
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-text mb-2">

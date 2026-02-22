@@ -154,39 +154,39 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t">
-          <nav className="container py-4 space-y-3">
+          <nav className="container py-4 space-y-1 max-h-[calc(100vh-130px)] overflow-y-auto">
             <Link
               to="/"
               onClick={() => { setIsMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+              className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors font-medium"
             >
               Início
             </Link>
             <Link
               to="/?newest=true"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+              className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors font-medium"
             >
               Novidades
             </Link>
             <Link
               to="/colecoes"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+              className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors font-medium"
             >
               Coleções
             </Link>
             <Link
               to="/?promotion=true"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+              className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors font-medium"
             >
               Promoções
             </Link>
             <Link
               to="/faq"
               onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-text hover:text-primary transition-colors font-medium"
+              className="block py-3 text-text hover:text-primary transition-colors font-medium"
             >
               FAQ
             </Link>

@@ -171,11 +171,11 @@ const Category = () => {
         </button>
 
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-display font-bold text-text mb-2">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-text mb-2">
             {categoryDisplay}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600">
             {filteredProducts.length} produto
             {filteredProducts.length !== 1 ? 's' : ''} encontrado
             {filteredProducts.length !== 1 ? 's' : ''}
@@ -185,7 +185,7 @@ const Category = () => {
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Filters Sidebar */}
           <div className={`lg:block ${showFilters ? 'block' : 'hidden'} mb-6 lg:mb-0`}>
-            <div className="card p-6 sticky top-24 h-fit">
+            <div className="card p-5 sm:p-6 sticky top-24 max-h-[80vh] overflow-y-auto lg:max-h-none lg:overflow-visible">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-lg">Filtros</h3>
                 <button
@@ -360,9 +360,9 @@ const Category = () => {
                     <Link
                       key={product.id}
                       to={`/produto/${product.id}`}
-                      className="card p-4 flex gap-4 hover:shadow-lg transition-shadow"
+                      className="card p-3 sm:p-4 flex gap-3 sm:gap-4 hover:shadow-lg transition-shadow"
                     >
-                      <div className="w-24 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-16 h-24 sm:w-24 sm:h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         <img
                           src={product.imageUrl}
                           alt={product.name}

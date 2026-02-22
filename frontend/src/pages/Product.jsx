@@ -220,7 +220,7 @@ const Product = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Image Section */}
-          <div className="sticky top-24 h-fit">
+          <div className="md:sticky top-24 h-fit">
             <div className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[3/4] flex items-center justify-center">
               {!imageLoaded && (
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
@@ -284,12 +284,12 @@ const Product = () => {
 
             {/* Thumbnails */}
             {imagesList.length > 1 && (
-              <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+              <div className="flex gap-1.5 sm:gap-2 mt-3 overflow-x-auto pb-1">
                 {imagesList.map((url, idx) => (
                   <button
                     key={idx}
                     onClick={() => { setActiveImageIndex(idx); setImageLoaded(false); }}
-                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all ${
                       activeImageIndex === idx ? 'border-primary' : 'border-gray-200 hover:border-primary/50'
                     }`}
                   >
@@ -309,8 +309,7 @@ const Product = () => {
                 <video
                   src={product.videoUrl}
                   controls
-                  className="w-full rounded-lg"
-                  style={{ maxHeight: '400px' }}
+                  className="w-full rounded-lg max-h-56 sm:max-h-80 md:max-h-[400px] object-contain bg-black"
                 >
                   Seu navegador não suporta vídeo.
                 </video>
@@ -388,7 +387,7 @@ const Product = () => {
                       type="button"
                       onClick={() => setSelectedColor(color)}
                       title={color.name}
-                      className={`w-9 h-9 rounded-full border-2 transition-all ${
+                      className={`w-11 h-11 sm:w-9 sm:h-9 rounded-full border-2 transition-all ${
                         selectedColor?.name === color.name
                           ? 'border-primary scale-110 shadow-md'
                           : 'border-transparent hover:border-gray-300'
@@ -437,17 +436,17 @@ const Product = () => {
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   disabled={!inStock}
-                  className="px-4 py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-3 sm:py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl leading-none"
                 >
                   −
                 </button>
-                <span className="px-6 py-2 font-semibold text-center min-w-12">
+                <span className="px-6 py-3 sm:py-2 font-semibold text-center min-w-12">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                   disabled={!inStock}
-                  className="px-4 py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-4 py-3 sm:py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl leading-none"
                 >
                   +
                 </button>
@@ -458,7 +457,7 @@ const Product = () => {
             <button
               onClick={handleAddToCart}
               disabled={!inStock || !selectedSize}
-              className="btn-primary w-full py-4 text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-4 text-base sm:text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <FiShoppingCart size={24} />
               {inStock ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}

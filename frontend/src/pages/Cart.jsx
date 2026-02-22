@@ -132,7 +132,7 @@ const Cart = () => {
                   >
                     {/* Mobile Layout */}
                     <div className="md:hidden flex gap-3">
-                      <div className="w-20 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-16 h-20 sm:w-20 sm:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         <img
                           src={item.imageUrl}
                           alt={item.name}
@@ -152,7 +152,7 @@ const Cart = () => {
                           <div className="flex items-center border border-gray-300 rounded-lg">
                             <button
                               onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
-                              className="p-2 hover:bg-gray-100 transition-colors"
+                              className="p-3 hover:bg-gray-100 transition-colors"
                               aria-label="Diminuir quantidade"
                             >
                               <FiMinus size={16} />
@@ -160,7 +160,7 @@ const Cart = () => {
                             <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
                             <button
                               onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
-                              className="p-2 hover:bg-gray-100 transition-colors"
+                              className="p-3 hover:bg-gray-100 transition-colors"
                               disabled={item.quantity >= item.stock}
                               aria-label="Aumentar quantidade"
                             >
@@ -263,7 +263,7 @@ const Cart = () => {
 
           {/* Summary Sidebar */}
           <div>
-            <div className="card p-6 sticky top-24 space-y-6">
+            <div className="card p-5 sm:p-6 lg:sticky top-24 space-y-6">
               {/* Summary */}
               <div>
                 <h3 className="text-lg font-bold mb-4">Resumo do Pedido</h3>

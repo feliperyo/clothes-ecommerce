@@ -194,32 +194,32 @@ const Home = () => {
       {/* Benefits Bar */}
       <section className="py-6 bg-white border-y">
         <div className="container">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-            <div className="flex items-center gap-3">
-              <FiTruck size={24} className="text-primary" />
+          <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center sm:gap-8 md:gap-16">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <FiTruck size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm">Frete Grátis</p>
+                <p className="font-semibold text-xs sm:text-sm">Frete Grátis</p>
                 <p className="text-xs text-gray-500">{`Acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <FiCreditCard size={24} className="text-primary" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <FiCreditCard size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm">Até 12x s/ juros</p>
+                <p className="font-semibold text-xs sm:text-sm">Até 12x s/ juros</p>
                 <p className="text-xs text-gray-500">No cartão</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <FiRefreshCw size={24} className="text-primary" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <FiRefreshCw size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm">Troca Facilitada</p>
+                <p className="font-semibold text-xs sm:text-sm">Troca Facilitada</p>
                 <p className="text-xs text-gray-500">30 dias</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <FiShield size={24} className="text-primary" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <FiShield size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-sm">Compra Segura</p>
+                <p className="font-semibold text-xs sm:text-sm">Compra Segura</p>
                 <p className="text-xs text-gray-500">Ambiente protegido</p>
               </div>
             </div>
@@ -243,7 +243,7 @@ const Home = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <h3 className="text-white font-bold text-lg md:text-2xl lowercase italic">
+                  <h3 className="text-white font-bold text-sm sm:text-lg md:text-2xl lowercase italic drop-shadow">
                     {category.name}
                   </h3>
                 </div>

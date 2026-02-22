@@ -105,7 +105,7 @@ const ProductCard = ({ product }) => {
               <span
                 key={idx}
                 title={c.name}
-                className="w-4 h-4 rounded-full border border-gray-200 flex-shrink-0"
+                className="w-5 h-5 sm:w-4 sm:h-4 rounded-full border border-gray-200 flex-shrink-0"
                 style={{ backgroundColor: c.hex }}
               />
             ))}
@@ -131,7 +131,7 @@ const ProductCard = ({ product }) => {
               e.preventDefault();
               e.stopPropagation();
             }}
-            className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-3 py-2 sm:py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             disabled={product.stock === 0}
           >
             <option value="">Selecione</option>
@@ -147,10 +147,10 @@ const ProductCard = ({ product }) => {
         <button
           onClick={handleAddToCart}
           disabled={!selectedSize || product.stock === 0}
-          className="w-full btn-primary text-sm py-2 flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
+          className="w-full btn-primary text-sm py-2.5 sm:py-2 flex items-center justify-center gap-2 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:hover:bg-gray-300"
         >
           <FiShoppingCart size={18} />
-          {product.stock === 0 ? 'Esgotado' : 'Adicionar ao Carrinho'}
+          {product.stock === 0 ? 'Esgotado' : 'Adicionar'}
         </button>
 
         {/* Stock Warning */}
