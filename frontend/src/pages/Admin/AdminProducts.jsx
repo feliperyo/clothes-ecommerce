@@ -31,8 +31,13 @@ const AdminProducts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]); // File[]
+  const [imagePreviews, setImagePreviews] = useState([]);   // local URLs[]
+  const [existingImages, setExistingImages] = useState([]); // cloud URLs[]
+  const [selectedVideo, setSelectedVideo] = useState(null); // File
+  const [videoPreview, setVideoPreview] = useState(null);   // local URL
+  const [existingVideoUrl, setExistingVideoUrl] = useState(null); // cloud URL
+  const [removeVideo, setRemoveVideo] = useState(false);
   const [sizeStockMap, setSizeStockMap] = useState({});
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
@@ -101,18 +106,32 @@ const AdminProducts = () => {
       } else {
         setSizeStockMap({});
       }
-      // Se tem imagem existente, mostrar preview
-      if (product.imageUrl) {
-        const imgUrl = product.imageUrl.startsWith('/uploads')
-          ? `${API_URL}${product.imageUrl}`
-          : product.imageUrl;
-        setImagePreview(imgUrl);
+      // Preencher imagens existentes
+      let existingImgs = [];
+      if (product.images) {
+        try { existingImgs = JSON.parse(product.images); } catch {}
       }
+      if (existingImgs.length === 0 && product.imageUrl) {
+        existingImgs = [product.imageUrl];
+      }
+      setExistingImages(existingImgs);
+      setSelectedImages([]);
+      setImagePreviews([]);
+      // Vídeo existente
+      setExistingVideoUrl(product.videoUrl || null);
+      setSelectedVideo(null);
+      setVideoPreview(null);
+      setRemoveVideo(false);
     } else {
       setEditingProduct(null);
       reset();
-      setSelectedFile(null);
-      setImagePreview(null);
+      setExistingImages([]);
+      setSelectedImages([]);
+      setImagePreviews([]);
+      setExistingVideoUrl(null);
+      setSelectedVideo(null);
+      setVideoPreview(null);
+      setRemoveVideo(false);
       setSizeStockMap({});
     }
     setIsModalOpen(true);
@@ -121,23 +140,62 @@ const AdminProducts = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingProduct(null);
-    setSelectedFile(null);
-    setImagePreview(null);
+    setExistingImages([]);
+    setSelectedImages([]);
+    setImagePreviews([]);
+    setExistingVideoUrl(null);
+    setSelectedVideo(null);
+    setVideoPreview(null);
+    setRemoveVideo(false);
     setSizeStockMap({});
     reset();
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      // Criar preview
+  const totalImages = existingImages.length + selectedImages.length;
+
+  const handleImagesChange = (e) => {
+    const files = Array.from(e.target.files);
+    const remaining = 5 - totalImages;
+    const toAdd = files.slice(0, remaining);
+    const newPreviews = [];
+    toAdd.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        newPreviews.push(reader.result);
+        if (newPreviews.length === toAdd.length) {
+          setImagePreviews(prev => [...prev, ...newPreviews]);
+        }
       };
       reader.readAsDataURL(file);
+    });
+    setSelectedImages(prev => [...prev, ...toAdd]);
+    e.target.value = '';
+  };
+
+  const removeExistingImage = (idx) => {
+    setExistingImages(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const removeNewImage = (idx) => {
+    setSelectedImages(prev => prev.filter((_, i) => i !== idx));
+    setImagePreviews(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedVideo(file);
+      setVideoPreview(URL.createObjectURL(file));
+      setRemoveVideo(false);
     }
+    e.target.value = '';
+  };
+
+  const handleRemoveVideo = () => {
+    setSelectedVideo(null);
+    setVideoPreview(null);
+    setExistingVideoUrl(null);
+    setRemoveVideo(true);
   };
 
   const onSubmit = async (data) => {
@@ -154,14 +212,24 @@ const AdminProducts = () => {
       formData.append('sizes', data.sizes);
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
+      formData.append('existingImages', JSON.stringify(existingImages));
+
+      if (removeVideo) {
+        formData.append('removeVideo', 'true');
+      } else if (existingVideoUrl) {
+        formData.append('existingVideoUrl', existingVideoUrl);
+      }
 
       if (data.discountPrice) {
         formData.append('discountPrice', data.discountPrice);
       }
 
-      // Se tem arquivo selecionado, enviar
-      if (selectedFile) {
-        formData.append('image', selectedFile);
+      // Novas imagens
+      selectedImages.forEach(file => formData.append('images', file));
+
+      // Novo vídeo
+      if (selectedVideo) {
+        formData.append('video', selectedVideo);
       }
 
       if (editingProduct) {
@@ -171,8 +239,8 @@ const AdminProducts = () => {
         toast.success('Produto atualizado com sucesso!');
       } else {
         // Criar - imagem é obrigatória para novos produtos
-        if (!selectedFile) {
-          toast.error('Selecione uma imagem para o produto');
+        if (totalImages === 0 && selectedImages.length === 0) {
+          toast.error('Selecione ao menos uma imagem para o produto');
           setSubmitting(false);
           return;
         }
@@ -447,6 +515,107 @@ const AdminProducts = () => {
                 )}
               </div>
 
+              {/* Imagens do Produto */}
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Imagens do Produto
+                  <span className="ml-2 text-gray-400 font-normal">({totalImages}/5)</span>
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  {/* Imagens existentes */}
+                  {existingImages.map((url, idx) => (
+                    <div key={`ex-${idx}`} className="relative w-20 h-20">
+                      <img
+                        src={url}
+                        alt={`Imagem ${idx + 1}`}
+                        className="w-20 h-20 rounded-lg object-cover border border-gray-200"
+                      />
+                      {idx === 0 && (
+                        <span className="absolute bottom-0 left-0 right-0 text-center text-white text-xs bg-primary/80 rounded-b-lg py-0.5">Principal</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeExistingImage(idx)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                      >
+                        <FiX size={12} />
+                      </button>
+                    </div>
+                  ))}
+                  {/* Novas imagens (preview local) */}
+                  {imagePreviews.map((src, idx) => (
+                    <div key={`new-${idx}`} className="relative w-20 h-20">
+                      <img
+                        src={src}
+                        alt={`Nova ${idx + 1}`}
+                        className="w-20 h-20 rounded-lg object-cover border border-dashed border-primary"
+                      />
+                      {existingImages.length === 0 && idx === 0 && (
+                        <span className="absolute bottom-0 left-0 right-0 text-center text-white text-xs bg-primary/80 rounded-b-lg py-0.5">Principal</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeNewImage(idx)}
+                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                      >
+                        <FiX size={12} />
+                      </button>
+                    </div>
+                  ))}
+                  {/* Botão adicionar */}
+                  {totalImages < 5 && (
+                    <label className="w-20 h-20 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 transition-colors text-gray-400">
+                      <FiUpload size={18} />
+                      <span className="text-xs mt-1">Adicionar</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleImagesChange}
+                        className="hidden"
+                      />
+                    </label>
+                  )}
+                </div>
+                <p className="text-xs text-gray-400 mt-1">JPG, PNG, WebP ou GIF — máx. 5 imagens, 50MB cada. A primeira é a principal.</p>
+              </div>
+
+              {/* Vídeo do Produto */}
+              <div>
+                <label className="block text-sm font-medium text-text mb-2">
+                  Vídeo do Produto (Opcional)
+                </label>
+                {(existingVideoUrl || videoPreview) ? (
+                  <div className="flex items-start gap-3">
+                    <video
+                      src={videoPreview || existingVideoUrl}
+                      className="w-40 h-28 rounded-lg object-cover border border-gray-200"
+                      controls={false}
+                      muted
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveVideo}
+                      className="flex items-center gap-1 text-sm text-red-500 hover:text-red-700"
+                    >
+                      <FiX size={16} /> Remover vídeo
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 transition-colors w-fit">
+                    <FiUpload className="text-gray-400" size={20} />
+                    <span className="text-sm text-gray-500">Clique para selecionar vídeo</span>
+                    <input
+                      type="file"
+                      accept="video/*"
+                      onChange={handleVideoChange}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+                <p className="text-xs text-gray-400 mt-1">MP4, MOV ou WebM — máx. 50MB</p>
+              </div>
+
               {/* Grid 2 Colunas */}
               <div className="grid grid-cols-2 gap-4">
                 {/* Category */}
@@ -465,49 +634,6 @@ const AdminProducts = () => {
                     <option value="Saia">Saia</option>
                     <option value="Saia Short">Saia Short</option>
                   </select>
-                </div>
-
-                {/* Image Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-text mb-2">
-                    Imagem do Produto
-                  </label>
-                  <div className="space-y-3">
-                    {/* Preview */}
-                    {imagePreview && (
-                      <div className="relative w-24 h-24">
-                        <img
-                          src={imagePreview}
-                          alt="Preview"
-                          className="w-24 h-24 rounded-lg object-cover border border-gray-200"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedFile(null);
-                            setImagePreview(null);
-                          }}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
-                        >
-                          <FiX size={14} />
-                        </button>
-                      </div>
-                    )}
-                    {/* Input */}
-                    <label className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary/50 transition-colors">
-                      <FiUpload className="text-gray-400" size={20} />
-                      <span className="text-sm text-gray-500">
-                        {selectedFile ? selectedFile.name : 'Clique para selecionar'}
-                      </span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="hidden"
-                      />
-                    </label>
-                    <p className="text-xs text-gray-400">JPG, PNG, WebP ou GIF (máx. 5MB)</p>
-                  </div>
                 </div>
 
                 {/* Price */}

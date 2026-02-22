@@ -9,32 +9,40 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Storage: salva direto no Cloudinary
+// Storage: salva direto no Cloudinary, suporta imagem e vídeo
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: 'anacurve/products',
-    allowed_formats: ['jpg', 'png', 'webp', 'gif']
+  params: async (req, file) => {
+    const isVideo = file.fieldname === 'video';
+    return {
+      folder: 'anacurve/products',
+      resource_type: isVideo ? 'video' : 'image',
+      allowed_formats: isVideo
+        ? ['mp4', 'mov', 'avi', 'webm']
+        : ['jpg', 'png', 'webp', 'gif']
+    };
   }
 });
 
-// Filtro para aceitar apenas imagens
+// Filtro para aceitar imagens e vídeos
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-
+  const allowedTypes = [
+    'image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif',
+    'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm', 'video/avi'
+  ];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Tipo de arquivo não permitido. Use: JPG, PNG, WebP ou GIF'), false);
+    cb(new Error('Tipo de arquivo não permitido. Use: JPG, PNG, WebP, GIF, MP4 ou MOV'), false);
   }
 };
 
-// Configuração do multer
+// Configuração do multer (50MB para suportar vídeos)
 const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB máximo
+    fileSize: 50 * 1024 * 1024 // 50MB máximo
   }
 });
 

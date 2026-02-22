@@ -28,8 +28,9 @@ router.get('/dashboard', getDashboard);
 
 // Produtos
 router.get('/products', getAllProductsAdmin);
-router.post('/products', upload.single('image'), createProduct);
-router.put('/products/:id', upload.single('image'), updateProduct);
+const productUpload = upload.fields([{ name: 'images', maxCount: 5 }, { name: 'video', maxCount: 1 }]);
+router.post('/products', productUpload, createProduct);
+router.put('/products/:id', productUpload, updateProduct);
 router.delete('/products/:id', deleteProduct);
 router.patch('/products/:id/featured', toggleFeatured);
 router.patch('/products/:id/promotion', togglePromotion);

@@ -149,10 +149,21 @@ const createProduct = async (req, res) => {
       } catch (e) { /* mantém totalStock do body */ }
     }
 
-    // Imagem vem do upload Cloudinary (req.file.path) ou URL externa (req.body.imageUrl)
+    // Múltiplas imagens
     let imageUrl = req.body.imageUrl || '';
-    if (req.file) {
-      imageUrl = req.file.path;
+    let images = null;
+    if (req.files?.['images']?.length > 0) {
+      const urls = req.files['images'].map(f => f.path);
+      imageUrl = urls[0];
+      images = JSON.stringify(urls);
+    } else if (req.file) {
+      imageUrl = req.file.path; // backward compat
+    }
+
+    // Vídeo
+    let videoUrl = null;
+    if (req.files?.['video']?.[0]) {
+      videoUrl = req.files['video'][0].path;
     }
 
     const product = await prisma.product.create({
@@ -166,6 +177,8 @@ const createProduct = async (req, res) => {
         stock: totalStock,
         sizeStock: sizeStock || null,
         imageUrl,
+        images,
+        videoUrl,
         isFeatured: isFeatured === 'true' || isFeatured === true,
         isPromotion: isPromotion === 'true' || isPromotion === true
       }
@@ -221,11 +234,31 @@ const updateProduct = async (req, res) => {
       isActive: isActive === 'true' || isActive === true || isActive === undefined
     };
 
-    // Se nova imagem foi enviada via Cloudinary, atualizar
-    if (req.file) {
-      data.imageUrl = req.file.path;
+    // Múltiplas imagens: merge existentes + novas
+    const newImageFiles = req.files?.['images'] || [];
+    let existingUrls = [];
+    if (req.body.existingImages) {
+      try { existingUrls = JSON.parse(req.body.existingImages); } catch {}
+    }
+    if (newImageFiles.length > 0 || req.body.existingImages !== undefined) {
+      const allUrls = [...existingUrls, ...newImageFiles.map(f => f.path)];
+      if (allUrls.length > 0) {
+        data.imageUrl = allUrls[0];
+        data.images = JSON.stringify(allUrls);
+      }
+    } else if (req.file) {
+      data.imageUrl = req.file.path; // backward compat
     } else if (req.body.imageUrl) {
       data.imageUrl = req.body.imageUrl;
+    }
+
+    // Vídeo
+    if (req.body.removeVideo === 'true') {
+      data.videoUrl = null;
+    } else if (req.files?.['video']?.[0]) {
+      data.videoUrl = req.files['video'][0].path;
+    } else if (req.body.existingVideoUrl) {
+      data.videoUrl = req.body.existingVideoUrl;
     }
 
     const product = await prisma.product.update({

@@ -32,6 +32,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -39,6 +40,7 @@ const Product = () => {
         setLoading(true);
         const data = await getProductById(id);
         setProduct(data);
+        setActiveImageIndex(0);
         setError(null);
 
         // Salvar nos produtos visualizados
@@ -170,6 +172,15 @@ const Product = () => {
     try { return JSON.parse(product.sizeStock); } catch { return null; }
   })();
 
+  const imagesList = (() => {
+    if (!product.images) return [product.imageUrl];
+    try {
+      const parsed = JSON.parse(product.images);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : [product.imageUrl];
+    } catch { return [product.imageUrl]; }
+  })();
+  const activeImageUrl = imagesList[activeImageIndex] || product.imageUrl;
+
   return (
     <div className="section bg-background">
       <SEO
@@ -205,7 +216,7 @@ const Product = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
               )}
               <img
-                src={getImageUrl(product.imageUrl)}
+                src={getImageUrl(activeImageUrl)}
                 alt={product.name}
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -260,6 +271,41 @@ const Product = () => {
                 </button>
               </div>
             </div>
+
+            {/* Thumbnails */}
+            {imagesList.length > 1 && (
+              <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+                {imagesList.map((url, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => { setActiveImageIndex(idx); setImageLoaded(false); }}
+                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      activeImageIndex === idx ? 'border-primary' : 'border-gray-200 hover:border-primary/50'
+                    }`}
+                  >
+                    <img
+                      src={getImageUrl(url)}
+                      alt={`${product.name} ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Vídeo */}
+            {product.videoUrl && (
+              <div className="mt-4">
+                <video
+                  src={product.videoUrl}
+                  controls
+                  className="w-full rounded-lg"
+                  style={{ maxHeight: '400px' }}
+                >
+                  Seu navegador não suporta vídeo.
+                </video>
+              </div>
+            )}
           </div>
 
           {/* Product Info Section */}
