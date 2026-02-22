@@ -102,7 +102,7 @@ const createOrder = async (req, res) => {
       const preference = {
         items: [
           {
-            title: `Pedido AC Ana Curve - ${order.orderNumber}`,
+            title: `Pedido Ana Curve - ${order.orderNumber}`,
             description: orderItems.map(i => i.productName).join(', '),
             quantity: 1,
             currency_id: 'BRL',
@@ -133,7 +133,7 @@ const createOrder = async (req, res) => {
         auto_return: 'approved',
         external_reference: order.id.toString(),
         notification_url: `${process.env.BACKEND_URL}/api/webhooks/mercadopago`,
-        statement_descriptor: 'AC ANA CURVE',
+        statement_descriptor: 'ANA CURVE SHOP',
         payment_methods: {
           installments: 12
         }
