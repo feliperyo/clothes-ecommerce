@@ -369,9 +369,10 @@ const Product = () => {
             {/* Description */}
             <div>
               <h3 className="font-bold text-lg mb-2">Descrição</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {product.description}
-              </p>
+              <div
+                className="product-description text-gray-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
             </div>
 
             {/* Color Selection */}

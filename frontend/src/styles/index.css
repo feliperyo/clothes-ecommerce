@@ -303,3 +303,38 @@ html {
 .stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
 .stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
 .stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* Rich text description - página do produto */
+.product-description h1 { @apply text-2xl font-bold font-display mt-4 mb-2; }
+.product-description h2 { @apply text-xl font-bold font-display mt-3 mb-2; }
+.product-description h3 { @apply text-lg font-semibold mt-3 mb-1; }
+.product-description p  { @apply mb-2 leading-relaxed; }
+.product-description ul { @apply list-disc list-inside mb-2 space-y-1; }
+.product-description ol { @apply list-decimal list-inside mb-2 space-y-1; }
+.product-description strong { @apply font-bold; }
+.product-description em { @apply italic; }
+.product-description table {
+  @apply w-full border-collapse mb-4 text-sm;
+}
+.product-description th {
+  @apply bg-primary/10 text-text font-semibold px-3 py-2 border border-gray-200 text-left;
+}
+.product-description td {
+  @apply px-3 py-2 border border-gray-200;
+}
+
+/* Editor TipTap no admin */
+.rich-editor .ProseMirror { @apply min-h-[120px] outline-none; }
+.rich-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply text-gray-400 float-left pointer-events-none h-0;
+}
+.rich-editor .ProseMirror h1 { @apply text-xl font-bold mb-1; }
+.rich-editor .ProseMirror h2 { @apply text-lg font-bold mb-1; }
+.rich-editor .ProseMirror h3 { @apply text-base font-semibold mb-1; }
+.rich-editor .ProseMirror ul { @apply list-disc list-inside mb-2; }
+.rich-editor .ProseMirror ol { @apply list-decimal list-inside mb-2; }
+.rich-editor .ProseMirror table { @apply w-full border-collapse mb-2; }
+.rich-editor .ProseMirror th { @apply bg-gray-100 font-semibold px-2 py-1 border border-gray-300 text-left text-sm; }
+.rich-editor .ProseMirror td { @apply px-2 py-1 border border-gray-300 text-sm; }
+.rich-editor .ProseMirror .selectedCell { @apply bg-primary/10; }

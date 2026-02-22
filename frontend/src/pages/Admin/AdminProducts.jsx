@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import RichTextEditor from '../../components/RichTextEditor';
 import toast from 'react-hot-toast';
 import {
   getAllProductsAdmin,
@@ -519,15 +520,9 @@ const AdminProducts = () => {
                 <label className="block text-sm font-medium text-text mb-2">
                   Descrição
                 </label>
-                <textarea
-                  placeholder="Digite a descrição"
-                  rows="4"
-                  {...register('description', { required: 'Descrição é obrigatória' })}
-                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                    errors.description
-                      ? 'border-red-500 focus:ring-red-200'
-                      : 'border-gray-300 focus:ring-primary/20'
-                  }`}
+                <RichTextEditor
+                  value={watch('description')}
+                  onChange={html => setValue('description', html)}
                 />
                 {errors.description && (
                   <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
