@@ -20,6 +20,10 @@ model Product {
   sizes         String      // Comma-separated: "48,50,52,G0"
   stock         Int         @default(0)
   imageUrl      String
+  images        String?     // JSON array de URLs: '["url1","url2"]'
+  videoUrl      String?     // URL do vídeo Cloudinary
+  sizeStock     String?     // JSON por tamanho: '{"G1":2,"G2":5}'
+  colors        String?     // JSON array: '[{"name":"Preto","hex":"#000000"}]'
   isFeatured    Boolean     @default(false)
   isPromotion   Boolean     @default(false)
   isActive      Boolean     @default(true)
