@@ -294,7 +294,12 @@ const Product = () => {
                   </span>
                 )}
               </div>
-              {product.stock > 0 && product.stock <= 5 && (
+              {product.stock === 1 && (
+                <p className="text-sm text-red-600 font-bold">
+                  Atenção, última peça!
+                </p>
+              )}
+              {product.stock > 1 && product.stock <= 5 && (
                 <p className="text-sm text-orange-600 font-semibold">
                   Apenas {product.stock} unidades disponíveis!
                 </p>

@@ -133,10 +133,14 @@ const ProductCard = ({ product }) => {
         </button>
 
         {/* Stock Warning */}
-        {product.stock > 0 && product.stock <= 5 && (
+        {product.stock === 1 && (
+          <p className="text-xs text-red-600 font-bold mt-2 text-center">
+            Atenção, última peça!
+          </p>
+        )}
+        {product.stock > 1 && product.stock <= 5 && (
           <p className="text-xs text-orange-600 mt-2 text-center">
-            Apenas {product.stock} {product.stock === 1 ? 'unidade' : 'unidades'} disponível
-            {product.stock > 1 ? 'is' : ''}!
+            Apenas {product.stock} unidades disponíveis!
           </p>
         )}
       </div>
