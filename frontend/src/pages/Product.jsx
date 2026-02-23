@@ -185,7 +185,13 @@ const Product = () => {
       return Array.isArray(parsed) && parsed.length > 0 ? parsed : [product.imageUrl];
     } catch { return [product.imageUrl]; }
   })();
-  const activeImageUrl = imagesList[activeImageIndex] || product.imageUrl;
+
+  // Combine images + video into a single media list
+  const mediaList = [
+    ...imagesList.map(url => ({ type: 'image', url })),
+    ...(product.videoUrl ? [{ type: 'video', url: product.videoUrl }] : []),
+  ];
+  const activeMedia = mediaList[activeImageIndex] || mediaList[0];
 
   const colorsParsed = (() => {
     if (!product.colors) return null;
@@ -223,21 +229,35 @@ const Product = () => {
           {/* Image Section */}
           <div className="md:sticky top-24 h-fit">
             <div className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[3/4] flex items-center justify-center">
-              {!imageLoaded && (
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
+              {activeMedia?.type === 'video' ? (
+                <video
+                  key={activeMedia.url}
+                  src={activeMedia.url}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain bg-black"
+                >
+                  Seu navegador não suporta vídeo.
+                </video>
+              ) : (
+                <>
+                  {!imageLoaded && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
+                  )}
+                  <img
+                    src={getImageUrl(activeMedia?.url || product.imageUrl)}
+                    alt={product.name}
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      imageLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
+                      setImageLoaded(true);
+                    }}
+                  />
+                </>
               )}
-              <img
-                src={getImageUrl(activeImageUrl)}
-                alt={product.name}
-                className={`w-full h-full object-cover transition-opacity duration-300 ${
-                  imageLoaded ? 'opacity-100' : 'opacity-0'
-                }`}
-                onLoad={() => setImageLoaded(true)}
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
-                  setImageLoaded(true);
-                }}
-              />
 
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
@@ -283,37 +303,32 @@ const Product = () => {
               </div>
             </div>
 
-            {/* Thumbnails */}
-            {imagesList.length > 1 && (
+            {/* Thumbnails (images + video) */}
+            {mediaList.length > 1 && (
               <div className="flex gap-1.5 sm:gap-2 mt-3 overflow-x-auto pb-1">
-                {imagesList.map((url, idx) => (
+                {mediaList.map((media, idx) => (
                   <button
                     key={idx}
                     onClick={() => { setActiveImageIndex(idx); setImageLoaded(false); }}
-                    className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden border-2 transition-all relative ${
                       activeImageIndex === idx ? 'border-primary' : 'border-gray-200 hover:border-primary/50'
                     }`}
                   >
-                    <img
-                      src={getImageUrl(url)}
-                      alt={`${product.name} ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                    {media.type === 'video' ? (
+                      <div className="w-full h-full bg-black flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    ) : (
+                      <img
+                        src={getImageUrl(media.url)}
+                        alt={`${product.name} ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </button>
                 ))}
-              </div>
-            )}
-
-            {/* Vídeo */}
-            {product.videoUrl && (
-              <div className="mt-4">
-                <video
-                  src={product.videoUrl}
-                  controls
-                  className="w-full rounded-lg max-h-56 sm:max-h-80 md:max-h-[400px] object-contain bg-black"
-                >
-                  Seu navegador não suporta vídeo.
-                </video>
               </div>
             )}
           </div>
