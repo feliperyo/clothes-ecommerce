@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="bg-white border-t mt-auto">
       {/* Main Footer */}
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Navegue no site */}
           <div>
             <h4 className="font-bold text-text mb-4">Navegue no site</h4>
@@ -111,15 +111,6 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-          </div>
-
-          {/* Quem Somos */}
-          <div>
-            <h4 className="font-bold text-text mb-4">Quem Somos</h4>
-            <p className="text-sm text-gray-600 leading-relaxed font-semibold">Moda Mid e Plus Size</p>
-            <p className="text-sm text-gray-600 leading-relaxed mt-2">
-              Nascemos do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
-            </p>
           </div>
 
           {/* Fale Conosco */}
