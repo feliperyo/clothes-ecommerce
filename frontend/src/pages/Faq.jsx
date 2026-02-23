@@ -74,7 +74,7 @@ const sections = [
       {
         question: 'Posso trocar um produto?',
         answer:
-          'Sim! Aceitamos troca de produtos sem uso em até 7 dias corridos após o recebimento, sem qualquer custo adicional. O produto deve estar nas mesmas condições em que foi recebido: sem indícios de uso, suor, perfume ou manchas, e com as etiquetas intactas.',
+          'Sim! Aceitamos troca de produtos sem uso em até 7 dias corridos a partir da data de recebimento, sem qualquer custo adicional. O produto deve estar nas mesmas condições em que foi recebido: sem indícios de uso, suor, perfume ou manchas, e com as etiquetas intactas.',
       },
       {
         question: 'Como solicito uma troca?',
