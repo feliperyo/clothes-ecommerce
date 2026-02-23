@@ -9,6 +9,7 @@ const ProductCard = ({ product }) => {
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState('');
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [activeColorIdx, setActiveColorIdx] = useState(null);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -26,14 +27,24 @@ const ProductCard = ({ product }) => {
     if (!product.colors) return null;
     try { return JSON.parse(product.colors); } catch { return null; }
   })();
+  const activeColor = activeColorIdx !== null ? colorsParsed?.[activeColorIdx] : null;
+
+  // Imagens do produto para hover
+  const imagesList = (() => {
+    if (!product.images) return [product.imageUrl];
+    try {
+      const parsed = JSON.parse(product.images);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : [product.imageUrl];
+    } catch { return [product.imageUrl]; }
+  })();
+  const hoverImageUrl = imagesList.length > 1 ? getImageUrl(imagesList[1]) : null;
+
+  const displayImageUrl = activeColor?.imageUrl ? activeColor.imageUrl : getImageUrl(product.imageUrl);
 
   return (
-    <Link
-      to={`/produto/${product.id}`}
-      className="product-card block group hover:scale-[1.02] transition-transform duration-300"
-    >
+    <div className="product-card group hover:scale-[1.02] transition-transform duration-300 relative">
       {/* Badges */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+      <div className="absolute top-3 left-3 z-10 flex flex-col gap-2 pointer-events-none">
         {product.isPreSale && (
           <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-orange-500">
             PRÉ-VENDA
@@ -51,36 +62,47 @@ const ProductCard = ({ product }) => {
         )}
       </div>
 
-      {/* Image */}
-      <div className="relative overflow-hidden aspect-product bg-gray-100">
+      {/* Image — clique abre o produto */}
+      <Link to={`/produto/${product.id}`} className="block relative overflow-hidden aspect-product bg-gray-100">
         {!imageLoaded && (
           <div className="absolute inset-0 img-placeholder" />
         )}
+        {/* Imagem principal */}
         <img
-          src={getImageUrl(product.imageUrl)}
+          src={displayImageUrl}
           alt={product.name}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`w-full h-full object-cover transition-opacity duration-500 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          } ${hoverImageUrl && !activeColor ? 'group-hover:opacity-0' : ''}`}
           onLoad={() => setImageLoaded(true)}
           onError={(e) => {
             e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
             setImageLoaded(true);
           }}
         />
+        {/* Imagem de hover (segunda foto) */}
+        {hoverImageUrl && !activeColor && (
+          <img
+            src={hoverImageUrl}
+            alt={`${product.name} — segunda foto`}
+            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          />
+        )}
         {product.stock === 0 && (
           <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
             <span className="text-white font-bold text-lg">Esgotado</span>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-3 sm:p-4">
-        {/* Product Name */}
-        <h3 className="font-semibold text-base sm:text-lg text-text mb-2 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">
-          {product.name}
-        </h3>
+        {/* Product Name — clique abre o produto */}
+        <Link to={`/produto/${product.id}`} className="block">
+          <h3 className="font-semibold text-base sm:text-lg text-text mb-2 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem] hover:text-primary transition-colors">
+            {product.name}
+          </h3>
+        </Link>
 
         {/* Category */}
         <p className="text-sm text-gray-500 mb-2">{product.category}</p>
@@ -112,10 +134,18 @@ const ProductCard = ({ product }) => {
         {colorsParsed?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-2">
             {colorsParsed.slice(0, 6).map((c, idx) => (
-              <span
+              <button
                 key={idx}
                 title={c.name}
-                className="w-5 h-5 rounded border border-gray-300 flex-shrink-0"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const next = activeColorIdx === idx ? null : idx;
+                  setActiveColorIdx(next);
+                  setImageLoaded(false);
+                }}
+                className={`w-5 h-5 rounded-sm border-2 flex-shrink-0 transition-all ${
+                  activeColorIdx === idx ? 'border-primary scale-110' : 'border-gray-200 hover:border-gray-400'
+                }`}
                 style={{ backgroundColor: c.hex }}
               />
             ))}
@@ -175,7 +205,7 @@ const ProductCard = ({ product }) => {
           </p>
         )}
       </div>
-    </Link>
+    </div>
   );
 };
 

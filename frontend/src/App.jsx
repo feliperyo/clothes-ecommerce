@@ -12,6 +12,7 @@ import OrderConfirmation from './pages/OrderConfirmation';
 import Category from './pages/Category';
 import Collections from './pages/Collections';
 import Faq from './pages/Faq';
+import PreSale from './pages/PreSale';
 
 // Admin Pages
 import AdminLogin from './pages/Admin/AdminLogin';
@@ -26,6 +27,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import WhatsAppButton from './components/WhatsAppButton';
+import CouponPopup from './components/CouponPopup';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -85,11 +87,13 @@ function App() {
                       <Route path="/pedido-confirmado/:orderNumber" element={<OrderConfirmation />} />
                       <Route path="/categoria/:category" element={<Category />} />
                       <Route path="/faq" element={<Faq />} />
+                      <Route path="/pre-venda" element={<PreSale />} />
                     </Routes>
                   </main>
                   <Footer />
                   <CartDrawer />
                   <WhatsAppButton />
+                  <CouponPopup />
                 </>
               }
             />
