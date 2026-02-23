@@ -18,6 +18,7 @@ const {
   updateTracking
 } = require('../controllers/adminController');
 const { generateShippingLabel } = require('../controllers/shippingController');
+const { getAllCoupons, createCoupon, toggleCoupon, updateCoupon, deleteCoupon } = require('../controllers/couponController');
 
 // Rota pública de login
 router.post('/login', login);
@@ -44,5 +45,12 @@ router.get('/orders/:id', getOrderById);
 router.patch('/orders/:id/status', updateOrderStatus);
 router.patch('/orders/:id/tracking', updateTracking);
 router.post('/orders/:id/generate-label', generateShippingLabel);
+
+// Cupons
+router.get('/coupons', getAllCoupons);
+router.post('/coupons', createCoupon);
+router.patch('/coupons/:id', updateCoupon);
+router.patch('/coupons/:id/toggle', toggleCoupon);
+router.delete('/coupons/:id', deleteCoupon);
 
 module.exports = router;

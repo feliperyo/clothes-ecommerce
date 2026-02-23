@@ -7,7 +7,8 @@ import {
   FiLogOut,
   FiBarChart2,
   FiBox,
-  FiTruck
+  FiTruck,
+  FiTag
 } from 'react-icons/fi';
 
 const AdminLayout = () => {
@@ -62,6 +63,11 @@ const AdminLayout = () => {
       label: 'Pedidos',
       icon: FiTruck,
       path: '/admin/orders'
+    },
+    {
+      label: 'Cupons',
+      icon: FiTag,
+      path: '/admin/coupons'
     }
   ];
 

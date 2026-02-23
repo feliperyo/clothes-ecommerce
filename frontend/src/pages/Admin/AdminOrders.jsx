@@ -16,8 +16,18 @@ import {
   FiAlertCircle,
   FiCheck,
   FiTruck,
-  FiDownload
+  FiDownload,
+  FiSearch
 } from 'react-icons/fi';
+
+const STATUS_TABS = [
+  { key: '', label: 'Todos' },
+  { key: 'PENDING', label: 'Pendentes' },
+  { key: 'PAID', label: 'Pagos' },
+  { key: 'PROCESSING', label: 'Processando' },
+  { key: 'SHIPPED', label: 'Enviados' },
+  { key: 'DELIVERED', label: 'Entregues' },
+];
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -28,6 +38,8 @@ const AdminOrders = () => {
   const [isUpdatingTracking, setIsUpdatingTracking] = useState(false);
   const [isGeneratingLabel, setIsGeneratingLabel] = useState(false);
   const [trackingCode, setTrackingCode] = useState('');
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
 
   useEffect(() => {
     fetchOrders();
@@ -143,17 +155,64 @@ const AdminOrders = () => {
     );
   }
 
+  const filteredOrders = orders.filter(o => {
+    if (search) {
+      const q = search.toLowerCase();
+      const matchesSearch = o.orderNumber?.toLowerCase().includes(q) ||
+        o.customerName?.toLowerCase().includes(q) ||
+        o.customerEmail?.toLowerCase().includes(q);
+      if (!matchesSearch) return false;
+    }
+    if (statusFilter) {
+      if (statusFilter === 'PENDING' || statusFilter === 'PAID') {
+        if (o.paymentStatus !== statusFilter) return false;
+      } else {
+        if (o.shippingStatus !== statusFilter) return false;
+      }
+    }
+    return true;
+  });
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-bold text-text mb-2">Pedidos</h1>
-        <p className="text-gray-600">{orders.length} pedidos no total</p>
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-text mb-2">Pedidos</h1>
+        <p className="text-gray-600">{filteredOrders.length} de {orders.length} pedidos</p>
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+        <input
+          type="text"
+          placeholder="Buscar por número, nome ou email..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+        />
+      </div>
+
+      {/* Status Tabs */}
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        {STATUS_TABS.map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setStatusFilter(tab.key)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+              statusFilter === tab.key
+                ? 'bg-primary text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* Orders Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        {orders.length > 0 ? (
+        {filteredOrders.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
@@ -168,7 +227,7 @@ const AdminOrders = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {orders.map((order) => (
+                {filteredOrders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 font-mono font-semibold text-text">#{order.orderNumber}</td>
                     <td className="px-6 py-4">

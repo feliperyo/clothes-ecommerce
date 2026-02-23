@@ -18,6 +18,7 @@ import AdminLogin from './pages/Admin/AdminLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminProducts from './pages/Admin/AdminProducts';
 import AdminOrders from './pages/Admin/AdminOrders';
+import AdminCoupons from './pages/Admin/AdminCoupons';
 import AdminLayout from './pages/Admin/AdminLayout';
 
 // Components
@@ -65,6 +66,7 @@ function App() {
               <Route index element={<AdminDashboard />} />
               <Route path="products" element={<AdminProducts />} />
               <Route path="orders" element={<AdminOrders />} />
+              <Route path="coupons" element={<AdminCoupons />} />
             </Route>
 
             {/* Public Routes */}

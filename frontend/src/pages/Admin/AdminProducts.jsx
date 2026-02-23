@@ -23,14 +23,20 @@ import {
   FiAlertCircle,
   FiUpload,
   FiImage,
-  FiZap
+  FiZap,
+  FiSearch
 } from 'react-icons/fi';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
 
+const CATEGORIES = ['Blusas', 'Calças', 'Vestidos', 'Conjuntos', 'Short / Short Saia', 'Macaquinho/Macacão', 'Blazer/Jaqueta', 'Acessórios'];
+
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [filterCategory, setFilterCategory] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -336,13 +342,24 @@ const AdminProducts = () => {
     );
   }
 
+  const filteredProducts = products.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false;
+    if (filterCategory && p.category !== filterCategory) return false;
+    if (filterStatus === 'featured' && !p.isFeatured) return false;
+    if (filterStatus === 'promotion' && !p.isPromotion) return false;
+    if (filterStatus === 'new' && !p.isNew) return false;
+    if (filterStatus === 'outofstock' && p.stock > 0) return false;
+    if (filterStatus === 'lowstock' && (p.stock === 0 || p.stock > 10)) return false;
+    return true;
+  });
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-text mb-1">Produtos</h1>
-          <p className="text-sm text-gray-600">{products.length} produtos cadastrados</p>
+          <p className="text-sm text-gray-600">{filteredProducts.length} de {products.length} produtos</p>
         </div>
         <button
           onClick={() => openModal()}
@@ -353,9 +370,45 @@ const AdminProducts = () => {
         </button>
       </div>
 
+      {/* Search & Filters */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input
+            type="text"
+            placeholder="Buscar produto..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+          />
+        </div>
+        <select
+          value={filterCategory}
+          onChange={(e) => setFilterCategory(e.target.value)}
+          className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="">Todas Categorias</option>
+          {CATEGORIES.map(cat => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+        >
+          <option value="">Todos Status</option>
+          <option value="featured">Destaques</option>
+          <option value="promotion">Promoções</option>
+          <option value="new">Lançamentos</option>
+          <option value="lowstock">Estoque Baixo</option>
+          <option value="outofstock">Sem Estoque</option>
+        </select>
+      </div>
+
       {/* Products Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        {products.length > 0 ? (
+        {filteredProducts.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-xs sm:text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
@@ -381,7 +434,7 @@ const AdminProducts = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                   <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <div className="flex items-center gap-2 sm:gap-3">

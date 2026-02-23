@@ -37,6 +37,7 @@ const adminRoutes = require('./routes/admin');
 const webhookRoutes = require('./routes/webhooks');
 const seedRoutes = require('./routes/seed');
 const shippingRoutes = require('./routes/shipping');
+const couponRoutes = require('./routes/coupons');
 
 // Middlewares - CORS Configuration
 const allowedOrigins = [
@@ -99,6 +100,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/webhooks', webhookRoutes);
 app.use('/api/seed', seedRoutes);
 app.use('/api/shipping', shippingRoutes);
+app.use('/api/coupons', couponRoutes);
 
 // 404 para rotas não encontradas
 app.use((req, res) => {

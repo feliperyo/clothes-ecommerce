@@ -158,6 +158,40 @@ export const updateTracking = async (id, trackingCode) => {
   return response.data;
 };
 
+// === ADMIN - CUPONS ===
+
+export const getAllCoupons = async () => {
+  const response = await api.get('/admin/coupons');
+  return response.data;
+};
+
+export const createCouponAdmin = async (couponData) => {
+  const response = await api.post('/admin/coupons', couponData);
+  return response.data;
+};
+
+export const updateCouponAdmin = async (id, couponData) => {
+  const response = await api.patch(`/admin/coupons/${id}`, couponData);
+  return response.data;
+};
+
+export const toggleCouponAdmin = async (id) => {
+  const response = await api.patch(`/admin/coupons/${id}/toggle`);
+  return response.data;
+};
+
+export const deleteCouponAdmin = async (id) => {
+  const response = await api.delete(`/admin/coupons/${id}`);
+  return response.data;
+};
+
+// === CUPONS (público) ===
+
+export const validateCoupon = async (code, subtotal) => {
+  const response = await api.post('/coupons/validate', { code, subtotal });
+  return response.data;
+};
+
 // === FRETE ===
 
 export const calculateShippingOptions = async (cep, items = [], totalValue = 0) => {
