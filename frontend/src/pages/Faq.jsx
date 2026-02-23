@@ -79,7 +79,7 @@ const sections = [
       {
         question: 'Como solicito uma troca?',
         answer:
-          'Envie um e-mail para mabecasmodas@hotmail.com com: nome completo, CPF, número do pedido, motivo da troca e por qual produto/numeração deseja trocar. Em até 3 dias úteis você receberá um código de autorização de postagem. Basta levar o produto embalado aos Correios e postar com o código — sem custos para você.',
+          'Entre em contato pelo nosso WhatsApp (11) 91376-2420 ou e-mail contato@anacurve.com.br informando: nome completo, CPF, número do pedido, motivo da troca e por qual produto/numeração deseja trocar. Em até 3 dias úteis você receberá um código de autorização de postagem. Basta levar o produto embalado aos Correios e postar com o código — sem custos para você.',
       },
       {
         question: 'Quem paga o frete da troca?',

@@ -393,7 +393,7 @@ const Category = () => {
                         <p className="text-xs text-gray-600">
                           {product.stock > 0
                             ? `${product.stock} em estoque`
-                            : 'Fora de estoque'}
+                            : 'Esgotado'}
                         </p>
                       </div>
                     </Link>

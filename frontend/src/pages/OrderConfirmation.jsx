@@ -5,7 +5,6 @@ import {
   FiCheck,
   FiClock,
   FiTruck,
-  FiDownload,
   FiMail,
 } from 'react-icons/fi';
 import { getOrderByNumber } from '../utils/api';
@@ -232,9 +231,14 @@ const OrderConfirmation = () => {
                   <p className="font-mono font-bold text-lg text-primary mb-3">
                     {order.trackingCode}
                   </p>
-                  <button className="text-sm text-blue-600 hover:text-blue-800 font-semibold">
+                  <a
+                    href={`https://www.correios.com.br/rastreamento#${order.trackingCode}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:text-blue-800 font-semibold"
+                  >
                     Rastrear Entrega
-                  </button>
+                  </a>
                 </div>
               )}
             </div>
@@ -388,14 +392,15 @@ const OrderConfirmation = () => {
 
             {/* Actions */}
             <div className="space-y-3">
-              <button className="btn-primary w-full flex items-center justify-center gap-2">
-                <FiDownload size={18} />
-                Baixar Invoice
-              </button>
-              <button className="btn-outline w-full flex items-center justify-center gap-2">
+              <a
+                href={`https://wa.me/5511913762420?text=${encodeURIComponent(`Olá! Gostaria de ajuda com o pedido #${order?.orderNumber}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary w-full flex items-center justify-center gap-2"
+              >
                 <FiMail size={18} />
-                Reenviar Confirmação
-              </button>
+                Falar com Atendimento
+              </a>
             </div>
 
             {/* Help */}
@@ -403,9 +408,14 @@ const OrderConfirmation = () => {
               <p className="text-gray-700 mb-3">
                 Alguma dúvida sobre seu pedido?
               </p>
-              <Link to="/" className="text-primary hover:underline font-semibold">
-                Fale Conosco
-              </Link>
+              <a
+                href="https://wa.me/5511913762420"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-semibold"
+              >
+                Fale Conosco pelo WhatsApp
+              </a>
             </div>
           </div>
         </div>

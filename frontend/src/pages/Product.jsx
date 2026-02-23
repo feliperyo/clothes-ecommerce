@@ -259,7 +259,8 @@ const Product = () => {
                   key={activeMedia.url}
                   src={activeMedia.url}
                   controls
-                  autoPlay
+                  muted
+                  playsInline
                   className="w-full h-full object-contain bg-black"
                 >
                   Seu navegador não suporta vídeo.
@@ -424,7 +425,7 @@ const Product = () => {
               <h3 className="font-bold text-lg mb-2">Descrição</h3>
               <div
                 className="product-description text-gray-600 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: product.description || '' }}
               />
             </div>
 
@@ -561,7 +562,7 @@ const Product = () => {
               {inStock ? (
                 <span>Em Estoque - Enviamos Rapidinho!</span>
               ) : (
-                <span>Este produto está indisponível no momento</span>
+                <span>Este produto está esgotado no momento</span>
               )}
             </div>
           </div>
