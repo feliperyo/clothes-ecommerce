@@ -122,18 +122,19 @@ const Footer = () => {
           </div>
 
           {/* Redes Sociais */}
-          <div className="flex lg:justify-end items-start">
-            <div className="flex gap-4">
-              <a
-                href="https://www.instagram.com/anacurveshop"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors"
-                aria-label="Instagram"
-              >
-                <FiInstagram size={24} />
-              </a>
-            </div>
+          <div>
+            <a
+              href="https://www.instagram.com/anacurveshop"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 text-gray-600 hover:text-primary transition-colors"
+            >
+              <FiInstagram size={28} />
+              <div>
+                <span className="block text-xs text-gray-400 group-hover:text-primary transition-colors">SIGA-NOS NO INSTAGRAM</span>
+                <span className="block text-sm font-bold text-text group-hover:text-primary transition-colors">@ANACURVESHOP</span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
