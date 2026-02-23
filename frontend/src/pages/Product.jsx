@@ -45,6 +45,16 @@ const Product = () => {
         setActiveImageIndex(0);
         setError(null);
 
+        // Pré-selecionar a primeira cor automaticamente
+        if (data.colors) {
+          try {
+            const colors = JSON.parse(data.colors);
+            if (Array.isArray(colors) && colors.length > 0) {
+              setSelectedColor(colors[0]);
+            }
+          } catch { /* ignore */ }
+        }
+
         // Salvar nos produtos visualizados
         if (data && data.id) {
           try {
