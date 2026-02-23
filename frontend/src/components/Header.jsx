@@ -176,11 +176,17 @@ const Header = () => {
             <Link to="/categoria/Shorts" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
               Shorts
             </Link>
+            <Link to="/categoria/Short / Short Saia" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Short Saia
+            </Link>
+            <Link to="/categoria/Blazer/Jaqueta" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Blazer/Jaqueta
+            </Link>
             <Link to="/categoria/Acessórios" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
               Acessórios
             </Link>
-            <Link to="/faq" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
-              Perguntas Frequentes
+            <Link to="/pre-venda" className="text-primary hover:text-primary/80 transition-colors font-semibold whitespace-nowrap">
+              Pré-Venda
             </Link>
           </nav>
         </div>
@@ -226,7 +232,10 @@ const Header = () => {
             <Link to="/categoria/Macaquinho/Macacão" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Macaquinho/Macacão</Link>
             <Link to="/categoria/Saias" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Saias</Link>
             <Link to="/categoria/Shorts" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Shorts</Link>
+            <Link to="/categoria/Short / Short Saia" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Short Saia</Link>
+            <Link to="/categoria/Blazer/Jaqueta" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Blazer/Jaqueta</Link>
             <Link to="/categoria/Acessórios" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Acessórios</Link>
+            <Link to="/pre-venda" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-primary font-semibold hover:text-primary/80 transition-colors">Pré-Venda</Link>
             <Link to="/faq" onClick={() => setIsMenuOpen(false)} className="block py-3 mt-2 border-t border-gray-200 text-text hover:text-primary transition-colors font-medium">Perguntas Frequentes</Link>
           </nav>
         </div>

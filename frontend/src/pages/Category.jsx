@@ -148,6 +148,8 @@ const Category = () => {
     'Short / Short Saia': 'Shorts e saia shorts plus size estilosos e confortáveis. Tamanhos G0 ao G4.',
     'Macaquinho/Macacão': 'Macaquinhos e macacões plus size modernos para um look completo e estiloso. Tamanhos G0 ao G4.',
     'Blazer/Jaqueta': 'Blazers e jaquetas plus size para looks sofisticados e cheios de personalidade. Tamanhos G0 ao G4.',
+    'Saias': 'Saias plus size elegantes e versáteis para qualquer ocasião. Tamanhos G0 ao G4.',
+    'Shorts': 'Shorts plus size confortáveis e estilosos para o dia a dia. Tamanhos G0 ao G4.',
     'Acessórios': 'Acessórios para complementar e dar o toque final no seu look com estilo.',
   };
 
