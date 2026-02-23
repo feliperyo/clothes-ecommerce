@@ -29,16 +29,10 @@ const Collections = () => {
       path: '/categoria/Conjuntos'
     },
     {
-      name: 'Saia',
-      description: 'Saias modernas para valorizar suas curvas',
-      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800',
-      path: '/categoria/Saia'
-    },
-    {
-      name: 'Saia Short',
-      description: 'Saia shorts estilosas e confortáveis',
+      name: 'Short / Short Saia',
+      description: 'Shorts e saia shorts estilosos e confortáveis para valorizar suas curvas',
       image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800',
-      path: '/categoria/Saia Short'
+      path: '/categoria/Short / Short Saia'
     }
   ];
 

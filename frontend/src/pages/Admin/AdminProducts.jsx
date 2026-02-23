@@ -645,8 +645,7 @@ const AdminProducts = () => {
                     <option value="Calças">Calças</option>
                     <option value="Vestidos">Vestidos</option>
                     <option value="Conjuntos">Conjuntos</option>
-                    <option value="Saia">Saia</option>
-                    <option value="Saia Short">Saia Short</option>
+                    <option value="Short / Short Saia">Short / Short Saia</option>
                   </select>
                 </div>
 

@@ -309,8 +309,9 @@ html {
 .product-description h2 { @apply text-xl font-bold font-display mt-3 mb-2; }
 .product-description h3 { @apply text-lg font-semibold mt-3 mb-1; }
 .product-description p  { @apply mb-2 leading-relaxed; }
-.product-description ul { @apply list-disc list-inside mb-2 space-y-1; }
-.product-description ol { @apply list-decimal list-inside mb-2 space-y-1; }
+.product-description ul { @apply list-disc mb-2 space-y-1 pl-5; }
+.product-description ol { @apply list-decimal mb-2 space-y-1 pl-5; }
+.product-description li { @apply leading-relaxed; }
 .product-description strong { @apply font-bold; }
 .product-description em { @apply italic; }
 .product-description table {
@@ -332,8 +333,8 @@ html {
 .rich-editor .ProseMirror h1 { @apply text-xl font-bold mb-1; }
 .rich-editor .ProseMirror h2 { @apply text-lg font-bold mb-1; }
 .rich-editor .ProseMirror h3 { @apply text-base font-semibold mb-1; }
-.rich-editor .ProseMirror ul { @apply list-disc list-inside mb-2; }
-.rich-editor .ProseMirror ol { @apply list-decimal list-inside mb-2; }
+.rich-editor .ProseMirror ul { @apply list-disc mb-2 pl-5; }
+.rich-editor .ProseMirror ol { @apply list-decimal mb-2 pl-5; }
 .rich-editor .ProseMirror table { @apply w-full border-collapse mb-2; }
 .rich-editor .ProseMirror th { @apply bg-gray-100 font-semibold px-2 py-1 border border-gray-300 text-left text-sm; }
 .rich-editor .ProseMirror td { @apply px-2 py-1 border border-gray-300 text-sm; }

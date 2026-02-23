@@ -39,13 +39,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/categoria/Saia" className="hover:text-primary transition-colors">
-                  Saia
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/Saia Short" className="hover:text-primary transition-colors">
-                  Saia Short
+                <Link to="/categoria/Short / Short Saia" className="hover:text-primary transition-colors">
+                  Short / Short Saia
                 </Link>
               </li>
             </ul>

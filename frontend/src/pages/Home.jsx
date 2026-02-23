@@ -87,14 +87,9 @@ const Home = () => {
       path: '/categoria/Vestidos'
     },
     {
-      name: 'Saia',
-      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400',
-      path: '/categoria/Saia'
-    },
-    {
-      name: 'Saia Short',
+      name: 'Short / Short Saia',
       image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=400',
-      path: '/categoria/Saia Short'
+      path: '/categoria/Short / Short Saia'
     }
   ];
 
