@@ -148,6 +148,18 @@ export const updateTracking = async (id, trackingCode) => {
   return response.data;
 };
 
+// === FRETE ===
+
+export const calculateShippingOptions = async (cep, items = [], totalValue = 0) => {
+  const response = await api.post('/shipping/quote', { cep, items, totalValue });
+  return response.data;
+};
+
+export const generateShippingLabel = async (orderId) => {
+  const response = await api.post(`/admin/orders/${orderId}/generate-label`);
+  return response.data;
+};
+
 // === UTILIDADES ===
 
 // Buscar CEP via ViaCEP (API externa)

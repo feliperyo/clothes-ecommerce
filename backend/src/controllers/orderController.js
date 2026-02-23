@@ -25,7 +25,9 @@ const createOrder = async (req, res) => {
       items,
       paymentMethod,
       shippingCost,
-      discount = 0
+      discount = 0,
+      shippingService,
+      shippingServiceId
     } = req.body;
 
     // Validar dados obrigatórios
@@ -88,6 +90,8 @@ const createOrder = async (req, res) => {
         discount,
         total,
         paymentMethod,
+        shippingService: shippingService || null,
+        shippingServiceId: shippingServiceId ? parseInt(shippingServiceId) : null,
         items: {
           create: orderItems
         }

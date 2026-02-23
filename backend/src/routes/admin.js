@@ -16,6 +16,7 @@ const {
   updateOrderStatus,
   updateTracking
 } = require('../controllers/adminController');
+const { generateShippingLabel } = require('../controllers/shippingController');
 
 // Rota pública de login
 router.post('/login', login);
@@ -40,5 +41,6 @@ router.get('/orders', getAllOrders);
 router.get('/orders/:id', getOrderById);
 router.patch('/orders/:id/status', updateOrderStatus);
 router.patch('/orders/:id/tracking', updateTracking);
+router.post('/orders/:id/generate-label', generateShippingLabel);
 
 module.exports = router;

@@ -27,6 +27,33 @@ export const CartProvider = ({ children }) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Frete selecionado: { id, name, company, price, delivery_time } | null
+  const [selectedShipping, setSelectedShipping] = useState(() => {
+    try {
+      const saved = localStorage.getItem('anacurve_selected_shipping');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+
+  const [shippingCep, setShippingCep] = useState(
+    () => localStorage.getItem('anacurve_shipping_cep') || ''
+  );
+
+  const selectShipping = (option) => {
+    setSelectedShipping(option);
+    if (option) {
+      localStorage.setItem('anacurve_selected_shipping', JSON.stringify(option));
+    } else {
+      localStorage.removeItem('anacurve_selected_shipping');
+    }
+  };
+
+  const saveShippingCep = (cep) => {
+    setShippingCep(cep);
+    if (cep) localStorage.setItem('anacurve_shipping_cep', cep);
+    else localStorage.removeItem('anacurve_shipping_cep');
+  };
+
   // Salvar carrinho no localStorage sempre que mudar
   useEffect(() => {
     localStorage.setItem('anacurve_cart', JSON.stringify(cart));
@@ -141,7 +168,11 @@ export const CartProvider = ({ children }) => {
     getItemCount,
     toggleCart,
     openCart,
-    closeCart
+    closeCart,
+    selectedShipping,
+    selectShipping,
+    shippingCep,
+    saveShippingCep
   };
 
   return (

@@ -63,8 +63,12 @@ model Order {
   mercadopagoId  String?    // ID da transação no Mercado Pago
 
   // Entrega
-  shippingStatus String     @default("PROCESSING") // PROCESSING, SHIPPED, DELIVERED
-  trackingCode   String?
+  shippingStatus    String  @default("PROCESSING") // PROCESSING, SHIPPED, DELIVERED
+  trackingCode      String?
+  shippingService   String? // PAC, SEDEX, Jadlog, etc.
+  shippingServiceId Int?    // ID do serviço no Super Frete
+  superfreteOrderId String? // ID do pedido no Super Frete (para etiqueta)
+  superfreteLabel   String? // URL da etiqueta PDF
 
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt

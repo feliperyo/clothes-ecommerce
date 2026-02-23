@@ -4,7 +4,8 @@ import {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
-  updateTracking
+  updateTracking,
+  generateShippingLabel
 } from '../../utils/api';
 import { formatPrice, formatDate, getPaymentStatusLabel, getShippingStatusLabel, getStatusColor } from '../../utils/helpers';
 import {
@@ -14,7 +15,8 @@ import {
   FiPackage,
   FiAlertCircle,
   FiCheck,
-  FiTruck
+  FiTruck,
+  FiDownload
 } from 'react-icons/fi';
 
 const AdminOrders = () => {
@@ -24,6 +26,7 @@ const AdminOrders = () => {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
   const [isUpdatingTracking, setIsUpdatingTracking] = useState(false);
+  const [isGeneratingLabel, setIsGeneratingLabel] = useState(false);
   const [trackingCode, setTrackingCode] = useState('');
 
   useEffect(() => {
@@ -63,17 +66,13 @@ const AdminOrders = () => {
 
   const handleUpdatePaymentStatus = async (newStatus) => {
     if (!selectedOrder) return;
-
     try {
       setIsUpdatingStatus(true);
-      const updated = await updateOrderStatus(selectedOrder.id, {
-        paymentStatus: newStatus
-      });
-
+      const updated = await updateOrderStatus(selectedOrder.id, { paymentStatus: newStatus });
       setOrders(orders.map(o => o.id === selectedOrder.id ? updated : o));
       setSelectedOrder(updated);
       toast.success('Status de pagamento atualizado!');
-    } catch (error) {
+    } catch {
       toast.error('Erro ao atualizar status de pagamento');
     } finally {
       setIsUpdatingStatus(false);
@@ -82,17 +81,13 @@ const AdminOrders = () => {
 
   const handleUpdateShippingStatus = async (newStatus) => {
     if (!selectedOrder) return;
-
     try {
       setIsUpdatingStatus(true);
-      const updated = await updateOrderStatus(selectedOrder.id, {
-        shippingStatus: newStatus
-      });
-
+      const updated = await updateOrderStatus(selectedOrder.id, { shippingStatus: newStatus });
       setOrders(orders.map(o => o.id === selectedOrder.id ? updated : o));
       setSelectedOrder(updated);
       toast.success('Status de envio atualizado!');
-    } catch (error) {
+    } catch {
       toast.error('Erro ao atualizar status de envio');
     } finally {
       setIsUpdatingStatus(false);
@@ -104,17 +99,36 @@ const AdminOrders = () => {
       toast.error('Digite um código de rastreio');
       return;
     }
-
     try {
       setIsUpdatingTracking(true);
       const updated = await updateTracking(selectedOrder.id, trackingCode);
       setOrders(orders.map(o => o.id === selectedOrder.id ? updated : o));
       setSelectedOrder(updated);
       toast.success('Código de rastreio atualizado!');
-    } catch (error) {
+    } catch {
       toast.error('Erro ao atualizar código de rastreio');
     } finally {
       setIsUpdatingTracking(false);
+    }
+  };
+
+  const handleGenerateLabel = async () => {
+    if (!selectedOrder) return;
+    try {
+      setIsGeneratingLabel(true);
+      const result = await generateShippingLabel(selectedOrder.id);
+      const updated = { ...selectedOrder, superfreteOrderId: result.superfreteOrderId, superfreteLabel: result.label };
+      setSelectedOrder(updated);
+      setOrders(orders.map(o => o.id === selectedOrder.id ? updated : o));
+      if (result.label) {
+        toast.success('Etiqueta gerada com sucesso!');
+        window.open(result.label, '_blank');
+      }
+    } catch (err) {
+      const msg = err?.response?.data?.error || 'Erro ao gerar etiqueta';
+      toast.error(msg);
+    } finally {
+      setIsGeneratingLabel(false);
     }
   };
 
@@ -144,61 +158,42 @@ const AdminOrders = () => {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Pedido
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Cliente
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Total
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Pagamento
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Envio
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Data
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">
-                    Ações
-                  </th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Pedido</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Cliente</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Total</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Pagamento</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Envio</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Data</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Ações</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {orders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-mono font-semibold text-text">
-                      #{order.orderNumber}
-                    </td>
+                    <td className="px-6 py-4 font-mono font-semibold text-text">#{order.orderNumber}</td>
                     <td className="px-6 py-4">
                       <div>
-                        <p className="font-medium text-text">
-                          {order.customerName}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {order.customerEmail}
-                        </p>
+                        <p className="font-medium text-text">{order.customerName}</p>
+                        <p className="text-xs text-gray-500">{order.customerEmail}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-semibold text-primary">
-                      {formatPrice(order.total)}
-                    </td>
+                    <td className="px-6 py-4 font-semibold text-primary">{formatPrice(order.total)}</td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.paymentStatus)}`}>
                         {getPaymentStatusLabel(order.paymentStatus)}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.shippingStatus)}`}>
-                        {getShippingStatusLabel(order.shippingStatus)}
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium w-fit ${getStatusColor(order.shippingStatus)}`}>
+                          {getShippingStatusLabel(order.shippingStatus)}
+                        </span>
+                        {order.shippingService && (
+                          <span className="text-xs text-gray-500">{order.shippingService}</span>
+                        )}
+                      </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-600 text-xs">
-                      {formatDate(order.createdAt)}
-                    </td>
+                    <td className="px-6 py-4 text-gray-600 text-xs">{formatDate(order.createdAt)}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => openDetailModal(order.id)}
@@ -227,13 +222,8 @@ const AdminOrders = () => {
           <div className="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
             {/* Modal Header */}
             <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
-              <h2 className="text-2xl font-bold text-text">
-                Pedido #{selectedOrder.orderNumber}
-              </h2>
-              <button
-                onClick={closeDetailModal}
-                className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
-              >
+              <h2 className="text-2xl font-bold text-text">Pedido #{selectedOrder.orderNumber}</h2>
+              <button onClick={closeDetailModal} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
                 <FiX size={24} className="text-gray-600" />
               </button>
             </div>
@@ -243,38 +233,82 @@ const AdminOrders = () => {
               {/* Order Info */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 font-medium mb-1">
-                    CLIENTE
-                  </p>
-                  <p className="font-semibold text-text">
-                    {selectedOrder.customerName}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {selectedOrder.customerEmail}
-                  </p>
+                  <p className="text-xs text-gray-500 font-medium mb-1">CLIENTE</p>
+                  <p className="font-semibold text-text">{selectedOrder.customerName}</p>
+                  <p className="text-sm text-gray-600">{selectedOrder.customerEmail}</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 font-medium mb-1">
-                    TOTAL
-                  </p>
-                  <p className="font-semibold text-2xl text-primary">
-                    {formatPrice(selectedOrder.total)}
-                  </p>
+                  <p className="text-xs text-gray-500 font-medium mb-1">TOTAL</p>
+                  <p className="font-semibold text-2xl text-primary">{formatPrice(selectedOrder.total)}</p>
+                  {selectedOrder.shippingService && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Frete: {selectedOrder.shippingService} · {formatPrice(selectedOrder.shippingCost)}
+                    </p>
+                  )}
                 </div>
+              </div>
+
+              {/* Super Frete Label Section */}
+              <div className="border rounded-xl p-5 bg-gradient-to-br from-blue-50 to-indigo-50">
+                <div className="flex items-center gap-2 mb-3">
+                  <FiTruck className="text-blue-600" size={20} />
+                  <h3 className="text-base font-bold text-blue-900">Super Frete — Etiqueta de Envio</h3>
+                </div>
+
+                {selectedOrder.shippingService && (
+                  <p className="text-sm text-blue-700 mb-3">
+                    Serviço selecionado: <strong>{selectedOrder.shippingService}</strong>
+                  </p>
+                )}
+
+                {selectedOrder.superfreteLabel ? (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-green-700 text-sm font-medium">
+                      <FiCheck size={16} />
+                      Etiqueta gerada com sucesso
+                    </div>
+                    <a
+                      href={selectedOrder.superfreteLabel}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                    >
+                      <FiDownload size={16} />
+                      Baixar Etiqueta PDF
+                    </a>
+                    {selectedOrder.superfreteOrderId && (
+                      <p className="text-xs text-gray-500">
+                        ID Super Frete: <span className="font-mono">{selectedOrder.superfreteOrderId}</span>
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-xs text-gray-500">
+                      Clique para criar o pedido no Super Frete e gerar a etiqueta de envio.
+                      O saldo da sua conta Super Frete será utilizado.
+                    </p>
+                    <button
+                      onClick={handleGenerateLabel}
+                      disabled={isGeneratingLabel}
+                      className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-60"
+                    >
+                      {isGeneratingLabel ? (
+                        <><FiLoader className="animate-spin" size={16} /> Gerando etiqueta...</>
+                      ) : (
+                        <><FiPackage size={16} /> Gerar Etiqueta Super Frete</>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Status Update */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-bold text-text mb-4">
-                  Atualizar Status
-                </h3>
-
+                <h3 className="text-lg font-bold text-text mb-4">Atualizar Status</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Payment Status */}
                   <div>
-                    <label className="block text-sm font-semibold text-text mb-3">
-                      Status de Pagamento
-                    </label>
+                    <label className="block text-sm font-semibold text-text mb-3">Status de Pagamento</label>
                     <div className="space-y-2">
                       {['PENDING', 'PAID', 'CANCELLED', 'REFUNDED'].map((status) => (
                         <button
@@ -293,11 +327,8 @@ const AdminOrders = () => {
                     </div>
                   </div>
 
-                  {/* Shipping Status */}
                   <div>
-                    <label className="block text-sm font-semibold text-text mb-3">
-                      Status de Envio
-                    </label>
+                    <label className="block text-sm font-semibold text-text mb-3">Status de Envio</label>
                     <div className="space-y-2">
                       {['PROCESSING', 'SHIPPED', 'DELIVERED'].map((status) => (
                         <button
@@ -320,9 +351,7 @@ const AdminOrders = () => {
 
               {/* Tracking Code */}
               <div className="border-t pt-6">
-                <label className="block text-sm font-semibold text-text mb-3">
-                  Código de Rastreio
-                </label>
+                <label className="block text-sm font-semibold text-text mb-3">Código de Rastreio</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -336,11 +365,7 @@ const AdminOrders = () => {
                     disabled={isUpdatingTracking}
                     className="btn-primary px-6 flex items-center gap-2"
                   >
-                    {isUpdatingTracking ? (
-                      <FiLoader className="animate-spin" size={18} />
-                    ) : (
-                      <FiTruck size={18} />
-                    )}
+                    {isUpdatingTracking ? <FiLoader className="animate-spin" size={18} /> : <FiTruck size={18} />}
                     Atualizar
                   </button>
                 </div>
@@ -353,77 +378,45 @@ const AdminOrders = () => {
 
               {/* Order Items */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-bold text-text mb-4">
-                  Itens do Pedido
-                </h3>
+                <h3 className="text-lg font-bold text-text mb-4">Itens do Pedido</h3>
                 <div className="space-y-3 max-h-80 overflow-y-auto">
                   {selectedOrder.items && selectedOrder.items.length > 0 ? (
                     selectedOrder.items.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg"
-                      >
-                        {item.imageUrl && (
-                          <img
-                            src={item.imageUrl}
-                            alt={item.name}
-                            className="w-16 h-16 rounded-lg object-cover"
-                          />
-                        )}
+                      <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                         <div className="flex-1">
-                          <p className="font-medium text-text">
-                            {item.name}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Tamanho: {item.size} | Qty: {item.quantity}
-                          </p>
+                          <p className="font-medium text-text">{item.productName || item.name}</p>
+                          <p className="text-sm text-gray-600">Tamanho: {item.size} | Qty: {item.quantity}</p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold text-primary">
-                            {formatPrice(item.price * item.quantity)}
+                            {formatPrice((item.productPrice || item.price) * item.quantity)}
                           </p>
-                          <p className="text-xs text-gray-500">
-                            {formatPrice(item.price)} cada
-                          </p>
+                          <p className="text-xs text-gray-500">{formatPrice(item.productPrice || item.price)} cada</p>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-500 text-center py-4">
-                      Nenhum item neste pedido
-                    </p>
+                    <p className="text-gray-500 text-center py-4">Nenhum item neste pedido</p>
                   )}
                 </div>
               </div>
 
               {/* Shipping Address */}
               <div className="border-t pt-6">
-                <h3 className="text-lg font-bold text-text mb-4">
-                  Endereço de Entrega
-                </h3>
+                <h3 className="text-lg font-bold text-text mb-4">Endereço de Entrega</h3>
                 <div className="bg-gray-50 rounded-lg p-4 text-sm">
-                  <p className="text-text mb-1">
-                    {selectedOrder.shippingAddress?.street}, {selectedOrder.shippingAddress?.number}
-                  </p>
-                  {selectedOrder.shippingAddress?.complement && (
-                    <p className="text-gray-600 mb-1">
-                      {selectedOrder.shippingAddress.complement}
-                    </p>
-                  )}
-                  <p className="text-gray-600 mb-1">
-                    {selectedOrder.shippingAddress?.city}, {selectedOrder.shippingAddress?.state}
-                  </p>
-                  <p className="text-gray-600">
-                    CEP: {selectedOrder.shippingAddress?.cep}
-                  </p>
+                  <p className="text-text mb-1">{selectedOrder.street}, {selectedOrder.number}</p>
+                  {selectedOrder.complement && <p className="text-gray-600 mb-1">{selectedOrder.complement}</p>}
+                  <p className="text-gray-600 mb-1">{selectedOrder.neighborhood} — {selectedOrder.city}, {selectedOrder.state}</p>
+                  <p className="text-gray-600">CEP: {selectedOrder.zipCode}</p>
                 </div>
               </div>
 
-              {/* Close Button */}
-              <div className="border-t pt-6 flex gap-3">
+              {/* Close */}
+              <div className="border-t pt-6">
                 <button
                   onClick={closeDetailModal}
-                  className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
                 >
                   Fechar
                 </button>
