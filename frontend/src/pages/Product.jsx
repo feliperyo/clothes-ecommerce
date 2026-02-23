@@ -468,7 +468,7 @@ const Product = () => {
                   return (
                     <button
                       key={size}
-                      onClick={() => !sizeDisabled && setSelectedSize(size)}
+                      onClick={() => { if (!sizeDisabled) { setSelectedSize(size); setQuantity(1); } }}
                       disabled={sizeDisabled}
                       className={`py-3 rounded-lg font-semibold transition-all border-2 relative ${
                         sizeDisabled
@@ -503,8 +503,11 @@ const Product = () => {
                   {quantity}
                 </span>
                 <button
-                  onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                  disabled={!inStock}
+                  onClick={() => {
+                    const sizeMax = selectedSize ? (getSizeStock(selectedSize) ?? product.stock) : product.stock;
+                    setQuantity(Math.min(sizeMax, quantity + 1));
+                  }}
+                  disabled={!inStock || (selectedSize ? (getSizeStock(selectedSize) ?? product.stock) <= quantity : product.stock <= quantity)}
                   className="px-4 py-3 sm:py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl leading-none"
                 >
                   +
