@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { FiTruck, FiCreditCard, FiTag, FiShield } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
-import { getProducts, getFeaturedProducts, getPromotionProducts } from '../utils/api';
+import { getProducts, getFeaturedProducts, getPromotionProducts, getNewProducts } from '../utils/api';
 import { FREE_SHIPPING_THRESHOLD } from '../utils/helpers';
 import { getOrganizationSchema, getLocalBusinessSchema, getWebSiteSchema } from '../utils/seo';
 
@@ -32,15 +32,15 @@ const Home = () => {
           const promos = await getPromotionProducts();
           setPromotionProducts(Array.isArray(promos) ? promos : []);
         } else if (showNewest) {
-          const allProducts = await getProducts();
-          setNewProducts(Array.isArray(allProducts) ? allProducts : []);
+          const newProds = await getNewProducts();
+          setNewProducts(Array.isArray(newProds) ? newProds : []);
         } else {
-          const [featured, allProducts] = await Promise.all([
+          const [featured, newProds] = await Promise.all([
             getFeaturedProducts(),
-            getProducts()
+            getNewProducts()
           ]);
           setFeaturedProducts(Array.isArray(featured) ? featured : []);
-          setNewProducts(Array.isArray(allProducts) ? allProducts.slice(0, 8) : []);
+          setNewProducts(Array.isArray(newProds) ? newProds : []);
 
           if (!showFeatured) {
             const promos = await getPromotionProducts();

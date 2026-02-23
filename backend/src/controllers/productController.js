@@ -112,10 +112,31 @@ const getPromotionProducts = async (req, res) => {
   }
 };
 
+// GET /api/products/new - Lançamentos (marcados manualmente)
+const getNewProducts = async (req, res) => {
+  try {
+    const prisma = getPrisma();
+    const products = await prisma.product.findMany({
+      where: {
+        isActive: true,
+        isNew: true
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 8
+    });
+
+    res.json(products || []);
+  } catch (error) {
+    console.error('Error fetching new products:', error);
+    res.status(500).json([]);
+  }
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   getFeaturedProducts,
   getProductsByCategory,
-  getPromotionProducts
+  getPromotionProducts,
+  getNewProducts
 };

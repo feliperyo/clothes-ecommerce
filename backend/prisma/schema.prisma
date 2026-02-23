@@ -26,6 +26,7 @@ model Product {
   colors        String?     // JSON array: '[{"name":"Preto","hex":"#000000"}]'
   isFeatured    Boolean     @default(false)
   isPromotion   Boolean     @default(false)
+  isNew         Boolean     @default(false)
   isActive      Boolean     @default(true)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt

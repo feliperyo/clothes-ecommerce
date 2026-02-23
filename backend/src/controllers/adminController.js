@@ -138,7 +138,8 @@ const createProduct = async (req, res) => {
       sizeStock,
       colors,
       isFeatured,
-      isPromotion
+      isPromotion,
+      isNew
     } = req.body;
 
     // Calcular stock total a partir de sizeStock se disponível
@@ -182,7 +183,8 @@ const createProduct = async (req, res) => {
         images,
         videoUrl,
         isFeatured: isFeatured === 'true' || isFeatured === true,
-        isPromotion: isPromotion === 'true' || isPromotion === true
+        isPromotion: isPromotion === 'true' || isPromotion === true,
+        isNew: isNew === 'true' || isNew === true
       }
     });
 
@@ -210,6 +212,7 @@ const updateProduct = async (req, res) => {
       colors,
       isFeatured,
       isPromotion,
+      isNew,
       isActive
     } = req.body;
 
@@ -235,6 +238,7 @@ const updateProduct = async (req, res) => {
       colors: colors || null,
       isFeatured: isFeatured === 'true' || isFeatured === true,
       isPromotion: isPromotion === 'true' || isPromotion === true,
+      isNew: isNew === 'true' || isNew === true,
       isActive: isActive === 'true' || isActive === true || isActive === undefined
     };
 
@@ -335,6 +339,28 @@ const togglePromotion = async (req, res) => {
   } catch (error) {
     console.error('Error toggling promotion:', error);
     res.status(500).json({ error: 'Erro ao atualizar promoção' });
+  }
+};
+
+// PATCH /api/admin/products/:id/new - Toggle lançamento
+const toggleNew = async (req, res) => {
+  try {
+    const prisma = getPrisma();
+    const { id } = req.params;
+
+    const product = await prisma.product.findUnique({
+      where: { id: parseInt(id) }
+    });
+
+    const updated = await prisma.product.update({
+      where: { id: parseInt(id) },
+      data: { isNew: !product.isNew }
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error('Error toggling new:', error);
+    res.status(500).json({ error: 'Erro ao atualizar lançamento' });
   }
 };
 
@@ -443,6 +469,7 @@ module.exports = {
   deleteProduct,
   toggleFeatured,
   togglePromotion,
+  toggleNew,
   getAllOrders,
   getOrderById,
   updateOrderStatus,

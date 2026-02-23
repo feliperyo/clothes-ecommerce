@@ -61,6 +61,11 @@ export const getPromotionProducts = async () => {
   return response.data;
 };
 
+export const getNewProducts = async () => {
+  const response = await api.get('/products/new');
+  return response.data;
+};
+
 export const getProductsByCategory = async (category) => {
   const response = await api.get(`/products/category/${category}`);
   return response.data;
@@ -123,6 +128,11 @@ export const toggleFeatured = async (id) => {
 
 export const togglePromotion = async (id) => {
   const response = await api.patch(`/admin/products/${id}/promotion`);
+  return response.data;
+};
+
+export const toggleNew = async (id) => {
+  const response = await api.patch(`/admin/products/${id}/new`);
   return response.data;
 };
 

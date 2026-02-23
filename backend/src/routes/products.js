@@ -5,13 +5,15 @@ const {
   getProductById,
   getFeaturedProducts,
   getProductsByCategory,
-  getPromotionProducts
+  getPromotionProducts,
+  getNewProducts
 } = require('../controllers/productController');
 
 // Rotas públicas de produtos
 router.get('/', getAllProducts);
 router.get('/featured', getFeaturedProducts);
 router.get('/promotions', getPromotionProducts);
+router.get('/new', getNewProducts);
 router.get('/category/:category', getProductsByCategory);
 router.get('/:id', getProductById);
 

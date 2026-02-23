@@ -8,7 +8,8 @@ import {
   updateProduct,
   deleteProduct,
   toggleFeatured,
-  togglePromotion
+  togglePromotion,
+  toggleNew
 } from '../../utils/api';
 import { formatPrice } from '../../utils/helpers';
 import {
@@ -21,7 +22,8 @@ import {
   FiTrendingUp,
   FiAlertCircle,
   FiUpload,
-  FiImage
+  FiImage,
+  FiZap
 } from 'react-icons/fi';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
@@ -55,7 +57,8 @@ const AdminProducts = () => {
       imageUrl: '',
       discountPrice: '',
       featured: false,
-      promotion: false
+      promotion: false,
+      isNew: false
     }
   });
 
@@ -103,6 +106,7 @@ const AdminProducts = () => {
       setValue('discountPrice', product.discountPrice || '');
       setValue('featured', product.isFeatured || false);
       setValue('promotion', product.isPromotion || false);
+      setValue('isNew', product.isNew || false);
       // Preencher estoque por tamanho
       if (product.sizeStock) {
         try { setSizeStockMap(JSON.parse(product.sizeStock)); }
@@ -232,6 +236,7 @@ const AdminProducts = () => {
       formData.append('sizes', data.sizes);
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
+      formData.append('isNew', data.isNew || false);
       formData.append('existingImages', JSON.stringify(existingImages));
 
       if (removeVideo) {
@@ -307,6 +312,16 @@ const AdminProducts = () => {
       toast.success('Status de promoção atualizado!');
     } catch (error) {
       toast.error('Erro ao atualizar promoção');
+    }
+  };
+
+  const handleToggleNew = async (productId) => {
+    try {
+      const updated = await toggleNew(productId);
+      setProducts(products.map(p => p.id === productId ? updated : p));
+      toast.success('Status de lançamento atualizado!');
+    } catch (error) {
+      toast.error('Erro ao atualizar lançamento');
     }
   };
 
@@ -436,6 +451,17 @@ const AdminProducts = () => {
                           title="Toggle Promoção"
                         >
                           <FiTrendingUp size={14} />
+                        </button>
+                        <button
+                          onClick={() => handleToggleNew(product.id)}
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors ${
+                            product.isNew
+                              ? 'bg-purple-100 text-purple-600'
+                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                          }`}
+                          title="Toggle Lançamento"
+                        >
+                          <FiZap size={14} />
                         </button>
                       </div>
                     </td>
@@ -822,6 +848,14 @@ const AdminProducts = () => {
                     className="w-4 h-4 rounded"
                   />
                   <span className="text-sm text-text">Promoção</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register('isNew')}
+                    className="w-4 h-4 rounded"
+                  />
+                  <span className="text-sm text-text">Lançamento</span>
                 </label>
               </div>
 
