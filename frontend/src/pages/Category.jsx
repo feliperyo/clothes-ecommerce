@@ -146,6 +146,9 @@ const Category = () => {
     'Vestidos': 'Vestidos plus size para arrasar em qualquer evento. Tamanhos G0 ao G4.',
     'Conjuntos': 'Conjuntos plus size práticos e estilosos prontos para usar. Tamanhos G0 ao G4.',
     'Short / Short Saia': 'Shorts e saia shorts plus size estilosos e confortáveis. Tamanhos G0 ao G4.',
+    'Macaquinho/Macacão': 'Macaquinhos e macacões plus size modernos para um look completo e estiloso. Tamanhos G0 ao G4.',
+    'Blazer/Jaqueta': 'Blazers e jaquetas plus size para looks sofisticados e cheios de personalidade. Tamanhos G0 ao G4.',
+    'Acessórios': 'Acessórios para complementar e dar o toque final no seu look com estilo.',
   };
 
   return (

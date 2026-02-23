@@ -7,6 +7,7 @@ import {
   FiShare2,
   FiCheck,
   FiTruck,
+  FiTag,
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
@@ -480,10 +481,10 @@ const Product = () => {
                 </div>
               </div>
               <div className="flex gap-3 items-start">
-                <FiCheck className="text-primary flex-shrink-0 mt-1" size={20} />
+                <FiTag className="text-primary flex-shrink-0 mt-1" size={20} />
                 <div>
-                  <p className="font-semibold text-sm">Troca Facilitada</p>
-                  <p className="text-xs text-gray-600">Até 30 dias após a compra</p>
+                  <p className="font-semibold text-sm">10% OFF no Pix</p>
+                  <p className="text-xs text-gray-600">Para pagamento em PIX</p>
                 </div>
               </div>
             </div>

@@ -35,7 +35,8 @@ const Checkout = () => {
 
   const watchCep = watch('zipCode');
   const subtotal = getTotal();
-  const total = subtotal + shippingCost;
+  const pixDiscount = paymentMethod === 'pix' ? Math.round(subtotal * 0.1 * 100) / 100 : 0;
+  const total = subtotal + shippingCost - pixDiscount;
 
   // Ao montar, se já tem CEP salvo, re-buscar opções
   useEffect(() => {
@@ -134,7 +135,7 @@ const Checkout = () => {
         shippingCost,
         shippingService: selectedShipping?.name || null,
         shippingServiceId: selectedShipping?.id ?? null,
-        discount: 0
+        discount: pixDiscount
       };
 
       const response = await createOrder(orderData);
@@ -348,13 +349,13 @@ const Checkout = () => {
                       <input type="radio" value="credit_card" checked={paymentMethod === 'credit_card'} onChange={(e) => setPaymentMethod(e.target.value)} className="mr-3" />
                       <div>
                         <p className="font-semibold">Cartão de Crédito</p>
-                        <p className="text-sm text-gray-600">Parcele em até 12x sem juros</p>
+                        <p className="text-sm text-gray-600">Parcele em até 10x sem juros</p>
                       </div>
                     </label>
                     <label className="flex items-center p-4 border-2 rounded-lg cursor-pointer hover:border-primary transition-colors">
                       <input type="radio" value="pix" checked={paymentMethod === 'pix'} onChange={(e) => setPaymentMethod(e.target.value)} className="mr-3" />
                       <div>
-                        <p className="font-semibold">Pix</p>
+                        <p className="font-semibold">Pix — <span className="text-green-600">10% de desconto</span></p>
                         <p className="text-sm text-gray-600">Aprovação imediata</p>
                       </div>
                     </label>
@@ -415,6 +416,12 @@ const Checkout = () => {
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>Serviço:</span>
                     <span>{selectedShipping.name}{selectedShipping.company ? ` · ${selectedShipping.company}` : ''}</span>
+                  </div>
+                )}
+                {pixDiscount > 0 && (
+                  <div className="flex justify-between text-green-600 font-semibold">
+                    <span>Desconto Pix (10%):</span>
+                    <span>- {formatPrice(pixDiscount)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-lg font-bold text-primary pt-2 border-t">

@@ -43,6 +43,21 @@ const Footer = () => {
                   Short / Short Saia
                 </Link>
               </li>
+              <li>
+                <Link to="/categoria/Macaquinho/Macacão" className="hover:text-primary transition-colors">
+                  Macaquinho/Macacão
+                </Link>
+              </li>
+              <li>
+                <Link to="/categoria/Blazer/Jaqueta" className="hover:text-primary transition-colors">
+                  Blazer/Jaqueta
+                </Link>
+              </li>
+              <li>
+                <Link to="/categoria/Acessórios" className="hover:text-primary transition-colors">
+                  Acessórios
+                </Link>
+              </li>
             </ul>
           </div>
 

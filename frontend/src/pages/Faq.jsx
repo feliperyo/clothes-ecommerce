@@ -17,7 +17,7 @@ const sections = [
       {
         question: 'Quais formas de pagamento são aceitas?',
         answer:
-          'Aceitamos cartão de crédito (em até 12x sem juros), Pix e boleto bancário, tudo processado de forma segura pelo Mercado Pago.',
+          'Aceitamos cartão de crédito (em até 10x sem juros), Pix e boleto bancário, tudo processado de forma segura pelo Mercado Pago.',
       },
       {
         question: 'Como acompanho meu pedido?',

@@ -352,7 +352,7 @@ const Cart = () => {
               {/* Info */}
               <div className="bg-tertiary/30 rounded-lg p-4 text-xs text-gray-600 space-y-2">
                 <p><span className="font-semibold">Frete grátis</span> para pedidos acima de R$ {FREE_SHIPPING_THRESHOLD}</p>
-                <p><span className="font-semibold">Parcelamento</span> em até 12x no cartão</p>
+                <p><span className="font-semibold">Parcelamento</span> em até 10x no cartão</p>
               </div>
             </div>
           </div>

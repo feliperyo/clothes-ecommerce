@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { FiTruck, FiCreditCard, FiRefreshCw, FiShield } from 'react-icons/fi';
+import { FiTruck, FiCreditCard, FiTag, FiShield } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
 import { getProducts, getFeaturedProducts, getPromotionProducts } from '../utils/api';
@@ -87,9 +87,29 @@ const Home = () => {
       path: '/categoria/Vestidos'
     },
     {
+      name: 'Conjuntos',
+      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
+      path: '/categoria/Conjuntos'
+    },
+    {
       name: 'Short / Short Saia',
       image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=400',
       path: '/categoria/Short / Short Saia'
+    },
+    {
+      name: 'Macaquinho/Macacão',
+      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400',
+      path: '/categoria/Macaquinho/Macacão'
+    },
+    {
+      name: 'Blazer/Jaqueta',
+      image: 'https://images.unsplash.com/photo-1548712023-b6d97a5b0c03?w=400',
+      path: '/categoria/Blazer/Jaqueta'
+    },
+    {
+      name: 'Acessórios',
+      image: 'https://images.unsplash.com/photo-1584184924103-e310d9dc82fc?w=400',
+      path: '/categoria/Acessórios'
     }
   ];
 
@@ -200,15 +220,15 @@ const Home = () => {
             <div className="flex items-center gap-2 sm:gap-3">
               <FiCreditCard size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-xs sm:text-sm">Até 12x s/ juros</p>
+                <p className="font-semibold text-xs sm:text-sm">Até 10x s/ juros</p>
                 <p className="text-xs text-gray-500">No cartão</p>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              <FiRefreshCw size={22} className="text-primary flex-shrink-0" />
+              <FiTag size={22} className="text-primary flex-shrink-0" />
               <div>
-                <p className="font-semibold text-xs sm:text-sm">Troca Facilitada</p>
-                <p className="text-xs text-gray-500">30 dias</p>
+                <p className="font-semibold text-xs sm:text-sm">10% OFF no Pix</p>
+                <p className="text-xs text-gray-500">Para pagamento em PIX</p>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
