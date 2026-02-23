@@ -136,6 +136,11 @@ export const toggleNew = async (id) => {
   return response.data;
 };
 
+export const togglePreSale = async (id) => {
+  const response = await api.patch(`/admin/products/${id}/presale`);
+  return response.data;
+};
+
 // === ADMIN - PEDIDOS ===
 
 export const getAllOrders = async () => {

@@ -241,15 +241,15 @@ const Product = () => {
 
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                {product.isPromotion && (
-                  <span className="badge-promo">OFERTA</span>
+                {product.isPreSale && (
+                  <span className="bg-orange-500 text-white px-3 py-1 rounded-full font-bold text-sm">PRÉ-VENDA</span>
                 )}
                 {product.isFeatured && (
                   <span className="badge-featured">DESTAQUE</span>
                 )}
                 {hasDiscount && (
                   <span className="bg-red-500 text-white px-3 py-1 rounded-full font-bold text-sm">
-                    -{discountPercent}%
+                    {discountPercent}% OFF
                   </span>
                 )}
               </div>
@@ -336,6 +336,19 @@ const Product = () => {
                 {product.name}
               </h1>
             </div>
+
+            {/* Pre-sale notice */}
+            {product.isPreSale && (
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                <p className="text-orange-700 font-bold text-sm flex items-center gap-2">
+                  <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                  Atenção: Pré-venda
+                </p>
+                <p className="text-orange-600 text-sm mt-1">
+                  Envio em até 7 a 10 dias após a compra
+                </p>
+              </div>
+            )}
 
             {/* Prices */}
             <div className="py-4 border-y border-gray-200">

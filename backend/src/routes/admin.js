@@ -12,6 +12,7 @@ const {
   toggleFeatured,
   togglePromotion,
   toggleNew,
+  togglePreSale,
   getAllOrders,
   getOrderById,
   updateOrderStatus,
@@ -39,6 +40,7 @@ router.delete('/products/:id', deleteProduct);
 router.patch('/products/:id/featured', toggleFeatured);
 router.patch('/products/:id/promotion', togglePromotion);
 router.patch('/products/:id/new', toggleNew);
+router.patch('/products/:id/presale', togglePreSale);
 
 // Pedidos
 router.get('/orders', getAllOrders);

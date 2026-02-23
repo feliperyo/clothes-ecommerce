@@ -27,6 +27,7 @@ model Product {
   isFeatured    Boolean     @default(false)
   isPromotion   Boolean     @default(false)
   isNew         Boolean     @default(false)
+  isPreSale     Boolean     @default(false)
   isActive      Boolean     @default(true)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt

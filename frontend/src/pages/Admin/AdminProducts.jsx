@@ -9,7 +9,8 @@ import {
   deleteProduct,
   toggleFeatured,
   togglePromotion,
-  toggleNew
+  toggleNew,
+  togglePreSale
 } from '../../utils/api';
 import { formatPrice } from '../../utils/helpers';
 import {
@@ -64,7 +65,8 @@ const AdminProducts = () => {
       discountPrice: '',
       featured: false,
       promotion: false,
-      isNew: false
+      isNew: false,
+      isPreSale: false
     }
   });
 
@@ -113,6 +115,7 @@ const AdminProducts = () => {
       setValue('featured', product.isFeatured || false);
       setValue('promotion', product.isPromotion || false);
       setValue('isNew', product.isNew || false);
+      setValue('isPreSale', product.isPreSale || false);
       // Preencher estoque por tamanho
       if (product.sizeStock) {
         try { setSizeStockMap(JSON.parse(product.sizeStock)); }
@@ -243,6 +246,7 @@ const AdminProducts = () => {
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
       formData.append('isNew', data.isNew || false);
+      formData.append('isPreSale', data.isPreSale || false);
       formData.append('existingImages', JSON.stringify(existingImages));
 
       if (removeVideo) {
@@ -331,6 +335,16 @@ const AdminProducts = () => {
     }
   };
 
+  const handleTogglePreSale = async (productId) => {
+    try {
+      const updated = await togglePreSale(productId);
+      setProducts(products.map(p => p.id === productId ? updated : p));
+      toast.success('Status de pré-venda atualizado!');
+    } catch (error) {
+      toast.error('Erro ao atualizar pré-venda');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -348,6 +362,7 @@ const AdminProducts = () => {
     if (filterStatus === 'featured' && !p.isFeatured) return false;
     if (filterStatus === 'promotion' && !p.isPromotion) return false;
     if (filterStatus === 'new' && !p.isNew) return false;
+    if (filterStatus === 'presale' && !p.isPreSale) return false;
     if (filterStatus === 'outofstock' && p.stock > 0) return false;
     if (filterStatus === 'lowstock' && (p.stock === 0 || p.stock > 10)) return false;
     return true;
@@ -515,6 +530,17 @@ const AdminProducts = () => {
                           title="Toggle Lançamento"
                         >
                           <FiZap size={14} />
+                        </button>
+                        <button
+                          onClick={() => handleTogglePreSale(product.id)}
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors text-xs font-bold ${
+                            product.isPreSale
+                              ? 'bg-orange-100 text-orange-600'
+                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                          }`}
+                          title="Toggle Pré-venda"
+                        >
+                          PV
                         </button>
                       </div>
                     </td>
@@ -925,6 +951,14 @@ const AdminProducts = () => {
                     className="w-4 h-4 rounded"
                   />
                   <span className="text-sm text-text">Lançamento</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register('isPreSale')}
+                    className="w-4 h-4 rounded"
+                  />
+                  <span className="text-sm text-orange-600 font-medium">Pré-venda</span>
                 </label>
               </div>
 

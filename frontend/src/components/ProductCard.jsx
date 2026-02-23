@@ -34,6 +34,11 @@ const ProductCard = ({ product }) => {
     >
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+        {product.isPreSale && (
+          <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-orange-500">
+            PRÉ-VENDA
+          </span>
+        )}
         {product.isFeatured && (
           <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary animate-bounce-soft">
             DESTAQUE

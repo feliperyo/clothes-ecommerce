@@ -139,7 +139,8 @@ const createProduct = async (req, res) => {
       colors,
       isFeatured,
       isPromotion,
-      isNew
+      isNew,
+      isPreSale
     } = req.body;
 
     // Calcular stock total a partir de sizeStock se disponível
@@ -184,7 +185,8 @@ const createProduct = async (req, res) => {
         videoUrl,
         isFeatured: isFeatured === 'true' || isFeatured === true,
         isPromotion: isPromotion === 'true' || isPromotion === true,
-        isNew: isNew === 'true' || isNew === true
+        isNew: isNew === 'true' || isNew === true,
+        isPreSale: isPreSale === 'true' || isPreSale === true
       }
     });
 
@@ -213,6 +215,7 @@ const updateProduct = async (req, res) => {
       isFeatured,
       isPromotion,
       isNew,
+      isPreSale,
       isActive
     } = req.body;
 
@@ -239,6 +242,7 @@ const updateProduct = async (req, res) => {
       isFeatured: isFeatured === 'true' || isFeatured === true,
       isPromotion: isPromotion === 'true' || isPromotion === true,
       isNew: isNew === 'true' || isNew === true,
+      isPreSale: isPreSale === 'true' || isPreSale === true,
       isActive: isActive === 'true' || isActive === true || isActive === undefined
     };
 
@@ -361,6 +365,28 @@ const toggleNew = async (req, res) => {
   } catch (error) {
     console.error('Error toggling new:', error);
     res.status(500).json({ error: 'Erro ao atualizar lançamento' });
+  }
+};
+
+// PATCH /api/admin/products/:id/presale - Toggle pré-venda
+const togglePreSale = async (req, res) => {
+  try {
+    const prisma = getPrisma();
+    const { id } = req.params;
+
+    const product = await prisma.product.findUnique({
+      where: { id: parseInt(id) }
+    });
+
+    const updated = await prisma.product.update({
+      where: { id: parseInt(id) },
+      data: { isPreSale: !product.isPreSale }
+    });
+
+    res.json(updated);
+  } catch (error) {
+    console.error('Error toggling pre-sale:', error);
+    res.status(500).json({ error: 'Erro ao atualizar pré-venda' });
   }
 };
 
@@ -492,6 +518,7 @@ module.exports = {
   toggleFeatured,
   togglePromotion,
   toggleNew,
+  togglePreSale,
   getAllOrders,
   getOrderById,
   updateOrderStatus,
