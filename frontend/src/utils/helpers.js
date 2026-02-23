@@ -148,7 +148,9 @@ export const getShippingStatusLabel = (status) => {
   const labels = {
     PROCESSING: 'Processando',
     SHIPPED: 'Enviado',
-    DELIVERED: 'Entregue'
+    DELIVERED: 'Entregue',
+    RETURNED: 'Devolvido',
+    CANCELLED: 'Cancelado'
   };
   return labels[status] || status;
 };

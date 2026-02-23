@@ -95,7 +95,7 @@ const CartDrawer = () => {
                       {item.name}
                     </h3>
                     <p className="text-xs text-gray-500 mb-2">
-                      Tamanho: {item.size}
+                      Tamanho: {item.size}{item.color ? ` · ${item.color.name}` : ''}
                     </p>
                     <p className="text-primary font-bold">
                       {formatPrice(item.price)}

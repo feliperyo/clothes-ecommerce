@@ -60,7 +60,7 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   // Adicionar produto ao carrinho
-  const addToCart = (product, size, quantity = 1) => {
+  const addToCart = (product, size, quantity = 1, color = null) => {
     if (!size) {
       toast.error('Por favor, selecione um tamanho');
       return;
@@ -69,9 +69,9 @@ export const CartProvider = ({ children }) => {
     const price = product.discountPrice || product.price;
 
     setCart(prevCart => {
-      // Verificar se o produto com o mesmo tamanho já está no carrinho
+      // Verificar se o produto com o mesmo tamanho E cor já está no carrinho
       const existingItemIndex = prevCart.findIndex(
-        item => item.id === product.id && item.size === size
+        item => item.id === product.id && item.size === size && item.color?.name === color?.name
       );
 
       if (existingItemIndex > -1) {
@@ -93,8 +93,9 @@ export const CartProvider = ({ children }) => {
             name: product.name,
             price,
             size,
+            color: color || null,
             quantity,
-            imageUrl: product.imageUrl,
+            imageUrl: color?.imageUrl || product.imageUrl,
             stock: product.stock
           }
         ];

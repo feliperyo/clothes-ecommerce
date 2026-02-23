@@ -139,7 +139,7 @@ const Cart = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <Link to={`/produto/${item.id}`} className="font-semibold text-sm text-text hover:text-primary transition-colors line-clamp-2">{item.name}</Link>
-                        <p className="text-xs text-gray-500 mt-1">Tam: {item.size}</p>
+                        <p className="text-xs text-gray-500 mt-1">Tam: {item.size}{item.color ? ` · ${item.color.name}` : ''}</p>
                         <p className="text-primary font-bold mt-1">{formatPrice(item.price)}</p>
                         <div className="flex items-center justify-between mt-2">
                           <div className="flex items-center border border-gray-300 rounded-lg">
@@ -167,7 +167,7 @@ const Cart = () => {
                         </div>
                       </div>
                       <div className="col-span-2 text-center">
-                        <span className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium">{item.size}</span>
+                        <span className="bg-gray-100 px-3 py-1 rounded-full text-sm font-medium">{item.size}{item.color ? ` · ${item.color.name}` : ''}</span>
                       </div>
                       <div className="col-span-2">
                         <div className="flex items-center justify-center border border-gray-300 rounded-lg">

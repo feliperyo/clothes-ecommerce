@@ -134,7 +134,7 @@ const AdminLayout = () => {
           <div className="text-sm">
             <p className="text-gray-500 text-xs">Usuário Logado</p>
             <p className="font-semibold text-text capitalize">
-              {admin?.name || admin?.username}
+              {admin?.name || admin?.username || 'Administrador'}
             </p>
           </div>
           <button

@@ -506,13 +506,23 @@ const deleteOrder = async (req, res) => {
     const prisma = getPrisma();
     const { id } = req.params;
 
-    // Deletar itens do pedido primeiro
-    await prisma.orderItem.deleteMany({
+    // Buscar itens do pedido antes de deletar para restaurar estoque
+    const orderItems = await prisma.orderItem.findMany({
       where: { orderId: parseInt(id) }
     });
 
-    await prisma.order.delete({
-      where: { id: parseInt(id) }
+    await prisma.$transaction(async (tx) => {
+      // Restaurar estoque de cada produto
+      for (const item of orderItems) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: { stock: { increment: item.quantity } }
+        });
+      }
+
+      // Deletar itens e pedido
+      await tx.orderItem.deleteMany({ where: { orderId: parseInt(id) } });
+      await tx.order.delete({ where: { id: parseInt(id) } });
     });
 
     res.json({ message: 'Pedido deletado com sucesso' });

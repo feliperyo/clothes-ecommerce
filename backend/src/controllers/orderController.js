@@ -70,35 +70,45 @@ const createOrder = async (req, res) => {
 
     const total = subtotal + shippingCost - discount;
 
-    // Criar pedido no banco
-    const order = await prisma.order.create({
-      data: {
-        orderNumber: generateOrderNumber(),
-        customerName: customer.name,
-        customerEmail: customer.email,
-        customerPhone: customer.phone,
-        customerCPF: customer.cpf,
-        zipCode: address.zipCode,
-        street: address.street,
-        number: address.number,
-        complement: address.complement,
-        neighborhood: address.neighborhood,
-        city: address.city,
-        state: address.state,
-        subtotal,
-        shippingCost,
-        discount,
-        total,
-        paymentMethod,
-        shippingService: shippingService || null,
-        shippingServiceId: shippingServiceId ? parseInt(shippingServiceId) : null,
-        items: {
-          create: orderItems
-        }
-      },
-      include: {
-        items: true
+    // Criar pedido e decrementar estoque em transação
+    const order = await prisma.$transaction(async (tx) => {
+      const created = await tx.order.create({
+        data: {
+          orderNumber: generateOrderNumber(),
+          customerName: customer.name,
+          customerEmail: customer.email,
+          customerPhone: customer.phone,
+          customerCPF: customer.cpf,
+          zipCode: address.zipCode,
+          street: address.street,
+          number: address.number,
+          complement: address.complement,
+          neighborhood: address.neighborhood,
+          city: address.city,
+          state: address.state,
+          subtotal,
+          shippingCost,
+          discount,
+          total,
+          paymentMethod,
+          shippingService: shippingService || null,
+          shippingServiceId: shippingServiceId ? parseInt(shippingServiceId) : null,
+          items: {
+            create: orderItems
+          }
+        },
+        include: { items: true }
+      });
+
+      // Decrementar estoque de cada produto
+      for (const item of items) {
+        await tx.product.update({
+          where: { id: item.productId },
+          data: { stock: { decrement: item.quantity } }
+        });
       }
+
+      return created;
     });
 
     // Criar preferência de pagamento no Mercado Pago
