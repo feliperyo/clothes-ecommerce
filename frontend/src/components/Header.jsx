@@ -65,9 +65,6 @@ const Header = () => {
             <Link to="/?promotion=true" className="text-text hover:text-primary transition-colors font-medium">
               Promoções
             </Link>
-            <Link to="/faq" className="text-text hover:text-primary transition-colors font-medium">
-              FAQ
-            </Link>
           </nav>
 
           {/* Search Bar (Desktop) */}
@@ -151,6 +148,44 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Categories Bar - Desktop */}
+      <div className="hidden lg:block border-t bg-white">
+        <div className="container">
+          <nav className="flex items-center justify-center space-x-6 py-2.5 text-sm">
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Todos os Produtos
+            </Link>
+            <Link to="/categoria/Blusas" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Blusas
+            </Link>
+            <Link to="/categoria/Calças" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Calças
+            </Link>
+            <Link to="/categoria/Vestidos" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Vestidos
+            </Link>
+            <Link to="/categoria/Conjuntos" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Conjuntos
+            </Link>
+            <Link to="/categoria/Macaquinho/Macacão" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Macaquinho/Macacão
+            </Link>
+            <Link to="/categoria/Saias" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Saias
+            </Link>
+            <Link to="/categoria/Shorts" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Shorts
+            </Link>
+            <Link to="/categoria/Acessórios" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Acessórios
+            </Link>
+            <Link to="/faq" className="text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              Perguntas Frequentes
+            </Link>
+          </nav>
+        </div>
+      </div>
+
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t">
@@ -160,7 +195,7 @@ const Header = () => {
               onClick={() => { setIsMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors font-medium"
             >
-              Início
+              Todos os Produtos
             </Link>
             <Link
               to="/?newest=true"
@@ -183,13 +218,16 @@ const Header = () => {
             >
               Promoções
             </Link>
-            <Link
-              to="/faq"
-              onClick={() => setIsMenuOpen(false)}
-              className="block py-3 text-text hover:text-primary transition-colors font-medium"
-            >
-              FAQ
-            </Link>
+            <span className="block py-2 text-xs text-gray-400 uppercase tracking-wider mt-2">Categorias</span>
+            <Link to="/categoria/Blusas" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Blusas</Link>
+            <Link to="/categoria/Calças" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Calças</Link>
+            <Link to="/categoria/Vestidos" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Vestidos</Link>
+            <Link to="/categoria/Conjuntos" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Conjuntos</Link>
+            <Link to="/categoria/Macaquinho/Macacão" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Macaquinho/Macacão</Link>
+            <Link to="/categoria/Saias" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Saias</Link>
+            <Link to="/categoria/Shorts" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Shorts</Link>
+            <Link to="/categoria/Acessórios" onClick={() => setIsMenuOpen(false)} className="block py-3 border-b border-gray-100 text-text hover:text-primary transition-colors">Acessórios</Link>
+            <Link to="/faq" onClick={() => setIsMenuOpen(false)} className="block py-3 mt-2 border-t border-gray-200 text-text hover:text-primary transition-colors font-medium">Perguntas Frequentes</Link>
           </nav>
         </div>
       )}
