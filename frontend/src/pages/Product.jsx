@@ -203,6 +203,19 @@ const Product = () => {
     return null;
   };
 
+  // Quantidade máxima permitida com base na seleção atual
+  const getMaxQty = () => {
+    if (selectedSize) {
+      return getSizeStock(selectedSize) ?? product.stock;
+    }
+    // Cor selecionada mas sem tamanho: limita ao maior estoque de qualquer tamanho dessa cor
+    if (isNestedStock && selectedColor) {
+      const colorStocks = Object.values(sizeStockParsed?.[selectedColor.name] || {});
+      return colorStocks.length > 0 ? Math.max(...colorStocks) : product.stock;
+    }
+    return product.stock;
+  };
+
   const imagesList = (() => {
     if (!product.images) return [product.imageUrl];
     try {
@@ -504,11 +517,8 @@ const Product = () => {
                   {quantity}
                 </span>
                 <button
-                  onClick={() => {
-                    const sizeMax = selectedSize ? (getSizeStock(selectedSize) ?? product.stock) : product.stock;
-                    setQuantity(Math.min(sizeMax, quantity + 1));
-                  }}
-                  disabled={!inStock || (selectedSize ? (getSizeStock(selectedSize) ?? product.stock) <= quantity : product.stock <= quantity)}
+                  onClick={() => setQuantity(Math.min(getMaxQty(), quantity + 1))}
+                  disabled={!inStock || getMaxQty() <= quantity}
                   className="px-4 py-3 sm:py-2 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-xl leading-none"
                 >
                   +

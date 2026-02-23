@@ -138,10 +138,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="mailto:contato@anacurve.com.br"
+                  href="mailto:mabecasmodas@hotmail.com"
                   className="hover:text-primary transition-colors"
                 >
-                  contato@anacurve.com.br
+                  mabecasmodas@hotmail.com
                 </a>
               </li>
 

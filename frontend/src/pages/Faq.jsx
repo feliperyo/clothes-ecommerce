@@ -58,7 +58,7 @@ const sections = [
       {
         question: 'Como posso excluir meus dados?',
         answer:
-          'Você pode solicitar a exclusão dos seus dados a qualquer momento entrando em contato pelo nosso WhatsApp (11) 91376-2420 ou pelo e-mail contato@anacurve.com.br. Atenderemos sua solicitação em até 15 dias úteis, conforme a LGPD.',
+          'Você pode solicitar a exclusão dos seus dados a qualquer momento entrando em contato pelo nosso WhatsApp (11) 91376-2420 ou pelo e-mail mabecasmodas@hotmail.com. Atenderemos sua solicitação em até 15 dias úteis, conforme a LGPD.',
       },
     ],
   },

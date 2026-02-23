@@ -41,6 +41,18 @@ const Collections = () => {
       path: '/categoria/Macaquinho/Macacão'
     },
     {
+      name: 'Saias',
+      description: 'Saias elegantes e versáteis para todos os momentos e estilos',
+      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800',
+      path: '/categoria/Saias'
+    },
+    {
+      name: 'Shorts',
+      description: 'Shorts confortáveis e estilosos para o dia a dia com muito estilo',
+      image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800',
+      path: '/categoria/Shorts'
+    },
+    {
       name: 'Blazer/Jaqueta',
       description: 'Blazers e jaquetas para compor looks sofisticados e cheios de personalidade',
       image: 'https://images.unsplash.com/photo-1548712023-b6d97a5b0c03?w=800',

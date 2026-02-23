@@ -236,7 +236,7 @@ const Checkout = () => {
                       </div>
                       <div>
                         <label className="label">Telefone/WhatsApp *</label>
-                        <input {...register('customerPhone', { required: true })} className={errors.customerPhone ? 'input-error' : 'input'} placeholder="(11) 99999-9999" />
+                        <input {...register('customerPhone', { required: true })} className={errors.customerPhone ? 'input-error' : 'input'} placeholder="(11) 99999-9999" maxLength={15} />
                       </div>
                     </div>
                     <div>
@@ -258,9 +258,15 @@ const Checkout = () => {
                       <input
                         {...register('zipCode', { required: true })}
                         onBlur={handleCepBlur}
+                        onChange={(e) => {
+                          const raw = e.target.value.replace(/\D/g, '').slice(0, 8);
+                          const masked = raw.length > 5 ? `${raw.slice(0, 5)}-${raw.slice(5)}` : raw;
+                          e.target.value = masked;
+                          register('zipCode').onChange(e);
+                        }}
                         className={errors.zipCode ? 'input-error' : 'input'}
                         placeholder="00000-000"
-                        maxLength={8}
+                        maxLength={9}
                       />
                     </div>
                     <div className="grid md:grid-cols-3 gap-4">

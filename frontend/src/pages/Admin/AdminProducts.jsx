@@ -52,6 +52,7 @@ const AdminProducts = () => {
   const [colorList, setColorList] = useState([]); // [{name, hex}]
   const [colorName, setColorName] = useState('');
   const [colorHex, setColorHex] = useState('#000000');
+  const [showColorImagePicker, setShowColorImagePicker] = useState(null);
   const [selectedStockColor, setSelectedStockColor] = useState(null);
   const [colorStockMap, setColorStockMap] = useState({});
   // Format: { "Verde": { sizes: "50,52", stock: { "50": 5, "52": 3 } } }
@@ -253,6 +254,7 @@ const AdminProducts = () => {
     setColorList([]);
     setColorName('');
     setColorHex('#000000');
+    setShowColorImagePicker(null);
     reset();
   };
 
@@ -313,7 +315,12 @@ const AdminProducts = () => {
       formData.append('description', data.description);
       formData.append('category', data.category);
       formData.append('price', data.price);
-      formData.append('colors', JSON.stringify(colorList));
+      // Filtrar blob URLs temporárias (imagens novas ainda não salvas no Cloudinary)
+      const colorsToSave = colorList.map(c => ({
+        ...c,
+        imageUrl: c.imageUrl && !c.imageUrl.startsWith('blob:') ? c.imageUrl : undefined
+      }));
+      formData.append('colors', JSON.stringify(colorsToSave));
 
       // Estoque: aninhado por cor ou flat
       if (colorList.length > 0) {
@@ -868,7 +875,7 @@ const AdminProducts = () => {
                     type="number"
                     placeholder="0.00"
                     step="0.01"
-                    {...register('price', { required: 'Preço é obrigatório' })}
+                    {...register('price', { required: 'Preço é obrigatório', min: { value: 0.01, message: 'Preço deve ser maior que zero' } })}
                     className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                       errors.price
                         ? 'border-red-500 focus:ring-red-200'
@@ -920,21 +927,95 @@ const AdminProducts = () => {
                   Cores Disponíveis (Opcional)
                 </label>
                 {colorList.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="space-y-1.5 mb-3">
                     {colorList.map((c, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 bg-gray-100 rounded-full px-3 py-1">
-                        <span
-                          className="w-4 h-4 rounded-full border border-gray-300 flex-shrink-0"
-                          style={{ backgroundColor: c.hex }}
-                        />
-                        <span className="text-sm">{c.name}</span>
-                        <button
-                          type="button"
-                          onClick={() => setColorList(prev => prev.filter((_, i) => i !== idx))}
-                          className="text-gray-400 hover:text-red-500 ml-1"
-                        >
-                          <FiX size={12} />
-                        </button>
+                      <div key={idx}>
+                        <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg p-2">
+                          <span
+                            className="w-6 h-6 rounded-sm border border-gray-300 flex-shrink-0"
+                            style={{ backgroundColor: c.hex }}
+                          />
+                          <span className="text-sm font-medium flex-1 truncate">{c.name}</span>
+                          {/* Imagem associada */}
+                          {c.imageUrl ? (
+                            <div className="flex items-center gap-1 flex-shrink-0">
+                              <img src={c.imageUrl} alt="" className="w-8 h-8 object-cover rounded border border-gray-200" />
+                              <button
+                                type="button"
+                                title="Remover foto"
+                                onClick={() => {
+                                  setColorList(prev => prev.map((x, i) => i === idx ? { ...x, imageUrl: null } : x));
+                                  if (showColorImagePicker === idx) setShowColorImagePicker(null);
+                                }}
+                                className="text-gray-400 hover:text-red-500"
+                              >
+                                <FiX size={10} />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setShowColorImagePicker(showColorImagePicker === idx ? null : idx)}
+                              className="text-xs text-primary hover:underline flex items-center gap-1 flex-shrink-0"
+                            >
+                              <FiImage size={12} /> Foto
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            title="Remover cor"
+                            onClick={() => {
+                              setColorList(prev => prev.filter((_, i) => i !== idx));
+                              if (showColorImagePicker === idx) setShowColorImagePicker(null);
+                            }}
+                            className="text-gray-400 hover:text-red-500 flex-shrink-0"
+                          >
+                            <FiX size={14} />
+                          </button>
+                        </div>
+                        {/* Picker de imagem inline */}
+                        {showColorImagePicker === idx && (
+                          <div className="mt-1 p-2 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            {(existingImages.length + imagePreviews.length) === 0 ? (
+                              <p className="text-xs text-gray-400 text-center py-2">
+                                Faça upload das imagens do produto para vinculá-las às cores
+                              </p>
+                            ) : (
+                              <>
+                                <p className="text-xs text-gray-500 mb-2">Selecione a foto para <strong>{c.name}</strong>:</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {existingImages.map((url, imgIdx) => (
+                                    <img
+                                      key={`ex-${imgIdx}`}
+                                      src={url}
+                                      alt=""
+                                      className="w-14 h-14 object-cover rounded cursor-pointer border-2 border-transparent hover:border-primary transition-colors"
+                                      onClick={() => {
+                                        setColorList(prev => prev.map((x, i) => i === idx ? { ...x, imageUrl: url } : x));
+                                        setShowColorImagePicker(null);
+                                      }}
+                                    />
+                                  ))}
+                                  {imagePreviews.map((url, imgIdx) => (
+                                    <div key={`prev-${imgIdx}`} className="relative">
+                                      <img
+                                        src={url}
+                                        alt=""
+                                        className="w-14 h-14 object-cover rounded cursor-pointer border-2 border-dashed border-orange-300 hover:border-primary transition-colors"
+                                        title="Imagem nova — salve o produto para confirmar o vínculo"
+                                        onClick={() => {
+                                          setColorList(prev => prev.map((x, i) => i === idx ? { ...x, imageUrl: url } : x));
+                                          setShowColorImagePicker(null);
+                                        }}
+                                      />
+                                      <span className="absolute bottom-0 left-0 right-0 bg-orange-400/80 text-white text-[8px] text-center py-0.5 rounded-b">Nova</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

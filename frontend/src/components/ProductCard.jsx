@@ -135,9 +135,11 @@ const ProductCard = ({ product }) => {
           <div className="flex flex-wrap gap-1.5 mb-2">
             {colorsParsed.slice(0, 6).map((c, idx) => (
               <button
+                type="button"
                 key={idx}
                 title={c.name}
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                   const next = activeColorIdx === idx ? null : idx;
                   setActiveColorIdx(next);
