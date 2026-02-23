@@ -67,29 +67,44 @@ const sections = [
     title: 'Trocas e Devoluções',
     content: [
       {
+        question: 'Qual o prazo para postagem do pedido?',
+        answer:
+          'O prazo para postagem nos Correios é de até 3 dias úteis contados após a aprovação do pagamento, sendo possível enviar antes.',
+      },
+      {
         question: 'Posso trocar um produto?',
         answer:
-          'Sim! Você tem até 30 dias após o recebimento para solicitar a troca. O produto deve estar sem uso, com etiquetas e na embalagem original.',
+          'Sim! Aceitamos troca de produtos sem uso em até 7 dias corridos após o recebimento, sem qualquer custo adicional. O produto deve estar nas mesmas condições em que foi recebido: sem indícios de uso, suor, perfume ou manchas, e com as etiquetas intactas.',
       },
       {
         question: 'Como solicito uma troca?',
         answer:
-          'Entre em contato pelo nosso WhatsApp (11) 91376-2420 informando o número do pedido e o motivo da troca. Nossa equipe irá orientar sobre o envio e os próximos passos.',
+          'Envie um e-mail para mabecasmodas@hotmail.com com: nome completo, CPF, número do pedido, motivo da troca e por qual produto/numeração deseja trocar. Em até 3 dias úteis você receberá um código de autorização de postagem. Basta levar o produto embalado aos Correios e postar com o código — sem custos para você.',
       },
       {
         question: 'Quem paga o frete da troca?',
         answer:
-          'Em caso de defeito ou envio incorreto, o frete de devolução é por nossa conta. Para trocas por preferência (tamanho, cor, modelo), o frete de envio fica por conta do cliente.',
+          'A primeira troca é por nossa conta, utilizando PAC (Correios) ou Jadlog, independentemente da forma de envio original. A partir da segunda troca, o frete poderá ser cobrado do solicitante. Caso o cliente tenha urgência, pode optar e custear o SEDEX.',
+      },
+      {
+        question: 'Posso trocar por outro produto de valor diferente?',
+        answer:
+          'Sim! Você pode escolher outro item conforme disponibilidade de estoque. Se o produto desejado for de valor superior, será necessário pagar a diferença pelas opções de pagamento do site. O novo produto será despachado somente após o recebimento do item a ser trocado em nosso centro de distribuição.',
       },
       {
         question: 'Posso devolver e receber reembolso?',
         answer:
-          'Sim, conforme o Código de Defesa do Consumidor, você tem até 7 dias após o recebimento para desistir da compra (direito de arrependimento). O reembolso será feito na mesma forma de pagamento utilizada na compra, em até 10 dias úteis após recebermos o produto de volta.',
+          'Sim. Em caso de devolução, o cliente pode optar por crédito (sem validade) no site ou pelo estorno do valor do produto na mesma forma de pagamento realizada. O prazo para postagem do produto é de 7 dias corridos após a data de entrega da encomenda.',
       },
       {
-        question: 'O que fazer se o produto chegou com defeito?',
+        question: 'O que fazer se o produto chegou com defeito ou errado?',
         answer:
-          'Entre em contato imediatamente pelo WhatsApp (11) 91376-2420 com fotos do defeito. Enviaremos um novo produto ou realizaremos o reembolso integral, incluindo o frete.',
+          'Entre em contato com nossos canais de atendimento no horário comercial. Comprovada a falha, realizaremos a substituição do produto sem custos. Obs: os produtos podem apresentar pequenas variações de cor devido às configurações de monitores.',
+      },
+      {
+        question: 'Produtos em promoção podem ser trocados ou devolvidos?',
+        answer:
+          'Não. Não realizamos trocas nem devoluções de produtos em promoção.',
       },
     ],
   },
