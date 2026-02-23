@@ -143,12 +143,20 @@ const createProduct = async (req, res) => {
       isPreSale
     } = req.body;
 
-    // Calcular stock total a partir de sizeStock se disponível
+    // Calcular stock total a partir de sizeStock (flat ou aninhado por cor)
     let totalStock = parseInt(stock) || 0;
     if (sizeStock) {
       try {
         const sizeStockObj = JSON.parse(sizeStock);
-        totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+        const firstVal = Object.values(sizeStockObj)[0];
+        if (firstVal && typeof firstVal === 'object') {
+          // Formato aninhado por cor: { "Verde": { "50": 5 }, "Marrom": { "44": 2 } }
+          totalStock = Object.values(sizeStockObj).reduce((sum, colorStock) =>
+            sum + Object.values(colorStock).reduce((s, qty) => s + (parseInt(qty) || 0), 0), 0);
+        } else {
+          // Formato flat: { "P": 5, "M": 3 }
+          totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+        }
       } catch (e) { /* mantém totalStock do body */ }
     }
 
@@ -219,12 +227,18 @@ const updateProduct = async (req, res) => {
       isActive
     } = req.body;
 
-    // Calcular stock total a partir de sizeStock se disponível
+    // Calcular stock total a partir de sizeStock (flat ou aninhado por cor)
     let totalStock = parseInt(stock) || 0;
     if (sizeStock) {
       try {
         const sizeStockObj = JSON.parse(sizeStock);
-        totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+        const firstVal = Object.values(sizeStockObj)[0];
+        if (firstVal && typeof firstVal === 'object') {
+          totalStock = Object.values(sizeStockObj).reduce((sum, colorStock) =>
+            sum + Object.values(colorStock).reduce((s, qty) => s + (parseInt(qty) || 0), 0), 0);
+        } else {
+          totalStock = Object.values(sizeStockObj).reduce((sum, qty) => sum + (parseInt(qty) || 0), 0);
+        }
       } catch (e) { /* mantém totalStock do body */ }
     }
 

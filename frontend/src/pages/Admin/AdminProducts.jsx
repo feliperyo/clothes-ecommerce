@@ -52,6 +52,9 @@ const AdminProducts = () => {
   const [colorList, setColorList] = useState([]); // [{name, hex}]
   const [colorName, setColorName] = useState('');
   const [colorHex, setColorHex] = useState('#000000');
+  const [selectedStockColor, setSelectedStockColor] = useState(null);
+  const [colorStockMap, setColorStockMap] = useState({});
+  // Format: { "Verde": { sizes: "50,52", stock: { "50": 5, "52": 3 } } }
 
   const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
     defaultValues: {
@@ -74,10 +77,10 @@ const AdminProducts = () => {
     fetchProducts();
   }, []);
 
-  // Sincronizar sizeStockMap quando o campo de tamanhos muda
+  // Sincronizar sizeStockMap quando o campo de tamanhos muda (modo SEM cores)
   const watchedSizes = watch('sizes');
   useEffect(() => {
-    if (!watchedSizes) return;
+    if (!watchedSizes || colorList.length > 0) return;
     const sizeList = watchedSizes.split(',').map(s => s.trim()).filter(Boolean);
     setSizeStockMap(prev => {
       const next = {};
@@ -87,6 +90,50 @@ const AdminProducts = () => {
       return next;
     });
   }, [watchedSizes]);
+
+  // Sincronizar colorStockMap quando colorList muda
+  useEffect(() => {
+    if (colorList.length > 0) {
+      if (!selectedStockColor || !colorList.find(c => c.name === selectedStockColor)) {
+        setSelectedStockColor(colorList[0].name);
+      }
+      setColorStockMap(prev => {
+        const next = { ...prev };
+        colorList.forEach(c => {
+          if (!next[c.name]) next[c.name] = { sizes: '', stock: {} };
+        });
+        Object.keys(next).forEach(name => {
+          if (!colorList.find(c => c.name === name)) delete next[name];
+        });
+        return next;
+      });
+    } else {
+      setSelectedStockColor(null);
+    }
+  }, [colorList]);
+
+  // Helpers para estoque por cor
+  const handleColorSizesChange = (colorName, sizesStr) => {
+    setColorStockMap(prev => {
+      const colorData = prev[colorName] || { sizes: '', stock: {} };
+      const sizeList = sizesStr.split(',').map(s => s.trim()).filter(Boolean);
+      const newStock = {};
+      sizeList.forEach(size => {
+        newStock[size] = colorData.stock[size] ?? 0;
+      });
+      return { ...prev, [colorName]: { sizes: sizesStr, stock: newStock } };
+    });
+  };
+
+  const handleColorStockChange = (colorName, size, qty) => {
+    setColorStockMap(prev => ({
+      ...prev,
+      [colorName]: {
+        ...prev[colorName],
+        stock: { ...prev[colorName]?.stock, [size]: qty }
+      }
+    }));
+  };
 
   const fetchProducts = async () => {
     try {
@@ -116,12 +163,34 @@ const AdminProducts = () => {
       setValue('promotion', product.isPromotion || false);
       setValue('isNew', product.isNew || false);
       setValue('isPreSale', product.isPreSale || false);
-      // Preencher estoque por tamanho
+      // Preencher estoque por tamanho (flat ou nested por cor)
       if (product.sizeStock) {
-        try { setSizeStockMap(JSON.parse(product.sizeStock)); }
-        catch { setSizeStockMap({}); }
+        try {
+          const parsed = JSON.parse(product.sizeStock);
+          const firstVal = Object.values(parsed)[0];
+          if (firstVal && typeof firstVal === 'object' && !Array.isArray(firstVal)) {
+            // Formato aninhado por cor: { "Verde": { "50": 5 }, "Marrom": { "44": 2 } }
+            const csm = {};
+            Object.entries(parsed).forEach(([color, stockObj]) => {
+              csm[color] = {
+                sizes: Object.keys(stockObj).join(','),
+                stock: Object.fromEntries(Object.entries(stockObj).map(([s, q]) => [s, parseInt(q) || 0]))
+              };
+            });
+            setColorStockMap(csm);
+            setSizeStockMap({});
+          } else {
+            // Formato flat: { "P": 5, "M": 3 }
+            setSizeStockMap(parsed);
+            setColorStockMap({});
+          }
+        } catch {
+          setSizeStockMap({});
+          setColorStockMap({});
+        }
       } else {
         setSizeStockMap({});
+        setColorStockMap({});
       }
       // Preencher imagens existentes
       let existingImgs = [];
@@ -159,6 +228,8 @@ const AdminProducts = () => {
       setVideoPreview(null);
       setRemoveVideo(false);
       setSizeStockMap({});
+      setColorStockMap({});
+      setSelectedStockColor(null);
       setColorList([]);
       setColorName('');
       setColorHex('#000000');
@@ -177,6 +248,8 @@ const AdminProducts = () => {
     setVideoPreview(null);
     setRemoveVideo(false);
     setSizeStockMap({});
+    setColorStockMap({});
+    setSelectedStockColor(null);
     setColorList([]);
     setColorName('');
     setColorHex('#000000');
@@ -240,9 +313,22 @@ const AdminProducts = () => {
       formData.append('description', data.description);
       formData.append('category', data.category);
       formData.append('price', data.price);
-      formData.append('sizeStock', JSON.stringify(sizeStockMap));
       formData.append('colors', JSON.stringify(colorList));
-      formData.append('sizes', data.sizes);
+
+      // Estoque: aninhado por cor ou flat
+      if (colorList.length > 0) {
+        const nested = {};
+        const allSizes = new Set();
+        Object.entries(colorStockMap).forEach(([color, cData]) => {
+          nested[color] = cData.stock || {};
+          Object.keys(cData.stock || {}).forEach(s => allSizes.add(s));
+        });
+        formData.append('sizeStock', JSON.stringify(nested));
+        formData.append('sizes', Array.from(allSizes).join(','));
+      } else {
+        formData.append('sizeStock', JSON.stringify(sizeStockMap));
+        formData.append('sizes', data.sizes);
+      }
       formData.append('isFeatured', data.featured);
       formData.append('isPromotion', data.promotion);
       formData.append('isNew', data.isNew || false);
@@ -808,64 +894,31 @@ const AdminProducts = () => {
                   />
                 </div>
 
-                {/* Sizes */}
-                <div>
-                  <label className="block text-sm font-medium text-text mb-2">
-                    Tamanhos (separados por vírgula)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="P,M,G,GG"
-                    {...register('sizes', { required: 'Tamanhos são obrigatórios' })}
-                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                      errors.sizes
-                        ? 'border-red-500 focus:ring-red-200'
-                        : 'border-gray-300 focus:ring-primary/20'
-                    }`}
-                  />
-                  {errors.sizes && (
-                    <p className="text-red-500 text-sm mt-1">{errors.sizes.message}</p>
-                  )}
-                </div>
-              </div>
-
-              {/* Estoque por tamanho */}
-              <div>
-                <label className="block text-sm font-medium text-text mb-2">
-                  Estoque por Tamanho
-                  <span className="ml-2 text-gray-400 font-normal">
-                    (Total: {Object.values(sizeStockMap).reduce((a, b) => a + b, 0)} un.)
-                  </span>
-                </label>
-                {Object.keys(sizeStockMap).length === 0 ? (
-                  <p className="text-sm text-gray-400">Preencha os tamanhos acima para definir o estoque por tamanho</p>
-                ) : (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                    {Object.entries(sizeStockMap).map(([size, qty]) => (
-                      <div key={size} className="flex flex-col items-center gap-1">
-                        <span className="text-xs font-semibold text-gray-600 uppercase">{size}</span>
-                        <input
-                          type="number"
-                          min="0"
-                          value={qty}
-                          onChange={e => setSizeStockMap(prev => ({
-                            ...prev,
-                            [size]: parseInt(e.target.value) || 0
-                          }))}
-                          className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary/20"
-                        />
-                      </div>
-                    ))}
+                {/* Sizes - só aparece quando NÃO tem cores */}
+                {colorList.length === 0 && (
+                  <div>
+                    <label className="block text-sm font-medium text-text mb-2">
+                      Tamanhos (separados por vírgula)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="P,M,G,GG"
+                      {...register('sizes')}
+                      className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                        errors.sizes
+                          ? 'border-red-500 focus:ring-red-200'
+                          : 'border-gray-300 focus:ring-primary/20'
+                      }`}
+                    />
                   </div>
                 )}
               </div>
 
-              {/* Cores */}
+              {/* Cores Disponíveis */}
               <div>
                 <label className="block text-sm font-medium text-text mb-2">
                   Cores Disponíveis (Opcional)
                 </label>
-                {/* Lista de cores adicionadas */}
                 {colorList.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-3">
                     {colorList.map((c, idx) => (
@@ -886,7 +939,6 @@ const AdminProducts = () => {
                     ))}
                   </div>
                 )}
-                {/* Adicionar cor */}
                 <div className="flex items-center gap-2">
                   <input
                     type="color"
@@ -925,6 +977,110 @@ const AdminProducts = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Estoque por tamanho - MODO SEM CORES */}
+              {colorList.length === 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    Estoque por Tamanho
+                    <span className="ml-2 text-gray-400 font-normal">
+                      (Total: {Object.values(sizeStockMap).reduce((a, b) => a + b, 0)} un.)
+                    </span>
+                  </label>
+                  {Object.keys(sizeStockMap).length === 0 ? (
+                    <p className="text-sm text-gray-400">Preencha os tamanhos acima para definir o estoque por tamanho</p>
+                  ) : (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                      {Object.entries(sizeStockMap).map(([size, qty]) => (
+                        <div key={size} className="flex flex-col items-center gap-1">
+                          <span className="text-xs font-semibold text-gray-600 uppercase">{size}</span>
+                          <input
+                            type="number"
+                            min="0"
+                            value={qty}
+                            onChange={e => setSizeStockMap(prev => ({
+                              ...prev,
+                              [size]: parseInt(e.target.value) || 0
+                            }))}
+                            className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Estoque por Cor e Tamanho - MODO COM CORES */}
+              {colorList.length > 0 && (
+                <div>
+                  <label className="block text-sm font-medium text-text mb-2">
+                    Estoque por Cor e Tamanho
+                    <span className="ml-2 text-gray-400 font-normal">
+                      (Total: {Object.values(colorStockMap).reduce((sum, c) => sum + Object.values(c.stock || {}).reduce((a, b) => a + b, 0), 0)} un.)
+                    </span>
+                  </label>
+
+                  {/* Abas de cores */}
+                  <div className="flex gap-2 mb-3 border-b border-gray-200 pb-2">
+                    {colorList.map(c => (
+                      <button
+                        key={c.name}
+                        type="button"
+                        onClick={() => setSelectedStockColor(c.name)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-t-lg text-sm font-medium transition-colors ${
+                          selectedStockColor === c.name
+                            ? 'bg-primary/10 text-primary border-b-2 border-primary'
+                            : 'text-gray-500 hover:text-gray-700'
+                        }`}
+                      >
+                        <span
+                          className="w-3 h-3 rounded-full border border-gray-300 flex-shrink-0"
+                          style={{ backgroundColor: c.hex }}
+                        />
+                        {c.name}
+                        <span className="text-xs text-gray-400 ml-1">
+                          ({Object.values(colorStockMap[c.name]?.stock || {}).reduce((a, b) => a + b, 0)})
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tamanhos e estoque da cor selecionada */}
+                  {selectedStockColor && colorStockMap[selectedStockColor] && (
+                    <div className="space-y-3 bg-gray-50 rounded-lg p-3">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                          Tamanhos para {selectedStockColor} (separados por vírgula)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="P,M,G,GG ou 44,46,48"
+                          value={colorStockMap[selectedStockColor]?.sizes || ''}
+                          onChange={e => handleColorSizesChange(selectedStockColor, e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        />
+                      </div>
+                      {Object.keys(colorStockMap[selectedStockColor]?.stock || {}).length > 0 && (
+                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                          {Object.entries(colorStockMap[selectedStockColor].stock).map(([size, qty]) => (
+                            <div key={size} className="flex flex-col items-center gap-1">
+                              <span className="text-xs font-semibold text-gray-600 uppercase">{size}</span>
+                              <input
+                                type="number"
+                                min="0"
+                                value={qty}
+                                onChange={e => handleColorStockChange(selectedStockColor, size, parseInt(e.target.value) || 0)}
+                                className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:outline-none focus:ring-2 focus:ring-primary/20"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Checkboxes */}
               <div className="flex gap-6 pt-2">

@@ -178,6 +178,31 @@ const Product = () => {
     try { return JSON.parse(product.sizeStock); } catch { return null; }
   })();
 
+  // Detectar se estoque é aninhado por cor
+  const isNestedStock = sizeStockParsed && (() => {
+    const firstVal = Object.values(sizeStockParsed)[0];
+    return firstVal && typeof firstVal === 'object' && !Array.isArray(firstVal);
+  })();
+
+  // Tamanhos disponíveis dependem da cor selecionada quando estoque é por cor
+  const availableSizes = (() => {
+    if (isNestedStock && selectedColor) {
+      const colorStock = sizeStockParsed[selectedColor.name];
+      return colorStock ? Object.keys(colorStock) : [];
+    }
+    return parseSizes(product.sizes);
+  })();
+
+  // Estoque de um tamanho específico
+  const getSizeStock = (size) => {
+    if (!sizeStockParsed) return null;
+    if (isNestedStock && selectedColor) {
+      return sizeStockParsed[selectedColor.name]?.[size] ?? 0;
+    }
+    if (!isNestedStock) return sizeStockParsed[size] ?? 0;
+    return null;
+  };
+
   const imagesList = (() => {
     if (!product.images) return [product.imageUrl];
     try {
@@ -414,7 +439,7 @@ const Product = () => {
                     <button
                       key={idx}
                       type="button"
-                      onClick={() => setSelectedColor(color)}
+                      onClick={() => { setSelectedColor(color); setSelectedSize(''); }}
                       title={color.name}
                       className={`w-11 h-11 sm:w-9 sm:h-9 rounded-full border-2 transition-all ${
                         selectedColor?.name === color.name
@@ -430,11 +455,16 @@ const Product = () => {
 
             {/* Size Selection */}
             <div>
-              <label className="block font-semibold mb-3">Tamanho *</label>
+              <label className="block font-semibold mb-3">
+                Tamanho *
+                {isNestedStock && colorsParsed?.length > 0 && !selectedColor && (
+                  <span className="text-sm text-gray-400 font-normal ml-2">Selecione uma cor primeiro</span>
+                )}
+              </label>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                {parseSizes(product.sizes).map((size) => {
-                  const sizeQty = sizeStockParsed ? (sizeStockParsed[size] ?? 0) : null;
-                  const sizeDisabled = !inStock || (sizeStockParsed !== null && sizeQty === 0);
+                {availableSizes.map((size) => {
+                  const sizeQty = getSizeStock(size);
+                  const sizeDisabled = !inStock || (sizeQty !== null && sizeQty === 0);
                   return (
                     <button
                       key={size}
@@ -449,7 +479,7 @@ const Product = () => {
                       }`}
                     >
                       {size}
-                      {sizeStockParsed && sizeQty === 1 && !sizeDisabled && (
+                      {sizeQty !== null && sizeQty === 1 && !sizeDisabled && (
                         <span className="block text-xs text-red-500 font-normal leading-none mt-0.5">últ.</span>
                       )}
                     </button>
