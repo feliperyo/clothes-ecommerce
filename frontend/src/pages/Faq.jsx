@@ -84,7 +84,7 @@ const sections = [
       {
         question: 'Quem paga o frete da troca?',
         answer:
-          'A primeira troca é por nossa conta, utilizando PAC (Correios) ou Jadlog, independentemente da forma de envio original. A partir da segunda troca, o frete poderá ser cobrado do solicitante. Caso o cliente tenha urgência, pode optar e custear o SEDEX.',
+          'A primeira troca é gratuita! O frete fica por nossa conta, utilizando PAC (Correios) ou Jadlog, independentemente da forma de envio original. A partir da segunda troca, caso existam, o frete poderá ser cobrado do solicitante. Caso o cliente tenha urgência, pode optar e custear o SEDEX.',
       },
       {
         question: 'Posso trocar por outro produto de valor diferente?',
