@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { FiTruck, FiLoader } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import SEO from '../components/SEO';
-import { createOrder, fetchAddressByCep, calculateShippingOptions } from '../utils/api';
+import { createOrder, fetchAddressByCep, calculateShippingOptions, validateCoupon } from '../utils/api';
 import { formatPrice, formatCEP, validateCPF } from '../utils/helpers';
 
 const Checkout = () => {
@@ -20,6 +20,12 @@ const Checkout = () => {
   const [freeShipping, setFreeShipping] = useState(false);
   const [loadingShipping, setLoadingShipping] = useState(false);
   const [shippingCalculated, setShippingCalculated] = useState(!!selectedShipping);
+
+  // Cupom
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponApplied, setCouponApplied] = useState(null);
+  const [loadingCoupon, setLoadingCoupon] = useState(false);
 
   const shippingCost = freeShipping ? 0 : (selectedShipping?.price ?? 0);
 
@@ -36,7 +42,31 @@ const Checkout = () => {
   const watchCep = watch('zipCode');
   const subtotal = getTotal();
   const pixDiscount = paymentMethod === 'pix' ? Math.round(subtotal * 0.1 * 100) / 100 : 0;
-  const total = subtotal + shippingCost - pixDiscount;
+  const total = subtotal + shippingCost - pixDiscount - couponDiscount;
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setLoadingCoupon(true);
+    try {
+      const result = await validateCoupon(couponCode, subtotal);
+      setCouponDiscount(result.discountAmount);
+      setCouponApplied(result);
+      toast.success(`Cupom aplicado! ${result.discountPercent}% de desconto`);
+    } catch (err) {
+      const msg = err?.response?.data?.error || 'Cupom inválido';
+      toast.error(msg);
+      setCouponDiscount(0);
+      setCouponApplied(null);
+    } finally {
+      setLoadingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponCode('');
+    setCouponDiscount(0);
+    setCouponApplied(null);
+  };
 
   // Ao montar, se já tem CEP salvo, re-buscar opções
   useEffect(() => {
@@ -135,7 +165,7 @@ const Checkout = () => {
         shippingCost,
         shippingService: selectedShipping?.name || null,
         shippingServiceId: selectedShipping?.id ?? null,
-        discount: pixDiscount
+        discount: pixDiscount + couponDiscount
       };
 
       const response = await createOrder(orderData);
@@ -394,6 +424,37 @@ const Checkout = () => {
                   </div>
                 ))}
               </div>
+              {/* Coupon */}
+              <div className="border-t pt-4 mb-4">
+                <label className="block text-sm font-semibold text-text mb-2">Cupom de desconto</label>
+                {couponApplied ? (
+                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
+                    <div>
+                      <span className="text-green-700 font-bold text-sm">{couponApplied.code}</span>
+                      <span className="text-green-600 text-xs ml-2">-{couponApplied.discountPercent}%</span>
+                    </div>
+                    <button onClick={handleRemoveCoupon} className="text-red-500 text-xs hover:underline">Remover</button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Digite o cupom"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      disabled={loadingCoupon || !couponCode.trim()}
+                      className="px-4 py-2 bg-primary text-white text-sm rounded-lg font-medium hover:bg-primary-dark disabled:opacity-50 transition-colors"
+                    >
+                      {loadingCoupon ? '...' : 'Aplicar'}
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
@@ -416,6 +477,12 @@ const Checkout = () => {
                   <div className="flex justify-between text-xs text-gray-500">
                     <span>Serviço:</span>
                     <span>{selectedShipping.name}{selectedShipping.company ? ` · ${selectedShipping.company}` : ''}</span>
+                  </div>
+                )}
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-green-600 font-semibold">
+                    <span>Cupom ({couponApplied?.code}):</span>
+                    <span>- {formatPrice(couponDiscount)}</span>
                   </div>
                 )}
                 {pixDiscount > 0 && (

@@ -72,7 +72,7 @@ const getFeaturedProducts = async (req, res) => {
   }
 };
 
-// GET /api/products/category/:category - Por categoria
+// GET /api/products/category/:category - Por categoria (suporta múltiplas categorias separadas por vírgula)
 const getProductsByCategory = async (req, res) => {
   try {
     const prisma = getPrisma();
@@ -81,7 +81,7 @@ const getProductsByCategory = async (req, res) => {
     const products = await prisma.product.findMany({
       where: {
         isActive: true,
-        category
+        category: { contains: category, mode: 'insensitive' }
       },
       orderBy: { createdAt: 'desc' }
     });

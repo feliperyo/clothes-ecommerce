@@ -90,6 +90,11 @@ const Footer = () => {
                   Trocas e Devoluções
                 </Link>
               </li>
+              <li>
+                <Link to="/faq#envio-e-entrega" className="hover:text-primary transition-colors">
+                  Envio e Entrega
+                </Link>
+              </li>
             </ul>
           </div>
 

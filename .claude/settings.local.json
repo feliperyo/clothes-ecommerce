@@ -33,7 +33,10 @@
       "Bash(timeout:*)",
       "WebFetch(domain:anacurveshop-production.up.railway.app)",
       "Bash(node -e:*)",
-      "Bash(npx prisma validate:*)"
+      "Bash(npx prisma validate:*)",
+      "Bash(railway version:*)",
+      "Bash(railway.exe --help:*)",
+      "Bash(railway:*)"
     ]
   }
 }

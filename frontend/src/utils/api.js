@@ -158,6 +158,11 @@ export const updateTracking = async (id, trackingCode) => {
   return response.data;
 };
 
+export const deleteOrder = async (id) => {
+  const response = await api.delete(`/admin/orders/${id}`);
+  return response.data;
+};
+
 // === ADMIN - CUPONS ===
 
 export const getAllCoupons = async () => {

@@ -29,7 +29,7 @@ import {
 
 const API_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:3001';
 
-const CATEGORIES = ['Blusas', 'Calças', 'Vestidos', 'Conjuntos', 'Short / Short Saia', 'Macaquinho/Macacão', 'Blazer/Jaqueta', 'Acessórios'];
+const CATEGORIES = ['Blusas', 'Calças', 'Vestidos', 'Conjuntos', 'Short / Short Saia', 'Macaquinho/Macacão', 'Blazer/Jaqueta', 'Saias', 'Shorts', 'Acessórios'];
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -711,24 +711,40 @@ const AdminProducts = () => {
 
               {/* Grid 2 Colunas */}
               <div className="grid grid-cols-2 gap-4">
-                {/* Category */}
-                <div>
+                {/* Category - Multiple */}
+                <div className="col-span-2">
                   <label className="block text-sm font-medium text-text mb-2">
-                    Categoria
+                    Categorias (selecione uma ou mais)
                   </label>
-                  <select
-                    {...register('category')}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  >
-                    <option value="Blusas">Blusas</option>
-                    <option value="Calças">Calças</option>
-                    <option value="Vestidos">Vestidos</option>
-                    <option value="Conjuntos">Conjuntos</option>
-                    <option value="Short / Short Saia">Short / Short Saia</option>
-                    <option value="Macaquinho/Macacão">Macaquinho/Macacão</option>
-                    <option value="Blazer/Jaqueta">Blazer/Jaqueta</option>
-                    <option value="Acessórios">Acessórios</option>
-                  </select>
+                  <div className="flex flex-wrap gap-2">
+                    {CATEGORIES.map(cat => {
+                      const currentCats = (watch('category') || '').split(',').map(c => c.trim()).filter(Boolean);
+                      const isSelected = currentCats.includes(cat);
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            let updated;
+                            if (isSelected) {
+                              updated = currentCats.filter(c => c !== cat);
+                            } else {
+                              updated = [...currentCats, cat];
+                            }
+                            setValue('category', updated.join(','));
+                          }}
+                          className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                            isSelected
+                              ? 'bg-primary text-white border-primary'
+                              : 'bg-white text-gray-600 border-gray-300 hover:border-primary'
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <input type="hidden" {...register('category')} />
                 </div>
 
                 {/* Price */}

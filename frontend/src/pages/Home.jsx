@@ -85,31 +85,6 @@ const Home = () => {
       name: 'Vestidos',
       image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400',
       path: '/categoria/Vestidos'
-    },
-    {
-      name: 'Conjuntos',
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',
-      path: '/categoria/Conjuntos'
-    },
-    {
-      name: 'Short / Short Saia',
-      image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=400',
-      path: '/categoria/Short / Short Saia'
-    },
-    {
-      name: 'Macaquinho/Macacão',
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400',
-      path: '/categoria/Macaquinho/Macacão'
-    },
-    {
-      name: 'Blazer/Jaqueta',
-      image: 'https://images.unsplash.com/photo-1548712023-b6d97a5b0c03?w=400',
-      path: '/categoria/Blazer/Jaqueta'
-    },
-    {
-      name: 'Acessórios',
-      image: 'https://images.unsplash.com/photo-1584184924103-e310d9dc82fc?w=400',
-      path: '/categoria/Acessórios'
     }
   ];
 
@@ -245,12 +220,12 @@ const Home = () => {
       {/* Categories */}
       <section className="py-8 md:py-12 bg-beige-light/40">
         <div className="container">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
+          <div className="grid grid-cols-3 gap-4 md:gap-6">
             {categories.map((category) => (
               <Link
                 key={category.name}
                 to={category.path}
-                className="group relative overflow-hidden rounded-lg aspect-[4/3]"
+                className="group relative overflow-hidden rounded-lg aspect-[3/4]"
               >
                 <img
                   src={category.image}
@@ -339,13 +314,10 @@ const Home = () => {
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm tracking-widest uppercase mb-4 text-white/80">Quem Somos</p>
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-              Moda plus size moderna e de qualidade.
+              A Ana Curve Shop
             </h2>
             <p className="text-white/90 leading-relaxed text-lg">
-              A Ana Curve nasceu do desejo de oferecer moda plus size moderna,
-              bem-acabada e de qualidade para mulheres que querem se sentir confiantes
-              e lindas. Valorizamos suas curvas com estilo e elegância, trazendo peças
-              que combinam conforto e tendência.
+              A Ana Curve Shop é uma marca de moda midi e plus size que une qualidade, elegância e modernidade. Nascemos do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
             </p>
           </div>
         </div>

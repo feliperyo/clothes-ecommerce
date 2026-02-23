@@ -139,7 +139,7 @@ const createOrder = async (req, res) => {
         notification_url: `${process.env.BACKEND_URL}/api/webhooks/mercadopago`,
         statement_descriptor: 'ANA CURVE SHOP',
         payment_methods: {
-          installments: 12
+          installments: 10
         }
       };
 

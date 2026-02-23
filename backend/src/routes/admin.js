@@ -15,7 +15,8 @@ const {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
-  updateTracking
+  updateTracking,
+  deleteOrder
 } = require('../controllers/adminController');
 const { generateShippingLabel } = require('../controllers/shippingController');
 const { getAllCoupons, createCoupon, toggleCoupon, updateCoupon, deleteCoupon } = require('../controllers/couponController');
@@ -45,6 +46,7 @@ router.get('/orders/:id', getOrderById);
 router.patch('/orders/:id/status', updateOrderStatus);
 router.patch('/orders/:id/tracking', updateTracking);
 router.post('/orders/:id/generate-label', generateShippingLabel);
+router.delete('/orders/:id', deleteOrder);
 
 // Cupons
 router.get('/coupons', getAllCoupons);

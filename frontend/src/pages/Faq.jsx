@@ -108,6 +108,37 @@ const sections = [
       },
     ],
   },
+  {
+    id: 'envio-e-entrega',
+    title: 'Envio e Entrega',
+    content: [
+      {
+        question: 'Qual o prazo para postagem do meu pedido?',
+        answer:
+          'O prazo para postagem nos Correios é de até 3 dias úteis contados após a aprovação do pagamento, sendo possível enviar antes.',
+      },
+      {
+        question: 'Qual o prazo de entrega?',
+        answer:
+          'O prazo varia conforme a região. Após a postagem, o prazo estimado é de 3 a 10 dias úteis para capitais e regiões metropolitanas, e até 15 dias úteis para demais localidades.',
+      },
+      {
+        question: 'Como acompanho minha entrega?',
+        answer:
+          'Após o envio, você receberá o código de rastreio por e-mail ou WhatsApp. Você pode acompanhar pelo site dos Correios ou pela Jadlog, dependendo da transportadora utilizada.',
+      },
+      {
+        question: 'O frete é grátis?',
+        answer:
+          'Sim! Para compras acima de R$ 599,00, o frete é grátis para todo o Brasil.',
+      },
+      {
+        question: 'Quais transportadoras são utilizadas?',
+        answer:
+          'Trabalhamos com Correios (PAC e SEDEX) e Jadlog, conforme a opção escolhida pelo cliente no momento da compra.',
+      },
+    ],
+  },
 ];
 
 const Faq = () => {

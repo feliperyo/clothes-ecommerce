@@ -5,7 +5,8 @@ import {
   getOrderById,
   updateOrderStatus,
   updateTracking,
-  generateShippingLabel
+  generateShippingLabel,
+  deleteOrder
 } from '../../utils/api';
 import { formatPrice, formatDate, getPaymentStatusLabel, getShippingStatusLabel, getStatusColor } from '../../utils/helpers';
 import {
@@ -17,7 +18,8 @@ import {
   FiCheck,
   FiTruck,
   FiDownload,
-  FiSearch
+  FiSearch,
+  FiTrash2
 } from 'react-icons/fi';
 
 const STATUS_TABS = [
@@ -121,6 +123,17 @@ const AdminOrders = () => {
       toast.error('Erro ao atualizar código de rastreio');
     } finally {
       setIsUpdatingTracking(false);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId, orderNumber) => {
+    if (!window.confirm(`Tem certeza que deseja excluir o pedido #${orderNumber}? Esta ação não pode ser desfeita.`)) return;
+    try {
+      await deleteOrder(orderId);
+      setOrders(orders.filter(o => o.id !== orderId));
+      toast.success('Pedido excluído com sucesso!');
+    } catch {
+      toast.error('Erro ao excluir pedido');
     }
   };
 
@@ -254,13 +267,22 @@ const AdminOrders = () => {
                     </td>
                     <td className="px-6 py-4 text-gray-600 text-xs">{formatDate(order.createdAt)}</td>
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => openDetailModal(order.id)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                        title="Ver Detalhes"
-                      >
-                        <FiEye size={18} />
-                      </button>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => openDetailModal(order.id)}
+                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          title="Ver Detalhes"
+                        >
+                          <FiEye size={18} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteOrder(order.id, order.orderNumber)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Excluir Pedido"
+                        >
+                          <FiTrash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

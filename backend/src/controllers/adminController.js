@@ -460,6 +460,28 @@ const updateTracking = async (req, res) => {
   }
 };
 
+// DELETE /api/admin/orders/:id - Deletar pedido
+const deleteOrder = async (req, res) => {
+  try {
+    const prisma = getPrisma();
+    const { id } = req.params;
+
+    // Deletar itens do pedido primeiro
+    await prisma.orderItem.deleteMany({
+      where: { orderId: parseInt(id) }
+    });
+
+    await prisma.order.delete({
+      where: { id: parseInt(id) }
+    });
+
+    res.json({ message: 'Pedido deletado com sucesso' });
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    res.status(500).json({ error: 'Erro ao deletar pedido' });
+  }
+};
+
 module.exports = {
   login,
   getDashboard,
@@ -473,5 +495,6 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrderStatus,
-  updateTracking
+  updateTracking,
+  deleteOrder
 };

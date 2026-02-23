@@ -34,12 +34,6 @@ const ProductCard = ({ product }) => {
     >
       {/* Badges */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-        {product.isPromotion && (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-red-500 animate-pulse-glow relative overflow-hidden">
-            OFERTA
-            <span className="absolute inset-0 animate-shimmer"></span>
-          </span>
-        )}
         {product.isFeatured && (
           <span className="px-3 py-1 rounded-full text-xs font-semibold text-white bg-primary animate-bounce-soft">
             DESTAQUE
@@ -47,7 +41,7 @@ const ProductCard = ({ product }) => {
         )}
         {hasDiscount && (
           <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-red-600">
-            -{discountPercent}%
+            {discountPercent}% OFF
           </span>
         )}
       </div>
@@ -98,19 +92,30 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
 
-        {/* Color dots */}
+        {/* Installments */}
+        {price >= 10 && (
+          <p className="text-xs text-green-600 mb-2">
+            {(() => {
+              const maxInstallments = Math.min(10, Math.floor(price / 10));
+              const installmentValue = price / maxInstallments;
+              return `${maxInstallments}x de ${formatPrice(installmentValue)} sem juros`;
+            })()}
+          </p>
+        )}
+
+        {/* Color swatches */}
         {colorsParsed?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-2">
             {colorsParsed.slice(0, 6).map((c, idx) => (
               <span
                 key={idx}
                 title={c.name}
-                className="w-5 h-5 sm:w-4 sm:h-4 rounded-full border border-gray-200 flex-shrink-0"
+                className="w-5 h-5 rounded border border-gray-300 flex-shrink-0"
                 style={{ backgroundColor: c.hex }}
               />
             ))}
             {colorsParsed.length > 6 && (
-              <span className="text-xs text-gray-400">+{colorsParsed.length - 6}</span>
+              <span className="text-xs text-gray-400 self-center">+{colorsParsed.length - 6}</span>
             )}
           </div>
         )}
