@@ -132,11 +132,27 @@ const getNewProducts = async (req, res) => {
   }
 };
 
+// GET /api/products/presale - Produtos em pré-venda
+const getPreSaleProducts = async (req, res) => {
+  try {
+    const prisma = getPrisma();
+    const products = await prisma.product.findMany({
+      where: { isActive: true, isPreSale: true },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(products || []);
+  } catch (error) {
+    console.error('Error fetching pre-sale products:', error);
+    res.status(500).json([]);
+  }
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   getFeaturedProducts,
   getProductsByCategory,
   getPromotionProducts,
-  getNewProducts
+  getNewProducts,
+  getPreSaleProducts
 };
