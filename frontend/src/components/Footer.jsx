@@ -39,17 +39,17 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/categoria/Short / Short Saia" className="hover:text-primary transition-colors">
+                <Link to="/categoria/Short%20%2F%20Short%20Saia" className="hover:text-primary transition-colors">
                   Short / Short Saia
                 </Link>
               </li>
               <li>
-                <Link to="/categoria/Macaquinho/Macacão" className="hover:text-primary transition-colors">
+                <Link to="/categoria/Macaquinho%2FMacac%C3%A3o" className="hover:text-primary transition-colors">
                   Macaquinho/Macacão
                 </Link>
               </li>
               <li>
-                <Link to="/categoria/Blazer/Jaqueta" className="hover:text-primary transition-colors">
+                <Link to="/categoria/Blazer%2FJaqueta" className="hover:text-primary transition-colors">
                   Blazer/Jaqueta
                 </Link>
               </li>

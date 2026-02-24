@@ -32,13 +32,13 @@ const Collections = () => {
       name: 'Short / Short Saia',
       description: 'Shorts e saia shorts estilosos e confortáveis para valorizar suas curvas',
       image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=800',
-      path: '/categoria/Short / Short Saia'
+      path: '/categoria/Short%20%2F%20Short%20Saia'
     },
     {
       name: 'Macaquinho/Macacão',
       description: 'Macaquinhos e macacões modernos para um look completo e estiloso',
       image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800',
-      path: '/categoria/Macaquinho/Macacão'
+      path: '/categoria/Macaquinho%2FMacac%C3%A3o'
     },
     {
       name: 'Saias',
@@ -56,7 +56,7 @@ const Collections = () => {
       name: 'Blazer/Jaqueta',
       description: 'Blazers e jaquetas para compor looks sofisticados e cheios de personalidade',
       image: 'https://images.unsplash.com/photo-1548712023-b6d97a5b0c03?w=800',
-      path: '/categoria/Blazer/Jaqueta'
+      path: '/categoria/Blazer%2FJaqueta'
     },
     {
       name: 'Acessórios',
