@@ -93,9 +93,10 @@ function App() {
                   {/* Quem Somos — acima do footer */}
                   <section className="bg-gradient-to-r from-tertiary via-secondary/20 to-tertiary border-t">
                     <div className="container py-10 text-center max-w-2xl">
-                      <p className="font-semibold text-text mb-2">Moda Mid e Plus Size</p>
+                      <p className="font-semibold text-text mb-1">Moda Mid e Plus Size</p>
+                      <p className="text-xs text-gray-500 mb-3">Moderna e de qualidade</p>
                       <p className="text-sm text-gray-600 leading-relaxed">
-                        Nascemos do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
+                        A Ana Curve Shop nasceu do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
                       </p>
                     </div>
                   </section>

@@ -313,11 +313,12 @@ const Home = () => {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm tracking-widest uppercase mb-4 text-white/80">Quem Somos</p>
-            <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
-              A Ana Curve Shop
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">
+              Moda Mid e Plus Size
             </h2>
+            <p className="text-white/80 text-lg mb-6">Moderna e de qualidade</p>
             <p className="text-white/90 leading-relaxed text-lg">
-              A Ana Curve Shop é uma marca de moda midi e plus size que une qualidade, elegância e modernidade. Nascemos do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
+              A Ana Curve Shop nasceu do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
             </p>
           </div>
         </div>
