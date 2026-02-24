@@ -128,7 +128,7 @@ const CartDrawer = () => {
                       <button
                         onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
                         className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100 transition-colors"
-                        disabled={item.quantity >= item.stock}
+                        disabled={item.quantity >= (item.sizeStock ?? item.stock)}
                         aria-label="Aumentar quantidade"
                       >
                         <FiPlus size={14} />

@@ -60,13 +60,14 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   // Adicionar produto ao carrinho
-  const addToCart = (product, size, quantity = 1, color = null) => {
+  const addToCart = (product, size, quantity = 1, color = null, sizeStock = null) => {
     if (!size) {
       toast.error('Por favor, selecione um tamanho');
       return;
     }
 
     const price = product.discountPrice || product.price;
+    const maxStock = sizeStock ?? product.stock;
 
     setCart(prevCart => {
       // Verificar se o produto com o mesmo tamanho E cor já está no carrinho
@@ -75,12 +76,16 @@ export const CartProvider = ({ children }) => {
       );
 
       if (existingItemIndex > -1) {
-        // Atualizar quantidade do item existente
+        // Atualizar quantidade do item existente respeitando o estoque do tamanho
+        const existing = prevCart[existingItemIndex];
+        const itemMax = existing.sizeStock ?? maxStock;
+        const newQty = Math.min(itemMax, existing.quantity + quantity);
+        if (newQty === existing.quantity) {
+          toast.error('Quantidade máxima disponível já atingida');
+          return prevCart;
+        }
         const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex] = {
-          ...updatedCart[existingItemIndex],
-          quantity: updatedCart[existingItemIndex].quantity + quantity
-        };
+        updatedCart[existingItemIndex] = { ...existing, quantity: newQty };
         toast.success('Quantidade atualizada no carrinho!');
         return updatedCart;
       } else {
@@ -94,9 +99,10 @@ export const CartProvider = ({ children }) => {
             price,
             size,
             color: color || null,
-            quantity,
+            quantity: Math.min(maxStock, quantity),
             imageUrl: color?.imageUrl || product.imageUrl,
-            stock: product.stock
+            stock: product.stock,
+            sizeStock: maxStock
           }
         ];
       }
@@ -121,11 +127,13 @@ export const CartProvider = ({ children }) => {
     }
 
     setCart(prevCart =>
-      prevCart.map(item =>
-        item.id === productId && item.size === size
-          ? { ...item, quantity }
-          : item
-      )
+      prevCart.map(item => {
+        if (item.id === productId && item.size === size) {
+          const maxStock = item.sizeStock ?? item.stock;
+          return { ...item, quantity: Math.min(maxStock, quantity) };
+        }
+        return item;
+      })
     );
   };
 

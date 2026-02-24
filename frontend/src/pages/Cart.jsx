@@ -145,7 +145,7 @@ const Cart = () => {
                           <div className="flex items-center border border-gray-300 rounded-lg">
                             <button onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)} className="p-3 hover:bg-gray-100 transition-colors" aria-label="Diminuir"><FiMinus size={16} /></button>
                             <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)} className="p-3 hover:bg-gray-100 transition-colors" disabled={item.quantity >= item.stock} aria-label="Aumentar"><FiPlus size={16} /></button>
+                            <button onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)} className="p-3 hover:bg-gray-100 transition-colors" disabled={item.quantity >= (item.sizeStock ?? item.stock)} aria-label="Aumentar"><FiPlus size={16} /></button>
                           </div>
                           <div className="flex items-center gap-3">
                             <span className="font-bold text-primary text-sm">{formatPrice(item.price * item.quantity)}</span>
@@ -173,7 +173,7 @@ const Cart = () => {
                         <div className="flex items-center justify-center border border-gray-300 rounded-lg">
                           <button onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)} className="p-2 hover:bg-gray-100 transition-colors" aria-label="Diminuir"><FiMinus size={16} /></button>
                           <span className="w-8 text-center font-semibold text-sm">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)} className="p-2 hover:bg-gray-100 transition-colors" disabled={item.quantity >= item.stock} aria-label="Aumentar"><FiPlus size={16} /></button>
+                          <button onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)} className="p-2 hover:bg-gray-100 transition-colors" disabled={item.quantity >= (item.sizeStock ?? item.stock)} aria-label="Aumentar"><FiPlus size={16} /></button>
                         </div>
                       </div>
                       <div className="col-span-2 text-right">

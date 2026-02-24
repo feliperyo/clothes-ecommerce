@@ -109,7 +109,7 @@ const Product = () => {
       toast.error('Quantidade inválida');
       return;
     }
-    addToCart(product, selectedSize, quantity, selectedColor);
+    addToCart(product, selectedSize, quantity, selectedColor, getSizeStock(selectedSize) ?? product.stock);
     setQuantity(1);
   };
 
