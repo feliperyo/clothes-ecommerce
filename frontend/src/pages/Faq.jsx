@@ -17,7 +17,7 @@ const sections = [
       {
         question: 'Quais formas de pagamento são aceitas?',
         answer:
-          'Aceitamos cartão de crédito (em até 10x sem juros), Pix e boleto bancário, tudo processado de forma segura pelo Mercado Pago.',
+          'Aceitamos cartão de crédito (em até 10x sem juros), Pix e boleto bancário, tudo processado de forma segura.',
       },
       {
         question: 'Como acompanho meu pedido?',
@@ -48,12 +48,12 @@ const sections = [
       {
         question: 'Como meus dados são protegidos?',
         answer:
-          'Utilizamos criptografia SSL em todo o site e o processamento de pagamentos é feito pelo Mercado Pago, uma plataforma segura e certificada. Não armazenamos dados de cartão de crédito.',
+          'Utilizamos criptografia SSL em todo o site e o processamento de pagamentos é feito por plataformas seguras e certificadas. Não armazenamos dados de cartão de crédito.',
       },
       {
         question: 'Meus dados são compartilhados com terceiros?',
         answer:
-          'Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins de marketing. Seus dados são compartilhados apenas com a transportadora (para entrega) e com o Mercado Pago (para processamento do pagamento).',
+          'Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins de marketing. Seus dados são compartilhados apenas com a transportadora (para entrega) e com o processador de pagamento.',
       },
       {
         question: 'Como posso excluir meus dados?',

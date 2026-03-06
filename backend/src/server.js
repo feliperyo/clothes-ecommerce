@@ -47,6 +47,8 @@ const allowedOrigins = [
   'https://clothesshop-git-main-felipe-ryos-projects.vercel.app',
   'https://clothesshop-9u9jug756-felipe-ryos-projects.vercel.app',
   'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
   'http://localhost:3000'
 ].filter(Boolean);
 

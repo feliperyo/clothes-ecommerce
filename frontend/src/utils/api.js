@@ -1,4 +1,5 @@
 import axios from 'axios';
+import products from '../data/products';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
@@ -28,7 +29,6 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      // Token expirado ou inválido
       localStorage.removeItem('clothes_admin_token');
       localStorage.removeItem('clothes_admin_user');
       if (window.location.pathname.startsWith('/admin')) {
@@ -39,41 +39,47 @@ api.interceptors.response.use(
   }
 );
 
-// === PRODUTOS ===
+// === PRODUTOS (dados estáticos) ===
+
+const allProducts = products.filter(p => p.isActive);
 
 export const getProducts = async (params = {}) => {
-  const response = await api.get('/products', { params });
-  return response.data;
+  if (params.search) {
+    const q = params.search.toLowerCase();
+    return allProducts.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+    );
+  }
+  return allProducts;
 };
 
 export const getProductById = async (id) => {
-  const response = await api.get(`/products/${id}`);
-  return response.data;
+  const product = allProducts.find(p => p.id === Number(id));
+  if (!product) throw new Error('Produto não encontrado');
+  return product;
 };
 
 export const getFeaturedProducts = async () => {
-  const response = await api.get('/products/featured');
-  return response.data;
+  return allProducts.filter(p => p.isFeatured);
 };
 
 export const getPromotionProducts = async () => {
-  const response = await api.get('/products/promotions');
-  return response.data;
+  return allProducts.filter(p => p.isPromotion);
 };
 
 export const getNewProducts = async () => {
-  const response = await api.get('/products/new');
-  return response.data;
+  return allProducts.filter(p => p.isNew);
 };
 
 export const getPreSaleProducts = async () => {
-  const response = await api.get('/products/presale');
-  return response.data;
+  return allProducts.filter(p => p.isPreSale);
 };
 
 export const getProductsByCategory = async (category) => {
-  const response = await api.get(`/products/category/${category}`);
-  return response.data;
+  const decoded = decodeURIComponent(category);
+  return allProducts.filter(p => p.category === decoded);
 };
 
 // === PEDIDOS ===
@@ -221,7 +227,6 @@ export const generateShippingLabel = async (orderId) => {
 
 // === UTILIDADES ===
 
-// Buscar CEP via ViaCEP (API externa)
 export const fetchAddressByCep = async (cep) => {
   try {
     const cleanCep = cep.replace(/\D/g, '');
@@ -237,7 +242,6 @@ export const fetchAddressByCep = async (cep) => {
 
 // === IMAGENS ===
 
-// Monta a URL completa de uma imagem de produto
 export const getImageUrl = (imageUrl) => {
   if (!imageUrl) return '';
   if (imageUrl.startsWith('http')) return imageUrl;

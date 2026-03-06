@@ -10,13 +10,6 @@ const CouponPopup = () => {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    // Só mostra se ainda não foi fechado/enviado nessa sessão (ou nas últimas 24h)
-    const dismissed = localStorage.getItem(STORAGE_KEY);
-    if (dismissed) {
-      const ts = parseInt(dismissed, 10);
-      // Mostra de novo depois de 24h
-      if (Date.now() - ts < 24 * 60 * 60 * 1000) return;
-    }
     const timer = setTimeout(() => setVisible(true), 2000);
     return () => clearTimeout(timer);
   }, []);
