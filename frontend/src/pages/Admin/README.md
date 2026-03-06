@@ -1,6 +1,6 @@
-# Páginas Administrativas - AC Clothes Shop
+# Páginas Administrativas - Clothes Ecommerce
 
-Este diretório contém todas as páginas e componentes do painel administrativo do AC Clothes Shop.
+Este diretório contém todas as páginas e componentes do painel administrativo do Clothes Ecommerce.
 
 ## Arquivos Criados
 

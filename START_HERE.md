@@ -1,4 +1,4 @@
-# 🚀 AC Clothes Shop - Painel Administrativo
+# 🚀 Clothes Ecommerce - Painel Administrativo
 
 ## Bem-vindo! Comece por aqui
 
@@ -146,7 +146,7 @@ Se todos OK → Você está pronto! 🎉
 ## 📍 Arquivos Importantes
 
 ```
-d:\Ryart\AC Clothes Shop\
+d:\Ryart\Clothes Ecommerce\
 ├── START_HERE.md ← VOCÊ ESTÁ AQUI
 ├── ADMIN_QUICK_START.md (5 min)
 ├── ADMIN_PAGES_SUMMARY.md (10 min)

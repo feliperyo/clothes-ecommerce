@@ -8,7 +8,7 @@
 
 ## 📊 Resumo do Projeto
 
-### AC Clothes Shop - E-commerce Plus Size Completo
+### Clothes Ecommerce - E-commerce Plus Size Completo
 
 Um e-commerce totalmente funcional com:
 - ✅ Backend Node.js + Express + PostgreSQL + Prisma
@@ -487,7 +487,7 @@ node -e "console.log(require('bcryptjs').hashSync('nova-senha', 10))"
 
 ---
 
-**Desenvolvido com ❤️ para AC Clothes Shop**
+**Desenvolvido com ❤️ para Clothes Ecommerce**
 
 *Co-Authored-By: Claude Sonnet 4.5*
 

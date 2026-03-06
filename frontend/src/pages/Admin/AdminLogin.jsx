@@ -43,7 +43,7 @@ const AdminLogin = () => {
         {/* Logo / Header */}
         <div className="text-center mb-8">
           <img
-            src="/assets/logo-ac.webp"
+            src="/logo.svg"
             alt="Clothes Shop"
             className="h-20 w-auto mx-auto mb-4"
           />

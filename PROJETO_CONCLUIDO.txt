@@ -2,7 +2,7 @@
                     PROJETO CONCLUIDO COM SUCESSO
 ================================================================================
 
-PROJETO: AC Clothes Shop - Painel Administrativo
+PROJETO: Clothes Ecommerce - Painel Administrativo
 DATA: 04/02/2026
 STATUS: 100% CONCLUIDO
 VERSAO: 1.0.0
@@ -115,7 +115,7 @@ UI/UX
                         ARQUIVOS CRIADOS
 ================================================================================
 
-d:\Ryart\AC Clothes Shop\
+d:\Ryart\Clothes Ecommerce\
 ├── START_HERE.md                    <- LEIA PRIMEIRO
 ├── ADMIN_QUICK_START.md             (5 min)
 ├── ADMIN_PAGES_SUMMARY.md           (10 min)

@@ -1,4 +1,4 @@
-# Guia de Deploy - AC Clothes Shop E-commerce
+# Guia de Deploy - Clothes Ecommerce E-commerce
 
 Este guia orienta o deploy do projeto em produção usando **Vercel** (frontend) e **Railway** (backend).
 

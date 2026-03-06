@@ -1,4 +1,4 @@
-# 🛍️ AC Clothes Shop
+# 🛍️ Clothes Ecommerce
 
 > **E-commerce completo de Moda Plus Size com checkout integrado ao Mercado Pago**
 
@@ -8,7 +8,7 @@
 
 ## 📋 Sobre o Projeto
 
-AC Clothes Shop é um e-commerce completo e moderno voltado para moda plus size, desenvolvido com as melhores práticas e otimizado para custo mínimo de hospedagem (máximo US$ 5/mês no Railway).
+Clothes Ecommerce é um e-commerce completo e moderno voltado para moda plus size, desenvolvido com as melhores práticas e otimizado para custo mínimo de hospedagem (máximo US$ 5/mês no Railway).
 
 ### ✨ Principais Características
 
@@ -336,7 +336,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Desenvolvido para AC Clothes Shop**
+**Desenvolvido para Clothes Ecommerce**
 
 ## 🙏 Agradecimentos
 

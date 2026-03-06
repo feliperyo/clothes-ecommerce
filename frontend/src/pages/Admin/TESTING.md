@@ -40,7 +40,7 @@
 ### 2. AdminLayout.jsx
 
 - [ ] **Sidebar navigation**
-  - Deve exibir logo "AC Ana" no topo
+  - Deve exibir logo "Clothes" no topo
   - Deve ter 3 links: Dashboard, Produtos, Pedidos
   - Links devem ter ícones apropriados
   - Link atual deve ser destacado (background + border)

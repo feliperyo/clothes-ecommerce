@@ -52,7 +52,7 @@ const CouponPopup = () => {
         <div className="flex-1 p-8 flex flex-col justify-center">
           {/* Logo */}
           <div className="mb-5 flex justify-center">
-            <img src="/assets/logo-ac.webp" alt="Clothes Shop" className="h-16 w-auto" />
+            <img src="/logo.svg" alt="Clothes Shop" className="h-16 w-auto" />
           </div>
 
           {!sent ? (

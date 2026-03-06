@@ -99,7 +99,7 @@ const AdminLayout = () => {
         <div className="p-6 border-b border-gray-100">
           <Link to="/admin" className="flex items-center gap-3 no-underline">
             <img
-              src="/assets/logo-ac.webp"
+              src="/logo.svg"
               alt="Clothes Shop"
               className="h-12 w-auto"
             />

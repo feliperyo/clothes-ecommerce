@@ -208,7 +208,7 @@ frontend/src/utils/
 
 frontend/src/App.jsx (rotas)
 
-d:\Ryart\AC Clothes Shop\
+d:\Ryart\Clothes Ecommerce\
 ├── ADMIN_PAGES_SUMMARY.md
 ├── ADMIN_QUICK_START.md
 └── ADMIN_FILES_CHECKLIST.txt
@@ -247,7 +247,7 @@ Comece por:
 
 ================================================================================
 
-PROJETO: AC Clothes Shop - Painel Administrativo
+PROJETO: Clothes Ecommerce - Painel Administrativo
 DATA: 04/02/2026
 STATUS: CONCLUIDO E PRONTO PARA USO
 VERSAO: 1.0.0

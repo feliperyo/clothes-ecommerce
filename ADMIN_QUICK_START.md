@@ -1,4 +1,4 @@
-# Quick Start - Painel Administrativo AC Clothes Shop
+# Quick Start - Painel Administrativo Clothes Ecommerce
 
 ## O que foi criado?
 

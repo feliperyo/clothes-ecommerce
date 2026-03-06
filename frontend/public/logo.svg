@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <circle cx="100" cy="100" r="95" fill="#C07837" opacity="0.1"/>
   <circle cx="100" cy="100" r="80" fill="#C07837"/>
-  <text x="100" y="95" font-family="Playfair Display, serif" font-size="60" font-weight="bold" fill="#FAF5F3" text-anchor="middle">CS</text>
-  <text x="100" y="125" font-family="Poppins, sans-serif" font-size="14" fill="#FAF5F3" text-anchor="middle" letter-spacing="2">CLOTHES SHOP</text>
-  <path d="M 40 100 Q 100 60, 160 100" stroke="#DE9A8D" stroke-width="3" fill="none" opacity="0.6"/>
+  <text x="100" y="88" font-family="Georgia, Playfair Display, serif" font-size="28" font-weight="bold" fill="#FAF5F3" text-anchor="middle" letter-spacing="1">Clothes</text>
+  <text x="100" y="118" font-family="Arial, Poppins, sans-serif" font-size="18" fill="#FAF5F3" text-anchor="middle" letter-spacing="4">SHOP</text>
+  <line x1="55" y1="95" x2="145" y2="95" stroke="#DE9A8D" stroke-width="1.5" opacity="0.6"/>
 </svg>
