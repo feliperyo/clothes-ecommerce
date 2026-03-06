@@ -76,7 +76,7 @@ const ProductCard = ({ product }) => {
           } ${hoverImageUrl && !activeColor ? 'group-hover:opacity-0' : ''}`}
           onLoad={() => setImageLoaded(true)}
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
+            e.target.src = 'https://via.placeholder.com/400x533?text=Clothes+Shop';
             setImageLoaded(true);
           }}
         />

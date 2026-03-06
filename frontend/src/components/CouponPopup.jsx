@@ -17,7 +17,7 @@ const CouponPopup = () => {
       // Mostra de novo depois de 24h
       if (Date.now() - ts < 24 * 60 * 60 * 1000) return;
     }
-    const timer = setTimeout(() => setVisible(true), 4000);
+    const timer = setTimeout(() => setVisible(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
