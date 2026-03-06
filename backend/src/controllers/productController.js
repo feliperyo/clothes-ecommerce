@@ -13,8 +13,8 @@ const getAllProducts = async (req, res) => {
       ...(featured === 'true' && { isFeatured: true }),
       ...(search && {
         OR: [
-          { name: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } }
+          { name: { contains: search } },
+          { description: { contains: search } }
         ]
       })
     };
@@ -81,7 +81,7 @@ const getProductsByCategory = async (req, res) => {
     const products = await prisma.product.findMany({
       where: {
         isActive: true,
-        category: { contains: category, mode: 'insensitive' }
+        category: { contains: category }
       },
       orderBy: { createdAt: 'desc' }
     });

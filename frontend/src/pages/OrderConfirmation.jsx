@@ -393,7 +393,7 @@ const OrderConfirmation = () => {
             {/* Actions */}
             <div className="space-y-3">
               <a
-                href={`https://wa.me/5511913762420?text=${encodeURIComponent(`Olá! Gostaria de ajuda com o pedido #${order?.orderNumber}`)}`}
+                href={`https://wa.me/5500000000000?text=${encodeURIComponent(`Olá! Gostaria de ajuda com o pedido #${order?.orderNumber}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary w-full flex items-center justify-center gap-2"
@@ -409,7 +409,7 @@ const OrderConfirmation = () => {
                 Alguma dúvida sobre seu pedido?
               </p>
               <a
-                href="https://wa.me/5511913762420"
+                href="https://wa.me/5500000000000"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline font-semibold"

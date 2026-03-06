@@ -30,12 +30,12 @@ const Header = () => {
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">💳 Parcele em até 10x sem juros</span>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🔥 Novidades toda semana</span>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🚚 Entrega rápida para todo Brasil</span>
-          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (00) 00000-0000</a>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">{`✨ Frete Grátis acima de R$ ${FREE_SHIPPING_THRESHOLD}`}</span>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">💳 Parcele em até 10x sem juros</span>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🔥 Novidades toda semana</span>
           <span className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm">🚚 Entrega rápida para todo Brasil</span>
-          <a href="https://wa.me/5511913762420" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (11) 91376-2420</a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" className="mx-4 sm:mx-8 font-medium text-xs sm:text-sm hover:underline">📱 WhatsApp: (00) 00000-0000</a>
         </div>
       </div>
 

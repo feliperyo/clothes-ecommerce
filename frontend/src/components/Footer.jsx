@@ -82,7 +82,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <a
-                  href="https://wa.me/5511913762420"
+                  href="https://wa.me/5500000000000"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
@@ -119,20 +119,20 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <a
-                  href="https://wa.me/5511913762420"
+                  href="https://wa.me/5500000000000"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"
                 >
-                  (11) 91376-2420
+                  (00) 00000-0000
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:mabecasmodas@hotmail.com"
+                  href="mailto:contato@clothesshop.com"
                   className="hover:text-primary transition-colors"
                 >
-                  mabecasmodas@hotmail.com
+                  contato@clothesshop.com
                 </a>
               </li>
 

@@ -58,7 +58,7 @@ const sections = [
       {
         question: 'Como posso excluir meus dados?',
         answer:
-          'Você pode solicitar a exclusão dos seus dados a qualquer momento entrando em contato pelo nosso WhatsApp (11) 91376-2420 ou pelo e-mail mabecasmodas@hotmail.com. Atenderemos sua solicitação em até 15 dias úteis, conforme a LGPD.',
+          'Você pode solicitar a exclusão dos seus dados a qualquer momento entrando em contato pelo nosso WhatsApp (00) 00000-0000 ou pelo e-mail contato@clothesshop.com. Atenderemos sua solicitação em até 15 dias úteis, conforme a LGPD.',
       },
     ],
   },
@@ -79,7 +79,7 @@ const sections = [
       {
         question: 'Como solicito uma troca?',
         answer:
-          'Envie um e-mail para mabecasmodas@hotmail.com com: nome completo, CPF, número do pedido, motivo da troca e por qual produto/numeração deseja trocar. Em até 3 dias úteis você receberá um código de autorização de postagem. Basta levar o produto embalado aos Correios e postar com o código — sem custos para você.',
+          'Envie um e-mail para contato@clothesshop.com com: nome completo, CPF, número do pedido, motivo da troca e por qual produto/numeração deseja trocar. Em até 3 dias úteis você receberá um código de autorização de postagem. Basta levar o produto embalado aos Correios e postar com o código — sem custos para você.',
       },
       {
         question: 'Quem paga o frete da troca?',
@@ -183,7 +183,7 @@ const Faq = () => {
         <p className="text-gray-600 mb-10 max-w-2xl">
           Tire suas dúvidas sobre compras, entregas, trocas e devoluções. Se não encontrar o que procura, fale conosco pelo{' '}
           <a
-            href="https://wa.me/5511913762420"
+            href="https://wa.me/5500000000000"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary font-semibold hover:underline"
@@ -243,7 +243,7 @@ const Faq = () => {
             Nossa equipe está pronta para ajudar!
           </p>
           <a
-            href="https://wa.me/5511913762420?text=Ol%C3%A1!%20Vim%20pelo%20site%20Clothes%20Shop%20e%20tenho%20uma%20d%C3%BAvida."
+            href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Vim%20pelo%20site%20Clothes%20Shop%20e%20tenho%20uma%20d%C3%BAvida."
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-block"
