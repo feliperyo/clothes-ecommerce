@@ -544,11 +544,11 @@ npm run dev
 // No console do navegador, após fazer login:
 
 // Ver token
-const token = localStorage.getItem('anacurve_admin_token');
+const token = localStorage.getItem('clothesshop_admin_token');
 console.log('Token:', token);
 
 // Ver dados do usuário
-const user = JSON.parse(localStorage.getItem('anacurve_admin_user'));
+const user = JSON.parse(localStorage.getItem('clothesshop_admin_user'));
 console.log('User:', user);
 
 // Testar API manualmente

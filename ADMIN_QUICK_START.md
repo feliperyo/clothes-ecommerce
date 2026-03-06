@@ -1,4 +1,4 @@
-# Quick Start - Painel Administrativo AC Ana Curve
+# Quick Start - Painel Administrativo AC Clothes Shop
 
 ## O que foi criado?
 

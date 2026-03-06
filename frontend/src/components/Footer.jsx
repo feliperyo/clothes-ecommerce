@@ -142,7 +142,7 @@ const Footer = () => {
           {/* Redes Sociais */}
           <div>
             <a
-              href="https://www.instagram.com/anacurveshop"
+              href="https://www.instagram.com/clothesshop"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 text-gray-600 hover:text-primary transition-colors"
@@ -150,7 +150,7 @@ const Footer = () => {
               <FiInstagram size={28} />
               <div>
                 <span className="block text-xs text-gray-400 group-hover:text-primary transition-colors">SIGA-NOS NO INSTAGRAM</span>
-                <span className="block text-sm font-bold text-text group-hover:text-primary transition-colors">@ANACURVESHOP</span>
+                <span className="block text-sm font-bold text-text group-hover:text-primary transition-colors">@clothesshop</span>
               </div>
             </a>
           </div>
@@ -161,7 +161,7 @@ const Footer = () => {
       <div className="border-t">
         <div className="container py-4">
           <p className="text-center text-xs text-gray-400">
-            © Ana Curve Shop - CNPJ: 24.025.650/0001-50 - {currentYear}. Todos os direitos reservados.
+            © Clothes Shop - {currentYear}. Todos os direitos reservados.
           </p>
           <p className="text-center text-xs text-gray-400 mt-1">
             Desenvolvido por{' '}

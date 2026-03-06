@@ -159,7 +159,7 @@ const Faq = () => {
     <div className="bg-background min-h-screen">
       <SEO
         title="Perguntas Frequentes"
-        description="Tire suas dúvidas sobre compras, entregas, trocas e devoluções na Ana Curve Shop. Como comprar, formas de pagamento, prazo de entrega e política de trocas."
+        description="Tire suas dúvidas sobre compras, entregas, trocas e devoluções na Clothes Shop. Como comprar, formas de pagamento, prazo de entrega e política de trocas."
         path="/faq"
         jsonLd={[
           getFaqSchema(sections),
@@ -243,7 +243,7 @@ const Faq = () => {
             Nossa equipe está pronta para ajudar!
           </p>
           <a
-            href="https://wa.me/5511913762420?text=Ol%C3%A1!%20Vim%20pelo%20site%20Ana%20Curve%20Shop%20e%20tenho%20uma%20d%C3%BAvida."
+            href="https://wa.me/5511913762420?text=Ol%C3%A1!%20Vim%20pelo%20site%20Clothes%20Shop%20e%20tenho%20uma%20d%C3%BAvida."
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary inline-block"

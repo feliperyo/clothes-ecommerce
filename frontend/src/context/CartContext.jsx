@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     // Carregar carrinho do localStorage
     try {
-      const savedCart = localStorage.getItem('anacurve_cart');
+      const savedCart = localStorage.getItem('clothes_cart');
       if (!savedCart) return [];
       const parsed = JSON.parse(savedCart);
       return Array.isArray(parsed) ? parsed : [];
@@ -30,33 +30,33 @@ export const CartProvider = ({ children }) => {
   // Frete selecionado: { id, name, company, price, delivery_time } | null
   const [selectedShipping, setSelectedShipping] = useState(() => {
     try {
-      const saved = localStorage.getItem('anacurve_selected_shipping');
+      const saved = localStorage.getItem('clothes_selected_shipping');
       return saved ? JSON.parse(saved) : null;
     } catch { return null; }
   });
 
   const [shippingCep, setShippingCep] = useState(
-    () => localStorage.getItem('anacurve_shipping_cep') || ''
+    () => localStorage.getItem('clothes_shipping_cep') || ''
   );
 
   const selectShipping = (option) => {
     setSelectedShipping(option);
     if (option) {
-      localStorage.setItem('anacurve_selected_shipping', JSON.stringify(option));
+      localStorage.setItem('clothes_selected_shipping', JSON.stringify(option));
     } else {
-      localStorage.removeItem('anacurve_selected_shipping');
+      localStorage.removeItem('clothes_selected_shipping');
     }
   };
 
   const saveShippingCep = (cep) => {
     setShippingCep(cep);
-    if (cep) localStorage.setItem('anacurve_shipping_cep', cep);
-    else localStorage.removeItem('anacurve_shipping_cep');
+    if (cep) localStorage.setItem('clothes_shipping_cep', cep);
+    else localStorage.removeItem('clothes_shipping_cep');
   };
 
   // Salvar carrinho no localStorage sempre que mudar
   useEffect(() => {
-    localStorage.setItem('anacurve_cart', JSON.stringify(cart));
+    localStorage.setItem('clothes_cart', JSON.stringify(cart));
   }, [cart]);
 
   // Adicionar produto ao carrinho

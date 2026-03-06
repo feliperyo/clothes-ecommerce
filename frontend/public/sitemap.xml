@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://anacurveshop.com.br/</loc>
+    <loc>https://clothesshop.com.br/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/colecoes</loc>
+    <loc>https://clothesshop.com.br/colecoes</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/categoria/Blusas</loc>
+    <loc>https://clothesshop.com.br/categoria/Blusas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/categoria/Cal%C3%A7as</loc>
+    <loc>https://clothesshop.com.br/categoria/Cal%C3%A7as</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/categoria/Vestidos</loc>
+    <loc>https://clothesshop.com.br/categoria/Vestidos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/categoria/Conjuntos</loc>
+    <loc>https://clothesshop.com.br/categoria/Conjuntos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://anacurveshop.com.br/faq</loc>
+    <loc>https://clothesshop.com.br/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

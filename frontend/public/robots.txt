@@ -7,4 +7,4 @@ Disallow: /checkout
 Disallow: /pedido-confirmado
 
 # Sitemap
-Sitemap: https://anacurveshop.com.br/sitemap.xml
+Sitemap: https://clothesshop.com.br/sitemap.xml

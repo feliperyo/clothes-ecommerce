@@ -1,4 +1,4 @@
-# Sumário - Páginas Administrativas AC Ana Curve Shop
+# Sumário - Páginas Administrativas AC Clothes Shop
 
 ## Status: CONCLUÍDO ✓
 
@@ -498,7 +498,7 @@ Para dúvidas específicas:
 
 ## Conclusão
 
-O painel administrativo do AC Ana Curve Shop está **100% funcional** e pronto para produção.
+O painel administrativo do AC Clothes Shop está **100% funcional** e pronto para produção.
 
 Todas as páginas possuem:
 - ✅ Funcionalidades completas
@@ -516,7 +516,7 @@ Todas as páginas possuem:
 ## Arquivos Importantes
 
 ```
-d:\Ryart\AC Ana Curve\
+d:\Ryart\AC Clothes Shop\
 ├── frontend/
 │   ├── src/
 │   │   ├── pages/

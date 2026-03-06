@@ -187,8 +187,8 @@ Backend valida credenciais
 Retorna token JWT + user data
             ↓
 Frontend salva em localStorage:
-  - 'anacurve_admin_token' (token)
-  - 'anacurve_admin_user' (user data)
+  - 'clothesshop_admin_token' (token)
+  - 'clothesshop_admin_user' (user data)
             ↓
 Interceptor automático adiciona token
 a todas as requisições:
@@ -220,8 +220,8 @@ Acesse: `http://localhost:5173/admin/login`
 ```javascript
 // Console do navegador
 // Salvar um token de teste (se disponível)
-localStorage.setItem('anacurve_admin_token', 'seu_token_aqui');
-localStorage.setItem('anacurve_admin_user', JSON.stringify({
+localStorage.setItem('clothesshop_admin_token', 'seu_token_aqui');
+localStorage.setItem('clothesshop_admin_user', JSON.stringify({
   id: '1',
   username: 'admin',
   name: 'Administrador'

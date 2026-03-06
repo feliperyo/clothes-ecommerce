@@ -12,7 +12,7 @@ const api = axios.create({
 // Interceptor para adicionar token de autenticação
 api.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('anacurve_admin_token');
+    const token = localStorage.getItem('clothes_admin_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -29,8 +29,8 @@ api.interceptors.response.use(
   error => {
     if (error.response?.status === 401) {
       // Token expirado ou inválido
-      localStorage.removeItem('anacurve_admin_token');
-      localStorage.removeItem('anacurve_admin_user');
+      localStorage.removeItem('clothes_admin_token');
+      localStorage.removeItem('clothes_admin_user');
       if (window.location.pathname.startsWith('/admin')) {
         window.location.href = '/admin/login';
       }

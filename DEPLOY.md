@@ -1,4 +1,4 @@
-# Guia de Deploy - AC Ana Curve E-commerce
+# Guia de Deploy - AC Clothes Shop E-commerce
 
 Este guia orienta o deploy do projeto em produção usando **Vercel** (frontend) e **Railway** (backend).
 
@@ -45,7 +45,7 @@ PORT=3001
 JWT_SECRET=sua-chave-secreta-super-segura-aqui
 
 # Admin (para seed inicial)
-ADMIN_EMAIL=admin@anacurve.com.br
+ADMIN_EMAIL=admin@clothesshop.com
 ADMIN_PASSWORD=sua-senha-segura-aqui
 
 # Mercado Pago (PRODUÇÃO)

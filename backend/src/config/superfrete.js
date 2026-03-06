@@ -11,15 +11,15 @@ const superfreteApi = axios.create({
     'Authorization': `Bearer ${process.env.SUPERFRETE_TOKEN || ''}`,
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'User-Agent': 'AnaCurveShop/1.0'
+    'User-Agent': 'ClothesShop/1.0'
   },
   timeout: 15000
 });
 
 // Endereço do remetente (loja) — configurável via variáveis de ambiente
 const getSenderAddress = () => ({
-  name: process.env.SUPERFRETE_FROM_NAME || 'Ana Curve Shop',
-  email: process.env.SUPERFRETE_FROM_EMAIL || 'contato@anacurve.com',
+  name: process.env.SUPERFRETE_FROM_NAME || 'Clothes Shop',
+  email: process.env.SUPERFRETE_FROM_EMAIL || 'contato@clothesshop.com',
   phone: (process.env.SUPERFRETE_FROM_PHONE || '11999999999').replace(/\D/g, ''),
   document: (process.env.SUPERFRETE_FROM_DOCUMENT || '').replace(/\D/g, ''),
   postal_code: (process.env.SUPERFRETE_FROM_CEP || '01310100').replace(/\D/g, ''),

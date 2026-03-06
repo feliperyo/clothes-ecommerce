@@ -2,13 +2,13 @@
 
 ## ✅ Status: 100% COMPLETO E NO GITHUB
 
-**Repositório:** https://github.com/feliperyo/anacurveshop
+**Repositório:** https://github.com/feliperyo/clothesshop
 
 ---
 
 ## 📊 Resumo do Projeto
 
-### AC Ana Curve Shop - E-commerce Plus Size Completo
+### AC Clothes Shop - E-commerce Plus Size Completo
 
 Um e-commerce totalmente funcional com:
 - ✅ Backend Node.js + Express + PostgreSQL + Prisma
@@ -26,7 +26,7 @@ Um e-commerce totalmente funcional com:
 ## 📁 Estrutura Criada
 
 ```
-anacurveshop/
+clothesshop/
 ├── 📄 README.md (Completo com instruções)
 ├── 📄 LICENSE (MIT)
 ├── 📄 .gitignore
@@ -219,8 +219,8 @@ Text:       #4A4A4A  /* Cinza escuro */
 ### 1️⃣ Clonar do GitHub
 
 ```bash
-git clone https://github.com/feliperyo/anacurveshop.git
-cd anacurveshop
+git clone https://github.com/feliperyo/clothesshop.git
+cd clothesshop
 ```
 
 ### 2️⃣ Instalar Dependências
@@ -239,7 +239,7 @@ npm install
 
 **Backend** (`backend/.env`):
 ```env
-DATABASE_URL="postgresql://user:pass@localhost:5432/anacurve"
+DATABASE_URL="postgresql://user:pass@localhost:5432/clothesshop"
 JWT_SECRET=sua-chave-secreta
 MERCADOPAGO_ACCESS_TOKEN=seu-token
 MERCADOPAGO_PUBLIC_KEY=sua-public-key
@@ -295,7 +295,7 @@ npm run dev
 
 1. **Criar conta:** https://railway.app
 2. **New Project** → Deploy from GitHub
-3. Selecionar repositório: `feliperyo/anacurveshop`
+3. Selecionar repositório: `feliperyo/clothesshop`
 4. **Adicionar PostgreSQL:**
    - + New → Database → PostgreSQL
    - Copiar `DATABASE_URL`
@@ -422,7 +422,7 @@ railway run npm run prisma:seed
 
 ### 🔗 Links Importantes
 
-- **GitHub:** https://github.com/feliperyo/anacurveshop
+- **GitHub:** https://github.com/feliperyo/clothesshop
 - **Mercado Pago Docs:** https://www.mercadopago.com.br/developers
 - **Railway:** https://railway.app
 - **ViaCEP API:** https://viacep.com.br
@@ -487,7 +487,7 @@ node -e "console.log(require('bcryptjs').hashSync('nova-senha', 10))"
 
 ---
 
-**Desenvolvido com ❤️ para AC Ana Curve Shop**
+**Desenvolvido com ❤️ para AC Clothes Shop**
 
 *Co-Authored-By: Claude Sonnet 4.5*
 

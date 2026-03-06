@@ -34,8 +34,8 @@
 - [ ] **Token armazenado**
   - Após login bem-sucedido, abra DevTools
   - Verifique localStorage:
-    - `anacurve_admin_token`: deve conter JWT
-    - `anacurve_admin_user`: deve conter JSON do user
+    - `clothesshop_admin_token`: deve conter JWT
+    - `clothesshop_admin_user`: deve conter JSON do user
 
 ### 2. AdminLayout.jsx
 
@@ -334,7 +334,7 @@ Teste em:
 **Solução**: Verifique z-index do CSS, reload página
 
 ### Problema: Token não incluído na requisição
-**Solução**: Verifique se `anacurve_admin_token` está no localStorage
+**Solução**: Verifique se `clothesshop_admin_token` está no localStorage
 
 ### Problema: Tabelas vazias
 **Solução**: Verifique se backend retorna dados, confira DevTools Network
@@ -351,23 +351,23 @@ Teste em:
 // No console do navegador
 
 // Ver token
-console.log(localStorage.getItem('anacurve_admin_token'));
+console.log(localStorage.getItem('clothesshop_admin_token'));
 
 // Ver dados do user
-console.log(JSON.parse(localStorage.getItem('anacurve_admin_user')));
+console.log(JSON.parse(localStorage.getItem('clothesshop_admin_user')));
 
 // Limpar localStorage
 localStorage.clear();
 
 // Simular logout
-localStorage.removeItem('anacurve_admin_token');
-localStorage.removeItem('anacurve_admin_user');
+localStorage.removeItem('clothesshop_admin_token');
+localStorage.removeItem('clothesshop_admin_user');
 location.reload();
 
 // Testar API manualmente
 fetch('http://localhost:3000/api/admin/products', {
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('anacurve_admin_token')}`
+    'Authorization': `Bearer ${localStorage.getItem('clothesshop_admin_token')}`
   }
 })
 .then(r => r.json())

@@ -15,7 +15,7 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     const isVideo = file.fieldname === 'video';
     return {
-      folder: 'anacurve/products',
+      folder: 'clothesshop/products',
       resource_type: isVideo ? 'video' : 'image',
       allowed_formats: isVideo
         ? ['mp4', 'mov', 'avi', 'webm']

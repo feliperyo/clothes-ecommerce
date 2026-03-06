@@ -1,7 +1,7 @@
 {
-  "name": "ac-ana-curve-backend",
+  "name": "clothes-shop-backend",
   "version": "1.0.0",
-  "description": "Backend API para AC Ana Curve Shop",
+  "description": "Backend API para Clothes Shop",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",

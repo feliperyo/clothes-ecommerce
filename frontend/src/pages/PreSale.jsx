@@ -30,7 +30,7 @@ const PreSale = () => {
     <div className="section bg-background">
       <SEO
         title="Pré-Venda"
-        description="Produtos em pré-venda na Ana Curve Shop. Reserve o seu com antecedência. Envio em até 7 a 10 dias após a compra."
+        description="Produtos em pré-venda na Clothes Shop. Reserve o seu com antecedência. Envio em até 7 a 10 dias após a compra."
         path="/pre-venda"
       />
       <div className="container">

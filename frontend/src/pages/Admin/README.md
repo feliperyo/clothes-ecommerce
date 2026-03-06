@@ -1,6 +1,6 @@
-# Páginas Administrativas - AC Ana Curve Shop
+# Páginas Administrativas - AC Clothes Shop
 
-Este diretório contém todas as páginas e componentes do painel administrativo do AC Ana Curve Shop.
+Este diretório contém todas as páginas e componentes do painel administrativo do AC Clothes Shop.
 
 ## Arquivos Criados
 
@@ -197,8 +197,8 @@ updateTracking(id, trackingCode)        // PATCH /admin/orders/:id/tracking
 ## Autenticação e Segurança
 
 ### Token Management
-- Token armazenado em `localStorage` com chave `anacurve_admin_token`
-- Dados do usuário em `anacurve_admin_user` (JSON stringified)
+- Token armazenado em `localStorage` com chave `clothesshop_admin_token`
+- Dados do usuário em `clothesshop_admin_user` (JSON stringified)
 - Token automaticamente incluído em requisições via interceptor
 
 ### Verificação de Autenticação

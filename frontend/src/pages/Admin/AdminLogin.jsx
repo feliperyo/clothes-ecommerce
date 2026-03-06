@@ -24,8 +24,8 @@ const AdminLogin = () => {
       });
 
       // Salvar token no localStorage
-      localStorage.setItem('anacurve_admin_token', response.token);
-      localStorage.setItem('anacurve_admin_user', JSON.stringify(response.admin));
+      localStorage.setItem('clothes_admin_token', response.token);
+      localStorage.setItem('clothes_admin_user', JSON.stringify(response.admin));
 
       toast.success('Login realizado com sucesso!');
       navigate('/admin');
@@ -44,7 +44,7 @@ const AdminLogin = () => {
         <div className="text-center mb-8">
           <img
             src="/assets/logo-ac.webp"
-            alt="Ana Curve"
+            alt="Clothes Shop"
             className="h-20 w-auto mx-auto mb-4"
           />
           <p className="text-text/60">Painel Administrativo</p>

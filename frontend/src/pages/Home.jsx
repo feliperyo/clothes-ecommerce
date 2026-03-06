@@ -62,7 +62,7 @@ const Home = () => {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('anacurve_viewed_products');
+      const saved = localStorage.getItem('clothes_viewed_products');
       const parsed = saved ? JSON.parse(saved) : [];
       setViewedProducts(Array.isArray(parsed) ? parsed : []);
     } catch {
@@ -174,7 +174,7 @@ const Home = () => {
             <source media="(min-width: 768px)" srcSet="/assets/banner-home.webp" />
             <img
               src="/assets/banner-home.webp"
-              alt="Ana Curve - A Moda que suas Curvas"
+              alt="Clothes Shop - Moda Feminina"
               className="w-full h-auto object-cover"
             />
           </picture>
@@ -318,7 +318,7 @@ const Home = () => {
             </h2>
             <p className="text-white/80 text-lg mb-6">Moderna e de qualidade</p>
             <p className="text-white/90 leading-relaxed text-lg">
-              A Ana Curve Shop nasceu do desejo de valorizar todos os corpos, oferecendo peças que abraçam curvas com estilo, conforto e personalidade — porque vestir bem é para todos os tamanhos.
+              A Clothes Shop é uma loja de moda feminina que une qualidade, elegância e modernidade. Nosso compromisso é oferecer peças que valorizam todos os tipos de corpo, com tecidos de alta qualidade e preços acessíveis.
             </p>
           </div>
         </div>

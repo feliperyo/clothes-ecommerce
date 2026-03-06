@@ -20,8 +20,8 @@ const AdminLayout = () => {
 
   // Verificar autenticação ao montar
   useEffect(() => {
-    const token = localStorage.getItem('anacurve_admin_token');
-    const adminUser = localStorage.getItem('anacurve_admin_user');
+    const token = localStorage.getItem('clothes_admin_token');
+    const adminUser = localStorage.getItem('clothes_admin_user');
 
     if (!token || !adminUser) {
       navigate('/admin/login');
@@ -33,15 +33,15 @@ const AdminLayout = () => {
       setAdmin(parsedAdmin);
       setLoading(false);
     } catch (error) {
-      localStorage.removeItem('anacurve_admin_token');
-      localStorage.removeItem('anacurve_admin_user');
+      localStorage.removeItem('clothes_admin_token');
+      localStorage.removeItem('clothes_admin_user');
       navigate('/admin/login');
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('anacurve_admin_token');
-    localStorage.removeItem('anacurve_admin_user');
+    localStorage.removeItem('clothes_admin_token');
+    localStorage.removeItem('clothes_admin_user');
     toast.success('Logout realizado com sucesso');
     navigate('/admin/login');
   };
@@ -100,7 +100,7 @@ const AdminLayout = () => {
           <Link to="/admin" className="flex items-center gap-3 no-underline">
             <img
               src="/assets/logo-ac.webp"
-              alt="Ana Curve"
+              alt="Clothes Shop"
               className="h-12 w-auto"
             />
             <p className="text-xs text-gray-500">Admin Panel</p>

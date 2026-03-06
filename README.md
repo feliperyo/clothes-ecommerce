@@ -1,4 +1,4 @@
-# 🛍️ AC Ana Curve Shop
+# 🛍️ AC Clothes Shop
 
 > **E-commerce completo de Moda Plus Size com checkout integrado ao Mercado Pago**
 
@@ -8,7 +8,7 @@
 
 ## 📋 Sobre o Projeto
 
-AC Ana Curve Shop é um e-commerce completo e moderno voltado para moda plus size, desenvolvido com as melhores práticas e otimizado para custo mínimo de hospedagem (máximo US$ 5/mês no Railway).
+AC Clothes Shop é um e-commerce completo e moderno voltado para moda plus size, desenvolvido com as melhores práticas e otimizado para custo mínimo de hospedagem (máximo US$ 5/mês no Railway).
 
 ### ✨ Principais Características
 
@@ -54,7 +54,7 @@ Text: #4A4A4A       /* Cinza escuro */
 ## 📦 Estrutura do Projeto
 
 ```
-ac-ana-curve-shop/
+clothes-ecommerce/
 ├── backend/              # API REST Node.js + Express
 │   ├── prisma/          # Schema do banco de dados
 │   ├── src/
@@ -91,8 +91,8 @@ ac-ana-curve-shop/
 #### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/feliperyo/anacurveshop.git
-cd anacurveshop
+git clone https://github.com/feliperyo/clothesshop.git
+cd clothesshop
 ```
 
 #### 2. Configure o Backend
@@ -108,7 +108,7 @@ cp .env.example .env
 
 **Variáveis obrigatórias no `.env`:**
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/anacurve"
+DATABASE_URL="postgresql://user:password@localhost:5432/clothesshop"
 JWT_SECRET=sua-chave-secreta-aqui
 MERCADOPAGO_ACCESS_TOKEN=seu-token-aqui
 MERCADOPAGO_PUBLIC_KEY=sua-public-key-aqui
@@ -227,7 +227,7 @@ git push origin main
 
 1. Acesse: https://railway.app
 2. **New Project** → **Deploy from GitHub**
-3. Selecione o repositório `anacurveshop`
+3. Selecione o repositório `clothesshop`
 
 ### 3. Adicione PostgreSQL
 
@@ -336,7 +336,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Desenvolvido para AC Ana Curve Shop**
+**Desenvolvido para AC Clothes Shop**
 
 ## 🙏 Agradecimentos
 

@@ -157,7 +157,7 @@ const Category = () => {
     <div className="section bg-background">
       <SEO
         title={`${categoryDisplay} Plus Size`}
-        description={categoryDescriptions[categoryDisplay] || `${categoryDisplay} plus size na Ana Curve Shop. Frete grátis acima de R$599.`}
+        description={categoryDescriptions[categoryDisplay] || `${categoryDisplay} plus size na Clothes Shop. Frete grátis acima de R$599.`}
         path={`/categoria/${category}`}
         jsonLd={getBreadcrumbSchema([
           { name: 'Início', url: '/' },

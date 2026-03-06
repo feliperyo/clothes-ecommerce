@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FiX } from 'react-icons/fi';
 
-const STORAGE_KEY = 'anacurve_popup_dismissed';
+const STORAGE_KEY = 'clothes_popup_dismissed';
 
 const CouponPopup = () => {
   const [visible, setVisible] = useState(false);
@@ -52,7 +52,7 @@ const CouponPopup = () => {
         <div className="flex-1 p-8 flex flex-col justify-center">
           {/* Logo */}
           <div className="mb-5 flex justify-center">
-            <img src="/assets/logo-ac.webp" alt="Ana Curve Shop" className="h-16 w-auto" />
+            <img src="/assets/logo-ac.webp" alt="Clothes Shop" className="h-16 w-auto" />
           </div>
 
           {!sent ? (
@@ -112,7 +112,7 @@ const CouponPopup = () => {
         <div className="hidden sm:block w-48 flex-shrink-0">
           <img
             src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80"
-            alt="Ana Curve Shop"
+            alt="Clothes Shop"
             className="w-full h-full object-cover"
           />
         </div>

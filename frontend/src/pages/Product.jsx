@@ -58,7 +58,7 @@ const Product = () => {
         // Salvar nos produtos visualizados
         if (data && data.id) {
           try {
-            const saved = localStorage.getItem('anacurve_viewed_products');
+            const saved = localStorage.getItem('clothes_viewed_products');
             const parsed = saved ? JSON.parse(saved) : [];
             const viewed = Array.isArray(parsed) ? parsed : [];
             const filtered = viewed.filter((p) => p.id !== data.id);
@@ -75,7 +75,7 @@ const Product = () => {
               isFeatured: data.isFeatured,
             });
             localStorage.setItem(
-              'anacurve_viewed_products',
+              'clothes_viewed_products',
               JSON.stringify(filtered.slice(0, 8))
             );
           } catch (e) {
@@ -250,7 +250,7 @@ const Product = () => {
     <div className="section bg-background">
       <SEO
         title={product.name}
-        description={`${product.name} - ${product.description?.substring(0, 150)}. Tamanhos: ${parseSizes(product.sizes).join(', ')}. Compre na Ana Curve Shop.`}
+        description={`${product.name} - ${product.description?.substring(0, 150)}. Tamanhos: ${parseSizes(product.sizes).join(', ')}. Compre na Clothes Shop.`}
         path={`/produto/${product.id}`}
         image={getImageUrl(product.imageUrl)}
         type="product"
@@ -301,7 +301,7 @@ const Product = () => {
                     }`}
                     onLoad={() => setImageLoaded(true)}
                     onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/400x533?text=Ana+Curve+Shop';
+                      e.target.src = 'https://via.placeholder.com/400x533?text=Clothes+Shop';
                       setImageLoaded(true);
                     }}
                   />

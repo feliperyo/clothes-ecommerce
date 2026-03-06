@@ -31,12 +31,13 @@
       "Bash(npx prisma db push:*)",
       "Bash(node:*)",
       "Bash(timeout:*)",
-      "WebFetch(domain:anacurveshop-production.up.railway.app)",
+      "WebFetch(domain:clothesshop-production.up.railway.app)",
       "Bash(node -e:*)",
       "Bash(npx prisma validate:*)",
       "Bash(railway version:*)",
       "Bash(railway.exe --help:*)",
-      "Bash(railway:*)"
+      "Bash(railway:*)",
+      "Bash(git pull)"
     ]
   }
 }

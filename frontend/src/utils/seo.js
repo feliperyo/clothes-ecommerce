@@ -1,6 +1,6 @@
 // SEO Constants - Atualizar SITE_URL quando o domínio for configurado
-export const SITE_URL = 'https://anacurveshop.com.br';
-export const SITE_NAME = 'Ana Curve Shop';
+export const SITE_URL = 'https://clothesshop.com.br';
+export const SITE_NAME = 'Clothes Shop';
 export const SITE_DESCRIPTION = 'Moda plus size moderna e de qualidade. Blusas, calças, vestidos e conjuntos nos tamanhos G0 ao G4. Frete grátis acima de R$599.';
 export const SITE_LOGO = `${SITE_URL}/assets/logo-ac.webp`;
 
@@ -18,7 +18,7 @@ export const getOrganizationSchema = () => ({
     areaServed: 'BR',
     availableLanguage: 'Portuguese',
   },
-  sameAs: ['https://www.instagram.com/anacurveshop'],
+  sameAs: ['https://www.instagram.com/clothesshop'],
 });
 
 // JSON-LD: LocalBusiness (ClothingStore)
